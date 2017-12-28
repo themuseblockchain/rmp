@@ -1,0 +1,79 @@
+<div id="user-management" class="page-layout simple right-sidenav" perfectScrollbar>
+
+    <mat-sidenav-container>
+
+        <!-- SIDENAV -->
+        <mat-sidenav class="sidenav left-sidenav" align="start" opened="false" mode="over"
+                     matSidenavHelper="user-management-left-sidenav">
+            <user-management-main-sidenav></user-management-main-sidenav>
+        </mat-sidenav>
+        <!-- / SIDENAV -->
+
+        <!-- CENTER -->
+        <div class="center" fxFlex>
+
+            <!-- HEADER -->
+            <div class="header mat-accent-bg p-24" fxLayout="column" fxLayoutAlign="space-between start">
+
+                <!-- TOOLBAR -->
+                <div class="toolbar w-100-p" fxFlex fxLayout="row" fxLayoutAlign="space-between start">
+
+                    <div class="left-side" fxLayout="row">
+                        <button mat-icon-button class="sidenav-toggle"
+                                matSidenavToggler="user-management-left-sidenav">
+                            <mat-icon>menu</mat-icon>
+                        </button>
+                    </div>
+
+                    <div class="right-side" fxLayout="row">
+                        <button mat-button class="mat-icon-button" aria-label="Search" matTooltip="Search">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <!-- / TOOLBAR -->
+
+                <!-- BREADCRUMB -->
+                <div class="breadcrumb text-truncate h1 pl-72" fxLayout="row" fxLayoutAlign="start center"
+                     *ifOnDom [@animate]="{value:'*',params:{x:'50px'}}">
+                    <div *ngFor="let path of pathArr; last  as isLast" fxLayout="row" fxLayoutAlign="start center">
+                        <span>{{path}}</span>
+                        <mat-icon *ngIf="!isLast" class="separator">chevron_right</mat-icon>
+                    </div>
+                </div>
+                <!-- / BREADCRUMB -->
+
+                <!-- ADD USER BUTTON -->
+                <div class="user-uploader">
+                    <input hidden type="user" #userInput/>
+                    <button mat-fab
+                            class="add-user-button mat-warn"
+                            (click)="user.click()"
+                            aria-label="Add user"
+                            *ifOnDom [@animate]="{value:'*', params:{delay:'300ms',scale:'0.2'}}">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+                <!-- / ADD USER BUTTON -->
+
+            </div>
+            <!-- / HEADER -->
+
+            <!-- CONTENT -->
+            <div class="content mat-white-bg" perfectScrollbar>
+                <user-list></user-list>
+            </div>
+            <!-- / CONTENT -->
+
+        </div>
+        <!-- / CENTER -->
+
+        <!-- SIDENAV -->
+        <mat-sidenav class="sidenav right-sidenav " align="end" opened="true" mode="side"
+                     matSidenavHelper="user-management-right-sidenav" mat-is-locked-open="gt-md">
+            <user-management-details-sidenav></user-management-details-sidenav>
+        </mat-sidenav>
+        <!-- / SIDENAV -->
+
+    </mat-sidenav-container>
+</div>
