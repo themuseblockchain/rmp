@@ -7,7 +7,7 @@ export class NavigationModel
         this.model = [
             {
                 'id'      : 'administration',
-                'title'   : 'Administration',
+                'title'   : 'Rights Management Portal',
                 'type'    : 'group',
                 'children': [
                     {
@@ -16,31 +16,25 @@ export class NavigationModel
                         'type' : 'item',
                         'icon' : 'star',
                         'url'  : '/sample',
-                    }// ,
-                    // {
-                    //     'id'   : 'another sample',
-                    //     'title': 'Another Sample',
-                    //     'type' : 'item',
-                    //     'icon' : 'star',
-                    //     'url'  : '/another-sample',
-                    // }
+                    },
+                    {
+                        'id'   : 'another sample',
+                        'title': 'Another Sample',
+                        'type' : 'item',
+                        'icon' : 'star',
+                        'url'  : '/another-sample',
+                    }
                 ]
             },
             
-            {
-                'id'      : 'user-management',
-                'title'   : 'User Management',
-                'type'    : 'group',
-                'children': [
-                    {
-                        'id'   : 'user management',
-                        'title': 'User Management',
-                        'type' : 'item',
-                        'icon' : 'star',
-                        'url'  : '/user-management',
-                    }
-                ]
-            }
+             {
+                'id'        : 'users',
+                'title'     : 'Users',
+                'type'      : 'item',
+                'icon'    : 'shopping_cart',
+                'url'       : '/user-management/users',
+                'exactMatch': true
+            },
         ];
     }
 }

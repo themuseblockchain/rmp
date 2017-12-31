@@ -18,34 +18,11 @@
                     <toolbar class="above" [ngClass]="settings.colorClasses.toolbar"></toolbar>
                 </ng-container>
         <!-- / TOOLBAR -->
-        <!-- HEADER -->
-            <div class="header mat-deep-purple-bg p-24 pb-0" fxLayout="column" fxLayoutAlign="space-between">
 
-                <div fxLayout="row" fxLayoutAlign="space-between start">
-                    <span class="mat-display-1 mb-0 welcome-message" *ifOnDom [@animate]="{value:'*',params:{x:'50px'}}">Welcome back, John</span>
-                </div>
-
-                <div fxLayout="row">
-
-                    <div class="selected-project"></div>
-                     <div class="selected-project">Selected User</div>
-
-                    <button mat-icon-button class="project-selector" [matMenuTriggerFor]="projectsMenu" aria-label="Select project">
-                        <mat-icon>more_horiz</mat-icon>
-                    </button>
-
-                    <mat-menu #projectsMenu="matMenu">
-                        <button mat-menu-item *ngFor="let project of projects" (click)="selectedProject = project">
-                            <p>''</p>
-                        </button>
-                    </mat-menu>
-                </div>
-            </div>
-            <!-- / HEADER -->
                 
                 <content></content>
 
-                <!-- FOOTER: Below -->
+                 <!--FOOTER: Below -->
                 <!--<ng-container *ngIf="settings.layout.footer === 'below'">
                     <footer class="below" [ngClass]="settings.colorClasses.footer"></footer>
                 </ng-container>-->
@@ -54,11 +31,11 @@
             </div>
 
             <!-- NAVBAR: Right -->
-            <navbar-vertical [folded]="settings.layout.navigationFolded"
+            <!--<navbar-vertical [folded]="settings.layout.navigationFolded"
                                   class="right-navbar"
                                   [ngClass]="settings.colorClasses.navbar"
                                   *ngIf="settings.layout.navigation === 'right'">
-            </navbar-vertical>
+            </navbar-vertical>-->
             <!-- / NAVBAR: Right -->
 
         </div>

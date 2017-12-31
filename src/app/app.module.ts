@@ -1,3 +1,4 @@
+import { Comment } from '@angular/compiler/public_api';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
@@ -13,28 +14,28 @@ import { ConfigService } from './core/services/config.service';
 import { NavigationService } from './core/components/navigation/navigation.service';
 import { SampleModule } from './main/content/sample/sample.module';
 import { AnotherSampleModule } from './main/content/another-sample/another-sample.module';
-import { UserManagementModule } from './main/apps/user-management/user-management.module';
-// import { TranslateModule } from '@ngx-translate/core';
- 
-const appRoutes: Routes = [
-    // {
-    //     path        : 'content/another-sample',
-    //     loadChildren: './main/content/another-sample/another-sample.module#AnotherSampleModule'
-    // },
-    // {
-    //     path        : 'apps/chat',
-    //     loadChildren: './main/content/apps/chat/chat.module#ChatModule'
-    // },
+// import { UserManagementModule } from './main/content/user-management/user-management.module';
 
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { FakeDbService } from './fake-db/fake-db.service';
+
+const appRoutes: Routes = [
+
+    {
+        path        : 'user-management',
+        loadChildren: './main/content/user-management/user-management.module#UserManagementModule'
+    },
     {
         path      : '**',
         redirectTo: 'sample'
     }
 ];
 
+
+
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent        
     ],
     imports     : [
         BrowserModule,
@@ -43,10 +44,13 @@ const appRoutes: Routes = [
         BrowserAnimationsModule,
         RouterModule.forRoot(appRoutes),
         SharedModule,
-        // TranslateModule.forRoot(),
         MainModule,
         SampleModule,
-        AnotherSampleModule         
+        AnotherSampleModule,
+        InMemoryWebApiModule.forRoot(FakeDbService, {
+            delay             : 0,
+            passThruUnknownUrl: true
+        }),        
     ],
     providers   : [
         SplashScreenService,
