@@ -1,4 +1,3 @@
-import { validate } from 'd:/Projects/Dev/Muse/RMP/__node_modules__/codelyzer/walkerFactory/walkerFn';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UsersService } from './users.service';
 import { DataSource } from '@angular/cdk/collections';
