@@ -1,8 +1,8 @@
 ﻿import { Injectable } from '@angular/core';
-
+import * as muse from 'muse-js';
 
 // I'm not sure how to import a .js lib, but I dont think it should be hard
-// import { Muse_lib } from 'SOME_DIRECTORY'; 
+// import { Muse_lib } from 'SOME_DIRECTORY';
 // OR
 // import * as Muse_lib from 'SOME_DIRECTORY';
 
@@ -21,6 +21,10 @@ export class DataService {
   // no data needs to be returned
   publishtContent() {
     this.muse.broadcast.publish_content();
+  }
+
+  ngOnInit() {
+     return this.muse.getConfig();
   }
 
   // Update Content

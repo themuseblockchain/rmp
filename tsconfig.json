@@ -15,12 +15,13 @@
     "lib": [
       "es2017",
       "dom"
-    ], 
+    ],
     "jsx": "react"
   },
   "angularCompilerOptions": {
     "genDir": "release/",
     "strictMetadataEmit": true,
+    "allowSyntheticDefaultImports": true,
     "skipTemplateCodegen": true,
     "annotationsAs": "decorators"
   }
