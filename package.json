@@ -32,7 +32,6 @@
     "@ngx-translate/core": "8.0.0",
     "@swimlane/ngx-charts": "7.0.1",
     "@swimlane/ngx-datatable": "11.1.4",
-    "@withinpixels/ngx-dnd": "3.1.0",
     "angular-calendar": "0.22.1",
     "angular-in-memory-web-api": "0.5.1",
     "browserify": "14.5.0",
