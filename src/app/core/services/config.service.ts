@@ -17,8 +17,10 @@ export class ConfigService
     constructor(
         private router: Router,
         public platform: Platform
+
     )
     {
+
         // Set the default settings
         this.defaultSettings = {
             layout          : {
@@ -62,6 +64,7 @@ export class ConfigService
         // Create the behavior subject
         this.onSettingsChanged = new BehaviorSubject(this.settings);
     }
+
 
     /**
      * Sets settings
