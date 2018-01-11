@@ -1,14 +1,17 @@
 ﻿import { Injectable, Inject } from '@angular/core';
-import * as Muse from 'museblockchain-js/dist/muse.min.js';
+import * as Muse from 'muse-js';
 @Injectable()
 export class DataService
 {
-constructor(@Inject(Muse) public muse: Muse){}
-
-init()
+constructor(public muse: Muse)
 {
 
-//this.muse.config.set('websocket','wss://api.muse.blckchnd.com');
-//this.muse.api.getConfig(function(err,response){console.log(response)});
 }
+//init()
+//{
+  //console.log(this.muse);
+  //alert('muse obj: ' + JSON.stringify(this.muse));
+  //this.muse.config.set('websocket','wss://api.muse.blckchnd.com');
+  //this.muse.api.getConfig(function(err,response){console.log(response)});
+//}
 }
