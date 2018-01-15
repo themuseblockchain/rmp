@@ -1,91 +1,78 @@
-﻿import { Injectable, Inject } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import * as muse from 'muse-js';
 
 @Injectable()
 export class DataService
 {
-
-  dummyParameter: any;
+ getAccountParameter: any;
+ getUrlDataParameter: any;
+ getDataForUserParameter: any;
+ getContentorAllParameter: any;
+ getStreamingPlatformsParameter: any;
+ authAccountParameterUser: any;
+ authAccountParameterKey: any;
 
 constructor() {
 
 }
-    //because of the way we instantiate muse we must set config each time we use a function.
-    setConfig() {
-    return muse.config.set('websocket','wss://api.muse.blckchnd.com');
-  }
-    // getConfig() gets called from another angular component
-    getConfig() {
-      return muse.api.getConfig(function(err, response){console.log(response);
-      });
-    }
+   // because of the way we instantiate muse we must set config each time we use a function.
+   setConfig() {
+     return muse.config.set('websocket', 'wss://api.muse.blckchnd.com');
+   }
+   getConfig() {
+     return muse.api.getConfig(function(err, response){console.log(response); } );
+   }
 
-    getAccount(dummyParameter) {
-      return muse.accountInfo(dummyParameter,function(err,response, data)
+   getAccount(getAccountParameter) {
+     return muse.accountInfo(getAccountParameter, function(err, response, data)
+     {
+       console.log(data);
+     });
+   }
+   getUrlData(getUrlDataParameter) {
+     return muse.api.getContentByUrl(getUrlDataParameter, function(err, response, data)
+     {
+       console.log(response);
+     });
+   }
+   getDataForUser(getDataForUserParameter) {
+     return muse.api.getContentByUploader(getDataForUserParameter, function(err, response, data)
+     {
+       console.log(response);
+     });
+   }
+
+   // optionally provide a lowerbound parameter to lookup by
+
+   getContentorAll(getContentorAllParameter) {
+     return muse.api.lookupContent(getContentorAllParameter, 50, function(err, response, data)
+     {
+       console.log(response);
+     });
+   }
+
+   // optionally provide a lowerbound parameter to lookup by
+
+   getStreamingPlatforms(getStreamingPlatformsParameter) {
+     return muse.api.lookupStreamingPlatformAccounts(getStreamingPlatformsParameter, 50, function(err, response, data)
+     {
+       console.log(err, response, data);
+     });
+   }
+
+   getAllAccounts(){
+     return muse.api.lookupAccounts('', 9999, function(err, response, data)
+     {
+       console.log(err, response, data);
+     });
+   }
+
+    authAccount(authAccountParameterUser,authAccountParameterKey) {
+       // logic to transform data if needed and then                // logic to transform data if needed and then
+       // return muse.function;                // return muse.function;
+      return muse.login(authAccountParameterUser, authAccountParameterKey, function(err, response, data)
       {
-      console.log(data);
+        console.log(err, response, data);
       });
     }
-    getUrlData(dummyParameter) {
-      return muse.api.getContentByUrl(dummyParameter,function(err,response, data)
-      {
-      console.log(response);
-      });
-    }
-    getDataForUser(dummyParameter) {
-      return muse.api.getContentByUploader(dummyParameter,function(err,response, data)
-      {
-      console.log(response);
-      });
-    }
-
-    //optionally provide a lowerbound parameter to lookup by
-
-    getContentorAll(dummyParameter) {
-      return muse.api.lookupContent(dummyParameter, 50,function(err,response, data)
-      {
-      console.log(response);
-      });
-    }
-
-    //optionally provide a lowerbound parameter to lookup by
-
-    getStreamingPlatforms(dummyParameter) {
-      return muse.api.lookupStreamingPlatformAccounts(dummyParameter, 50,function(err,response, data)
-      {
-      console.log(err, response, data);
-      });
-    }
-
-    getAllAccounts(){
-      return muse.api.lookupAccounts("", 9999, function(err,response, data)
-      {
-        console.log(err,response, data)
-      });
-    }
-
-
-    // 'dummyParameter' would be passed in from angular call from another component
-    authAccount(dummyParameter) {
-      // logic to transform data if needed and then
-      // return muse.function;
-      return muse.login(dummyParameter, function(err,response, data)
-      {
-        console.log(err,response, data)
-      });
-
-    }
-
-    broadcast() {
-      // return muse.function;
-    }
-
-   formatter() {
-      // return muse.function;
-  }
-
-  memo() {
-      // return muse.function;
-  }
-
 }
