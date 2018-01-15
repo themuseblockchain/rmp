@@ -26,5 +26,6 @@ onInit(){
      this.dataService.getContentorAll("");
      this.dataService.getStreamingPlatforms("");
      this.dataService.getAllAccounts();
+     this.dataService.authAccount("");
    }
 }

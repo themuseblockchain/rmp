@@ -16,7 +16,8 @@ constructor() {
   }
     // getConfig() gets called from another angular component
     getConfig() {
-      return muse.api.getConfig(function(err, response){console.log(response); } );
+      return muse.api.getConfig(function(err, response){console.log(response);
+      });
     }
 
     getAccount(dummyParameter) {
@@ -65,9 +66,14 @@ constructor() {
 
 
     // 'dummyParameter' would be passed in from angular call from another component
-    auth(dummyParameter) {
+    authAccount(dummyParameter) {
       // logic to transform data if needed and then
       // return muse.function;
+      return muse.login(dummyParameter, function(err,response, data)
+      {
+        console.log(err,response, data)
+      });
+
     }
 
     broadcast() {
