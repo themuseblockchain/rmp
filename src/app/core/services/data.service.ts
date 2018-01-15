@@ -1,17 +1,36 @@
 ﻿import { Injectable, Inject } from '@angular/core';
-import * as Muse from 'muse-js';
+import * as muse from 'muse-js';
+
 @Injectable()
 export class DataService
 {
-constructor(public muse: Muse)
-{
+
+  dummyParameter: any;
+
+constructor() {
 
 }
-//init()
-//{
-  //console.log(this.muse);
-  //alert('muse obj: ' + JSON.stringify(this.muse));
-  //this.muse.config.set('websocket','wss://api.muse.blckchnd.com');
-  //this.muse.api.getConfig(function(err,response){console.log(response)});
-//}
+    // getConfig() gets called from another angular component
+    getConfig() {
+      return muse.api.getConfig(function(err, response){console.log(response); } );
+    }
+
+    // 'dummyParameter' would be passed in from angular call from another component
+    auth(dummyParameter) {
+      // logic to transform data if needed and then
+      // return muse.function;
+    }
+
+    broadcast() {
+      // return muse.function;
+    }
+
+   formatter() {
+      // return muse.function;
+  }
+  
+  memo() {
+      // return muse.function;
+  }
+
 }
