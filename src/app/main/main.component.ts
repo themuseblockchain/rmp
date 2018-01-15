@@ -4,7 +4,6 @@ import { ConfigService } from '../core/services/config.service';
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
 import { Animations } from '../core/animations';
-import * as muse from 'muse-js';
 
 @Component({
     selector     : 'main',
@@ -44,9 +43,7 @@ export class MainComponent implements OnInit, OnDestroy
 
     ngOnInit()
     {
-      console.log(muse);
-      muse.config.set('websocket','wss://api.muse.blckchnd.com');
-      muse.api.getConfig(function(err,response){console.log(response)});
+      
     }
 
     ngOnDestroy()

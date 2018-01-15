@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-//import { DataService } from '../../../core/services/data.service';
-import * as muse from 'muse-js';
+import { DataService } from '../../../core/services/data.service';
 
 @Component({
    selector: 'another-sample',
@@ -13,18 +12,19 @@ onInit(){
 
    }
 
-   constructor( //public dataService: DataService
+   constructor( public dataService: DataService
    ) {
        this.load();
-
-       console.log("Works?");
    }
 
    load() {
-    muse.api.getConfig(function(err,response){console.log(response)});
-    console.log("Works?");
-    muse.api.getAccounts(['test', 'test2'], function(err, response){
-      console.log(err, response);
-    });
+     this.dataService.setConfig();
+     this.dataService.getConfig();
+     this.dataService.getAccount("johnstor5");
+     this.dataService.getUrlData("ipfs://here.here");
+     this.dataService.getDataForUser("gchampagne");
+     this.dataService.getContentorAll("");
+     this.dataService.getStreamingPlatforms("");
+     this.dataService.getAllAccounts();
    }
 }
