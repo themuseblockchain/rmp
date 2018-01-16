@@ -1,41 +1,50 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../../core/modules/shared.module';
-import { RightsManagementComponent } from './rights-management.component';
-import { PostContentComponent } from './post-content/post-content.component';
+import { RouterModule, Routes } from '@angular/router';
+import { ContentListComponent } from './content-list.component';
+import { ContentComponent } from './content/content.component';
 import { ContentService } from './content/content.service';
-import { ContentListService } from './content-list/content-list.service';
+import { ContentListService } from './content-list.service';
 
-const routes = [
+
+const routes: Routes = [
     {
-        path     : 'rights-management',
-        component: RightsManagementComponent,
+        path     : 'content', 
+        component: ContentListComponent,
         resolve  : {
             data : ContentListService
         }
     },
     {
-        path     : 'post-content',
-        component: PostContentComponent,
-    } ,
+        path     : 'content/:id',
+        component: ContentComponent,
+        resolve  : {
+            data: ContentService
+        }
+    },
+    {
+        path     : 'content/:id/:handle',
+        component: ContentComponent,
+        resolve  : {
+            data: ContentService
+        }
+    },
 ];
 
 @NgModule({
-    declarations: [
-        RightsManagementComponent,
-        PostContentComponent
-    ],
     imports     : [
-         SharedModule,
+        SharedModule,
         RouterModule.forChild(routes)
     ],
-    exports     : [
-        RightsManagementComponent,
-        PostContentComponent
+    declarations: [
+        ContentListComponent,
+        ContentComponent
+    ],
+    providers   : [
+        ContentListService,
+        ContentService
     ]
 })
-
-
 export class RightsManagementModule
 {
 }

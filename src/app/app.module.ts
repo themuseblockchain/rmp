@@ -14,8 +14,9 @@ import { ConfigService } from './core/services/config.service';
 import { NavigationService } from './core/components/navigation/navigation.service';
 import { SampleModule } from './main/content/sample/sample.module';
 import { AnotherSampleModule } from './main/content/another-sample/another-sample.module';
+
 import { DataService } from './core/services/data.service';
-// import { UserManagementModule } from './main/content/user-management/user-management.module';
+
 
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { FakeDbService } from './fake-db/fake-db.service';
@@ -25,6 +26,10 @@ const appRoutes: Routes = [
     {
         path        : 'user-management',
         loadChildren: './main/content/user-management/user-management.module#UserManagementModule'
+    },
+   {
+        path        : 'rights-management',
+        loadChildren: './main/content/rights-management/rights-management.module#RightsManagementModule'
     },
     {
         path      : '**',

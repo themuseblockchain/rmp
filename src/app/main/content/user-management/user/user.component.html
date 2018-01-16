@@ -37,12 +37,12 @@
             </div>
             <!-- / APP TITLE -->
 
-            <!--<button mat-raised-button
+            <button mat-raised-button
                     class="save-user-button mat-white-bg mt-16 mt-sm-0"
                     [disabled]="userForm.invalid"
                     *ngIf="pageType ==='new'" (click)="addUser()">
                 <span>ADD</span>
-            </button>-->
+            </button>
 
             <button mat-raised-button
                     class="save-user-button mat-white-bg mt-16 mt-sm-0"
@@ -67,7 +67,6 @@
                                 <div class="py-16" fxLayout="row">
                                     <mat-form-field class="w-100-p">
                                         <input  
-                                            readonly
                                             matInput
                                             name="museId"
                                             formControlName="museId"
@@ -86,7 +85,6 @@
                                 </div>
                                 <mat-form-field class="w-100-p">
                                         <input  
-                                            readonly
                                             matInput
                                             name="name"
                                             formControlName="name"
@@ -94,7 +92,6 @@
                                     </mat-form-field>
                                 <mat-form-field class="w-100-p">
                                     <textarea 
-                                              readonly
                                               matInput
                                               name="email"
                                               formControlName="email"

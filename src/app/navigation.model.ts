@@ -31,9 +31,25 @@ export class NavigationModel
                 'id'        : 'users',
                 'title'     : 'Users',
                 'type'      : 'item',
-                'icon'    : 'shopping_cart',
+                'icon'    : 'person',
                 'url'       : '/user-management/users',
                 'exactMatch': true
+            },
+
+                        {
+                'id'      : 'rights-management',
+                'title'   : 'Rights Management',
+                'type'    : 'group',
+                'children': [
+                    {
+                        'id'   : 'post content',
+                        'title': 'Post Content',
+                        'type' : 'item',
+                        'icon' : 'star',
+                        'url'  : '/rights-management/content',
+                        'exactMatch': true
+                    }
+                ]
             },
         ];
     }

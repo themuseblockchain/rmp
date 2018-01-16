@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { UsersService } from './users.service';
+import { ContentListService } from './content-list.service';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable } from 'rxjs/Observable';
-import { Animations } from '../../../../core/animations';
+import { Animations } from '../../../core/animations';
 import { MatPaginator, MatSort } from '@angular/material';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/startWith';
@@ -11,26 +11,26 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
-import { Utils } from '../../../../core/utils';
+import { Utils } from '../../../core/utils';
 // import {DataService} from '../../../../core/services/data.services';
 
 @Component({
-    selector   : 'users',
-    templateUrl  : './users.component.html',
-    styleUrls    : ['./users.component.scss'],
+    selector   : 'content-list',
+    templateUrl  : './content-list.component.html',
+    styleUrls    : ['./content-list.component.scss'],
     animations : Animations
 })
-export class UsersComponent implements OnInit
+export class ContentListComponent implements OnInit
 {
     dataSource: FilesDataSource | null; 
-    displayedColumns = ['id', 'museId', 'email', 'permissions', 'status', 'validated'];
+      displayedColumns = ['id', 'name', 'title', 'upcEan', 'releaseDate', 'releaseYear'];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild('filter') filter: ElementRef;
     @ViewChild(MatSort) sort: MatSort;
 
     constructor(
-        private usersService: UsersService, 
+        private contentListService: ContentListService, 
         // private dataService: DataService
     )
     {
@@ -38,7 +38,7 @@ export class UsersComponent implements OnInit
 
     ngOnInit()
     {
-        this.dataSource = new FilesDataSource(this.usersService, this.paginator, this.sort);
+        this.dataSource = new FilesDataSource(this.contentListService, this.paginator, this.sort);
         Observable.fromEvent(this.filter.nativeElement, 'keyup')
                   .debounceTime(150)
                   .distinctUntilChanged()
@@ -80,27 +80,27 @@ export class FilesDataSource extends DataSource<any>
     }
 
     constructor(
-        private usersService: UsersService,
+        private contentListService: ContentListService,
         private _paginator: MatPaginator,
         private _sort: MatSort
     )
     {
         super();
-        this.filteredData = this.usersService.users;
+        this.filteredData = this.contentListService.contentList;
     }
 
     /** Connect function called by the table to retrieve one stream containing the data to render. */
     connect(): Observable<any[]>
     {
         const displayDataChanges = [
-            this.usersService.onUserChanged,
+            this.contentListService.onContentChanged,
             this._paginator.page,
             this._filterChange,
             this._sort.sortChange
         ];
 
         return Observable.merge(...displayDataChanges).map(() => {
-            let data = this.usersService.users.slice();
+            let data = this.contentListService.contentList.slice();
 
             data = this.filterData(data);
 
@@ -136,23 +136,23 @@ export class FilesDataSource extends DataSource<any>
 
             switch ( this._sort.active )
             {
-                case 'id':
+                 case 'id':
                     [propertyA, propertyB] = [a.id, b.id];
                     break;
-                case 'museId':
-                    [propertyA, propertyB] = [a.museId, b.museId];
+                case 'name':
+                    [propertyA, propertyB] = [a.name, b.name];
                     break;
-                case 'email':
-                    [propertyA, propertyB] = [a.email[0], b.email[0]];
+                case 'title':
+                    [propertyA, propertyB] = [a.title, b.title];
                     break;
-                case 'permissions':
-                    [propertyA, propertyB] = [a.permissions, b.permissions];
+                case 'upcEan':
+                    [propertyA, propertyB] = [a.upcEan[0], b.upcEan[0]];
                     break;
-                case 'status':
-                    [propertyA, propertyB] = [a.status, b.status];
+                case 'releaseDate':
+                    [propertyA, propertyB] = [a.releaseDate, b.releaseDate];
                     break;
-                case 'validated':
-                    [propertyA, propertyB] = [a.validated, b.validated];
+                case 'releaseYear':
+                    [propertyA, propertyB] = [a.releaseYear, b.releaseYear];
                     break;
             }
 
