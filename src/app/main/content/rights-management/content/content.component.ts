@@ -15,7 +15,7 @@ import { MatSnackBar } from '@angular/material';
 import { Location } from '@angular/common';
 
 // DO NOT USE IN PRODUCTION. ONLY USED TO POPULATE DDL
-// import { content } from '../../../../fake-db/contents'; 
+// import { content } from '../../../../fake-db/contents';
 // import { content } from '../../../../fake-db/user.permissions';
 // DO NOT USE IN PRODUCTION. ONLY USED TO POPULATE DDL
 
@@ -37,7 +37,7 @@ export class ContentComponent implements OnInit, OnDestroy
 
     // DO NOT USE IN PRODUCTION. ONLY USED TO POPULATE DDL
     // userStatuses = userStatuses;
-    // userPermissions = userPermissions; 
+    // userPermissions = userPermissions;
     // DO NOT USE IN PRODUCTION. ONLY USED TO POPULATE DDL
 
     constructor(
@@ -114,7 +114,7 @@ export class ContentComponent implements OnInit, OnDestroy
             // postalCode: ['', [Validators.required, Validators.maxLength(5)]]
         });
 
-        this.form.valueChanges.subscribe(() => {
+        this.contentForm.valueChanges.subscribe(() => {
             this.onFormValuesChanged();
         });
 
@@ -145,14 +145,14 @@ export class ContentComponent implements OnInit, OnDestroy
     createContentForm()
     {
         return this.formBuilder.group({
-            
+
             id              : [this.content.id],
             name            : [this.content.name],
             title           : [this.content.handle],
             upcEan          : [this.content.upcEan],
             releaseDate     : [this.content.releaseDate],
             releaseYear     : [this.content.releaseYear],
-            
+
             validated       : [this.content.validate],
             textd           : [this.content.textd],
 

@@ -14,10 +14,8 @@ import { ConfigService } from './core/services/config.service';
 import { NavigationService } from './core/components/navigation/navigation.service';
 import { SampleModule } from './main/content/sample/sample.module';
 import { AnotherSampleModule } from './main/content/another-sample/another-sample.module';
-
+import { WalletModule } from './main/content/wallet/wallet.module';
 import { DataService } from './core/services/data.service';
-
-
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { FakeDbService } from './fake-db/fake-db.service';
 
@@ -30,6 +28,10 @@ const appRoutes: Routes = [
    {
         path        : 'rights-management',
         loadChildren: './main/content/rights-management/rights-management.module#RightsManagementModule'
+    },
+    {
+        path        : 'wallet',
+        loadChildren: './main/content/wallet/wallet.module#WalletModule'
     },
     {
         path      : '**',
@@ -53,6 +55,7 @@ const appRoutes: Routes = [
         MainModule,
         SampleModule,
         AnotherSampleModule,
+        WalletModule,
         InMemoryWebApiModule.forRoot(FakeDbService, {
             delay             : 0,
             passThruUnknownUrl: true

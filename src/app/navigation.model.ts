@@ -23,15 +23,22 @@ export class NavigationModel
                         'type' : 'item',
                         'icon' : 'star',
                         'url'  : '/another-sample',
+                    },
+                    {
+                        'id'   : 'wallet',
+                        'title': 'Wallet',
+                        'type' : 'item',
+                        'icon' : 'star',
+                        'url'  : '/wallet',
                     }
                 ]
             },
-            
+
              {
                 'id'        : 'users',
                 'title'     : 'Users',
                 'type'      : 'item',
-                'icon'    : 'person',
+                'icon'      : 'person',
                 'url'       : '/user-management/users',
                 'exactMatch': true
             },
