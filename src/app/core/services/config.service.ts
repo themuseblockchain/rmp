@@ -17,22 +17,19 @@ export class ConfigService
     constructor(
         private router: Router,
         public platform: Platform
-
     )
     {
-
         // Set the default settings
         this.defaultSettings = {
             layout          : {
                 navigation      : 'left', // 'right', 'left', 'top', 'none'
                 navigationFolded: false, // true, false
-                toolbar         : 'above', // 'above', 'below', 'none'
+                toolbar         : 'below', // 'above', 'below', 'none'
                 footer          : 'below', // 'above', 'below', 'none'
                 mode            : 'fullwidth' // 'boxed', 'fullwidth'
             },
             colorClasses    : {
-                // toolbar: 'mat-white-500-bg',
-                toolbar: 'mat-dark-700-bg',
+                toolbar: 'mat-dark-700-bg', // toolbar: 'mat-white-500-bg',
                 navbar : 'mat-dark-700-bg',
                 footer : 'mat-dark-900-bg'
             },
@@ -64,7 +61,6 @@ export class ConfigService
         // Create the behavior subject
         this.onSettingsChanged = new BehaviorSubject(this.settings);
     }
-
 
     /**
      * Sets settings

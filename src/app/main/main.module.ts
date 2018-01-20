@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../core/modules/shared.module';
 
 import { MainComponent } from './main.component';
-import { ContentComponent } from './content/content.component';
+import { PagesComponent } from './pages/pages.component';
 // import { FooterComponent } from './components/footer/footer.component';
 import { NavbarVerticalComponent } from './components/navbar/vertical/navbar-vertical.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
@@ -15,7 +15,7 @@ import { SearchBarModule } from '../core/components/search-bar/search-bar.module
 
 @NgModule({
     declarations: [
-        ContentComponent,
+        PagesComponent,
         // FooterComponent,
         MainComponent,
         NavbarVerticalComponent,

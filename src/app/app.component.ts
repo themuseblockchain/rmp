@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { SplashScreenService } from './core/services/splash-screen.service';
 
-import { LoginModule } from './main/content/authentication/login/login.module';
+import { LoginModule } from './main/pages/authentication/login/login.module';
 
 @Component({
     selector   : 'root',
