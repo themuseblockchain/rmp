@@ -15,11 +15,13 @@ import { NavigationService } from './core/components/navigation/navigation.servi
 import { SampleModule } from './main/content/sample/sample.module';
 import { AnotherSampleModule } from './main/content/another-sample/another-sample.module';
 
+import { LoginModule } from './main/content/authentication/login/login.module';
+
 import { DataService } from './core/services/data.service';
 
 
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { FakeDbService } from './fake-db/fake-db.service';
+// import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+// import { FakeDbService } from './fake-db/fake-db.service';
 
 const appRoutes: Routes = [
 
@@ -31,9 +33,13 @@ const appRoutes: Routes = [
         path        : 'rights-management',
         loadChildren: './main/content/rights-management/rights-management.module#RightsManagementModule'
     },
+    // {
+    //     path      : '**',
+    //     redirectTo: 'sample'
+    // }
     {
         path      : '**',
-        redirectTo: 'sample'
+        redirectTo: 'login'
     }
 ];
 
@@ -52,11 +58,11 @@ const appRoutes: Routes = [
         SharedModule,
         MainModule,
         SampleModule,
-        AnotherSampleModule,
-        InMemoryWebApiModule.forRoot(FakeDbService, {
-            delay             : 0,
-            passThruUnknownUrl: true
-        }),
+        AnotherSampleModule
+        // InMemoryWebApiModule.forRoot(FakeDbService, {
+        //     delay             : 0,
+        //     passThruUnknownUrl: true
+        // }),
     ],
     providers   : [
         SplashScreenService,

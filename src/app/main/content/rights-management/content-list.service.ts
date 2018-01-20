@@ -28,7 +28,7 @@ export class ContentListService implements Resolve<any>
         return new Promise((resolve, reject) => {
 
             Promise.all([
-                this.getUsers()
+                this.getContents()
             ]).then(
                 () => {
                     resolve();
@@ -38,15 +38,15 @@ export class ContentListService implements Resolve<any>
         });
     }
 
-    getUsers(): Promise<any>
+    getContents()// :Promise<any>
     {
-        return new Promise((resolve, reject) => {
-            this.http.get('api/users')
-                .subscribe((response: any) => {
-                    this.contentList = response;
-                    this.onContentChanged.next(this.contentList);
-                    resolve(response);
-                }, reject);
-        });
+        // return new Promise((resolve, reject) => {
+            // this.http.get('api/users')
+            //     .subscribe((response: any) => {
+            //         this.contentList = response;
+            //         this.onContentChanged.next(this.contentList);
+            //         resolve(response);
+            //     }, reject);
+        // });
     }
 }

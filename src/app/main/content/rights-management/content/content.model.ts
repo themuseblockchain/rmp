@@ -4,37 +4,43 @@ import { MatChipInputEvent } from '@angular/material';
 export class Content
 {
     id: string;
-    name: string;
-    title: string;
     handle: string;
+    ipfsUrl: string;
+    albumTitle: string;
+    albumGenre: string;
+    countryOrigin: string;
     upcEan: string;
     releaseDate: string;
     releaseYear: string;
-
-    number: number;
+    salesStartDate: string;
+    masterLabelName: string;
+    displayLabelName: string;
+    trackTitle: string;
+    isrc: string;
+    trackNo: string;
+    compositionTitle: string;
+                            
     validate: boolean;
-    textb: string;
-    textc: string;
-    textd: string;
 
     constructor(content?)
     {
         //  ['name', 'title', 'upcEan', 'releaseDate', 'releaseYear'];
         content = content || {};
         this.id = content.id || Utils.generateGUID();
-        this.name = content.name || '';
-        this.title = content.title || Utils.handleize(this.name);
-        this.handle = content.email || '';
-        this.upcEan = content.permissions || '';
-        this.releaseDate = content.status || '';
-        this.releaseYear = content.tags || [];
- 
-
-        this.validate = content.validate;
-        // this.textb = content.textb;
-        // this.textc = content.textc;
-        this.textd = content.textd;
-        this.number = content.number;
+        this.ipfsUrl = content.ipfsUrl || '';
+        this.albumTitle = content.albumTitle || '';
+        this.albumGenre = content.albumGenre || '';
+        this.countryOrigin = content.countryOrigin || '';
+        this.upcEan = content.upcEan || '';
+        this.releaseDate = content.releaseDate || '';
+        this.releaseYear = content.releaseYear || '';
+        this.salesStartDate = content.salesStartDate || '';
+        this.masterLabelName = content.masterLabelName || '';
+        this.displayLabelName = content.displayLabelName || '';
+        this.trackTitle = content.trackTitle || '';
+        this.isrc = content.isrc || '';
+        this.trackNo = content.trackNo || '';
+        this.compositionTitle = content.compositionTitle || '';
     }
 
     addPermissions(event: MatChipInputEvent): void
@@ -54,43 +60,4 @@ export class Content
             input.value = '';
         }
     }
-
-    // removePermissions(category)
-    // {
-    //     const index = this.permissions.indexOf(category);
-
-    //     if ( index >= 0 )
-    //     {
-    //         // this.permissions.splice(index, 1);
-    //     }
-    // }
-
-
-    // addTag(event: MatChipInputEvent): void
-    // {
-    //     const input = event.input;
-    //     const value = event.value;
-
-    //     // Add tag
-    //     if ( value )
-    //     {
-    //         this.tags.push(value);
-    //     }
-
-    //     // Reset the input value
-    //     if ( input )
-    //     {
-    //         input.value = '';
-    //     }
-    // }
-
-    // removeTag(tag)
-    // {
-    //     const index = this.tags.indexOf(tag);
-
-    //     if ( index >= 0 )
-    //     {
-    //         this.tags.splice(index, 1);
-    //     }
-    // }
 }

@@ -35,7 +35,7 @@
             <!--[routerLink]="'/user-management/users/new'"-->
             <button mat-raised-button
                        [routerLink]="'/rights-management/content/new'"
-                    class="add-user-button mat-white-bg my-12 mt-sm-0">
+                    class="add-content-button mat-white-bg my-12 mt-sm-0">
                 <span>POST NEW CONTENT</span>
             </button>
 
@@ -51,7 +51,6 @@
                        [@animateStagger]="{value:'50'}"
                        perfectScrollbar>
 
-               <!-- ID Column -->
                 <ng-container cdkColumnDef="id">
                     <mat-header-cell *cdkHeaderCellDef mat-sort-header>ID</mat-header-cell>
                     <mat-cell *cdkCellDef="let content">
@@ -59,45 +58,40 @@
                     </mat-cell>
                 </ng-container>
 
-                <!-- Name Column -->
-                <ng-container cdkColumnDef="name">
-                    <mat-header-cell *cdkHeaderCellDef mat-sort-header>Name</mat-header-cell>
+                <ng-container cdkColumnDef="albumTitle">
+                    <mat-header-cell *cdkHeaderCellDef mat-sort-header>Album Title</mat-header-cell>
                     <mat-cell *cdkCellDef="let content">
-                        <!--<p class="text-truncate">{{content.name}}</p>-->
+                        <!--<p class="text-truncate">{{content.albumTitle}}</p>-->
                     </mat-cell>
                 </ng-container>
 
-                <!-- Email Column -->
-                <ng-container cdkColumnDef="title">
-                    <mat-header-cell *cdkHeaderCellDef fxHide mat-sort-header fxShow.gt-md>Album Title</mat-header-cell>
-                    <mat-cell *cdkCellDef="let content" fxHide fxShow.gt-md>
-                        <p class="category text-truncate">
-                            <!--{{content.title}}-->
-                        </p>
+                <ng-container cdkColumnDef="trackTitle">
+                    <mat-header-cell *cdkHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Track Title</mat-header-cell>
+                    <mat-cell *cdkCellDef="let content" fxHide fxShow.gt-sm>
+                        <span>
+                            <!--{{content.trackTitle}}-->
+                        </span>
                     </mat-cell>
                 </ng-container>
 
-                <!-- Permissions Column -->
                 <ng-container cdkColumnDef="upcEan">
-                    <mat-header-cell *cdkHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>UPC or Ean</mat-header-cell>
-                    <mat-cell *cdkCellDef="let content" fxHide fxShow.gt-xs>
-                        <p class="price text-truncate">
+                    <mat-header-cell *cdkHeaderCellDef fxHide mat-sort-header fxShow.gt-md>UPC/Ean</mat-header-cell>
+                    <mat-cell *cdkCellDef="let content" fxHide fxShow.gt-md>
+                        <p class="text-truncate">
                             <!--{{content.upcEan}}-->
                         </p>
                     </mat-cell>
                 </ng-container>
 
-                <!-- Status Column -->
                 <ng-container cdkColumnDef="releaseDate">
-                    <mat-header-cell *cdkHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Release Date</mat-header-cell>
-                    <mat-cell *cdkCellDef="let content" fxHide fxShow.gt-sm>
-                        <span>
+                    <mat-header-cell *cdkHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Release Date</mat-header-cell>
+                    <mat-cell *cdkCellDef="let content" fxHide fxShow.gt-xs>
+                        <p class="text-truncate">
                             <!--{{content.releaseDate}}-->
-                        </span>
+                        </p>
                     </mat-cell>
                 </ng-container>
 
-                <!-- Status Column -->
                 <ng-container cdkColumnDef="releaseYear">
                     <mat-header-cell *cdkHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Release Year</mat-header-cell>
                     <mat-cell *cdkCellDef="let content" fxHide fxShow.gt-sm>
@@ -106,6 +100,8 @@
                         </span>
                     </mat-cell>
                 </ng-container>
+
+
               <!-- Validated Column -->
                 <!--<ng-container cdkColumnDef="validated">
                     <mat-header-cell *cdkHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Validated</mat-header-cell>
@@ -119,19 +115,19 @@
                 <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
 
                 <mat-row *cdkRowDef="let content; columns: displayedColumns;"
-                         class="user"
+                         class="content"
                          matRipple
                          [routerLink]="'/rights-management/content/'+content.id+'/'+content.handle">
                 </mat-row>
 
             </mat-table>
 
-            <mat-paginator #paginator
+            <!--<mat-paginator #paginator
                            [length]="dataSource.filteredData.length"
                            [pageIndex]="0"
                            [pageSize]="10"
                            [pageSizeOptions]="[5, 10, 25, 100]">
-            </mat-paginator>
+            </mat-paginator>-->
 
         </div>
         <!-- / CONTENT CARD -->
