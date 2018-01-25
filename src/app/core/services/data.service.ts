@@ -29,6 +29,12 @@ constructor() {
        console.log(data);
      });
    }
+   getAccountHistory(getAccountParameter) {
+     return muse.accountHistory(getAccountParameter, null, 1000, function(err, response, data)
+     {
+       console.log(err, response, data);
+     });
+   }
    getUrlData(getUrlDataParameter) {
      return muse.api.getContentByUrl(getUrlDataParameter, function(err, response, data)
      {
