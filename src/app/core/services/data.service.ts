@@ -5,6 +5,7 @@ import * as muse from 'muse-js';
 export class DataService
 {
  getAccountParameter: any;
+ AccountDetails: any;
  getUrlDataParameter: any;
  getDataForUserParameter: any;
  getContentorAllParameter: any;
@@ -26,7 +27,8 @@ constructor() {
    getAccount(getAccountParameter) {
      return muse.accountInfo(getAccountParameter, function(err, response, data)
      {
-       console.log(data);
+       var AccountDetails = data;
+       console.log(AccountDetails);
      });
    }
    getAccountHistory(getAccountParameter) {

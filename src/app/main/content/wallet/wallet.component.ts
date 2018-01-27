@@ -19,14 +19,14 @@ onInit(){
 
    load() {
      this.dataService.setConfig();
-     this.dataService.getConfig();
+     //this.dataService.getConfig();
      this.dataService.getAccount("johnstor5");
-     this.dataService.getAccountHistory("johnstor5");
+     //this.dataService.getAccountHistory("johnstor5");
      //this.dataService.getUrlData("ipfs://here.here");
      //this.dataService.getDataForUser("gchampagne");
      //this.dataService.getContentorAll("");
      //this.dataService.getStreamingPlatforms("");
      //this.dataService.getAllAccounts();
-     this.dataService.authAccount("******","******");
+     //this.dataService.authAccount("******","******");
    }
 }
