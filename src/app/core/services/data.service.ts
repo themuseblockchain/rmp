@@ -1,5 +1,6 @@
-import { Injectable, Inject } from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as muse from 'muse-js';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class DataService
@@ -12,6 +13,13 @@ export class DataService
  getStreamingPlatformsParameter: any;
  authAccountParameterUser: any;
  authAccountParameterKey: any;
+ private socketUrl: any = 'wss://api.muse.blckchnd.com';
+ private muse: any;
+ private dataStore: {  // This is where we will store our data in memory
+    todos: Todo[]
+  };
+  private _todos: BehaviorSubject<Todo[]>;
+  private baseUrl: string;
 
 constructor() {
 
@@ -25,10 +33,10 @@ constructor() {
    }
 
    getAccount(getAccountParameter) {
-     return muse.accountInfo(getAccountParameter, function(err, response, data)
+     return muse.accountInfo(getAccountParameter, function(success, response, result)
      {
-       var AccountDetails = data;
-       console.log(AccountDetails);
+       .map(result => result);
+       console.log(success, response, result);
      });
    }
    getAccountHistory(getAccountParameter) {
