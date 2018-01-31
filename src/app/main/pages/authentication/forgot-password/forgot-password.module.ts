@@ -2,18 +2,18 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from '../../../../core/modules/shared.module';
 import { RouterModule } from '@angular/router';
 
-import { ResetPasswordComponent } from './reset-password.component';
+import { ForgotPasswordComponent } from './forgot-password.component';
 
 const routes = [
     {
-        path     : 'pages/auth/reset-password',
-        component: ResetPasswordComponent
+        path     : 'pages/auth/forgot-password',
+        component: ForgotPasswordComponent
     }
 ];
 
 @NgModule({
     declarations: [
-        ResetPasswordComponent
+        ForgotPasswordComponent
     ],
     imports     : [
         SharedModule,
@@ -21,7 +21,7 @@ const routes = [
     ]
 })
 
-export class ResetPasswordModule
+export class ForgotPasswordModule
 {
 
 }

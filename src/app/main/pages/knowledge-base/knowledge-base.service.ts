@@ -34,19 +34,9 @@ export class KnowledgeBaseService implements Resolve<any>
         });
     }
 
-    /**
-     * Get knowledge base
-     */
-    getKnowledgeBase(): Promise<any[]>
-    {
-        return new Promise((resolve, reject) => {
 
-            this.http.get('api/knowledge-base')
-                .subscribe((response: any) => {
-                    this.knowledgeBase = response;
-                    this.onKnowledgeBaseChanged.next(this.knowledgeBase);
-                    resolve(this.knowledgeBase);
-                }, reject);
-        });
+    getKnowledgeBase()
+    {
+        
     }
 }

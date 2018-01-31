@@ -35,19 +35,8 @@ export class FaqService implements Resolve<any>
         });
     }
 
-    /**
-     * Get faqs
-     */
-    getFaqs(): Promise<any[]>
+    getFaqs()
     {
-        return new Promise((resolve, reject) => {
 
-            this.http.get('api/faq')
-                .subscribe((response: any) => {
-                    this.faqs = response;
-                    this.onFaqsChanged.next(this.faqs);
-                    resolve(this.faqs);
-                }, reject);
-        });
     }
 }

@@ -66,7 +66,7 @@ export class UserComponent implements OnInit, OnDestroy
     {
         return this.formBuilder.group({
             id              : [this.user.id],
-            museId          : [this.user.museId],
+            muserName          : [this.user.muserName],
             name            : [this.user.name],
             handle          : [this.user.handle],
             email           : [this.user.email],

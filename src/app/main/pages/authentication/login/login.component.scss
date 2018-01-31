@@ -2,10 +2,17 @@
 
 :host {
 
+#videoBackground {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%; 
+    min-height: 100%;
+}
+
     #login {
         width: 100%;
         overflow: auto;
-        background: url('/assets/images/backgrounds/march.jpg') no-repeat;
         background-size: cover;
 
         #login-form-wrapper {
@@ -47,23 +54,26 @@
                         width: 100%;
                     }
 
-                    mat-checkbox {
+                    a {
                         margin: 0;
                     }
 
-                    .remember-forgot-password {
+                    .register-forgot-password {
                         font-size: 13px;
                         margin-top: 8px;
+                        font-size: 13px;
+                        font-weight: 500;
+                        margin-bottom: 24px;
 
-                        .remember-me {
-                            margin-bottom: 16px
-                        }
+                        // .register {
+                        //     margin-bottom: 16px
+                        // }
 
-                        .forgot-password {
-                            font-size: 13px;
-                            font-weight: 500;
-                            margin-bottom: 16px
-                        }
+                        // .forgot-password {
+                        //     font-size: 13px;
+                        //     font-weight: 500;
+                        //     margin-bottom: 16px
+                        // }
                     }
 
                     .submit-button {
@@ -117,30 +127,6 @@
                         &:after {
                             left: 100%;
                         }
-                    }
-                }
-
-                button {
-
-                    &.google,
-                    &.facebook {
-                        width: 192px;
-                        text-transform: none;
-                        color: #FFFFFF;
-                        font-size: 13px;
-                    }
-
-                    @include media-breakpoint('xs') {
-                        width: 80%;
-                    }
-
-                    &.google {
-                        background-color: #D73D32;
-                        margin-bottom: 8px;
-                    }
-
-                    &.facebook {
-                        background-color: rgb(63, 92, 154);
                     }
                 }
             }

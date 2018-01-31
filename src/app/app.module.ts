@@ -8,34 +8,36 @@ import { RouterModule, Routes } from '@angular/router';
 import 'hammerjs';
 import { SharedModule } from './core/modules/shared.module';
 import { AppComponent } from './app.component';
-import { MainModule } from './main/main.module';
 import { SplashScreenService } from './core/services/splash-screen.service';
 import { ConfigService } from './core/services/config.service';
 import { NavigationService } from './core/components/navigation/navigation.service';
-import { SampleModule } from './main/pages/sample/sample.module';
-import { DataServiceSampleModule } from './main/pages/data.service-sample/data.service-sample.module';
-
-import { LoginModule } from './main/pages/authentication/login/login.module';
-
 import { DataService } from './core/services/data.service';
+import { PagesModule } from './main/pages/pages.module';
+import { MainModule } from './main/main.module';
+
+// https://angular.io/guide/router
+// 
 
 const appRoutes: Routes = [
-
+//     {
+//         path        : 'user-management',
+//         loadChildren: './main/pages/user-management/user-management.module#UserManagementModule'
+//     },
+//    {
+//         path        : 'rights-management',
+//         loadChildren: './main/pages/rights-management/rights-management.module#RightsManagementModule'
+//     },
+    // {
+    //     path        : '',
+    //     loadChildren: './main/pages/rights-management/post.module#PostModule'
+    // },
     {
-        path        : 'user-management',
-        loadChildren: './main/pages/user-management/user-management.module#UserManagementModule'
-    },
-   {
-        path        : 'rights-management',
-        loadChildren: './main/pages/rights-management/rights-management.module#RightsManagementModule'
-    },
-    {
-        path      : '**',
-        redirectTo: 'dataService-sample'
+        path      : '**', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined 
+        redirectTo: 'login'
     },
     // {
-    //     path      : '**',
-    //     redirectTo: 'login'
+    //     path      : '', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined 
+    //     loadChildren: './main/pages/rights-management/post.module#PostModule'
     // }
 ];
 
@@ -53,12 +55,7 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes),
         SharedModule,
         MainModule,
-        SampleModule,
-        DataServiceSampleModule
-        // InMemoryWebApiModule.forRoot(FakeDbService, {
-        //     delay             : 0,
-        //     passThruUnknownUrl: true
-        // }),
+        PagesModule
     ],
     providers   : [
         SplashScreenService,

@@ -4,7 +4,7 @@ import { MatChipInputEvent } from '@angular/material';
 export class User
 {
     id: string;
-    museId: string;
+    muserName: string;
     name: string;
     handle: string;
     email: string;
@@ -22,7 +22,7 @@ export class User
     {
         user = user || {};
         this.id = user.id || Utils.generateGUID();
-        this.museId = user.museId || '';
+        this.muserName = user.muserName || '';
         this.name = user.name || '';
         this.handle = user.handle || Utils.handleize(this.name);
         this.email = user.email || '';

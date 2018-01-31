@@ -70,10 +70,10 @@
                 </ng-container>-->
 
                 <!-- Name Column -->
-                <ng-container cdkColumnDef="museId">
+                <ng-container cdkColumnDef="muserName">
                     <mat-header-cell *cdkHeaderCellDef mat-sort-header>Muse ID</mat-header-cell>
                     <mat-cell *cdkCellDef="let user">
-                        <p class="text-truncate">{{user.museId}}</p>
+                        <!--<p class="text-truncate">{{user.muserName}}</p>-->
                     </mat-cell>
                 </ng-container>
 
@@ -82,7 +82,7 @@
                     <mat-header-cell *cdkHeaderCellDef fxHide mat-sort-header fxShow.gt-md>Email</mat-header-cell>
                     <mat-cell *cdkCellDef="let user" fxHide fxShow.gt-md>
                         <p class="category text-truncate">
-                            {{user.email}}
+                            <!--{{user.email}}-->
                         </p>
                     </mat-cell>
                 </ng-container>
@@ -92,7 +92,7 @@
                     <mat-header-cell *cdkHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>Permissions</mat-header-cell>
                     <mat-cell *cdkCellDef="let user" fxHide fxShow.gt-xs>
                         <p class="price text-truncate">
-                            {{user.permissions}}
+                            <!--{{user.permissions}}-->
                         </p>
                     </mat-cell>
                 </ng-container>
@@ -102,7 +102,7 @@
                     <mat-header-cell *cdkHeaderCellDef mat-sort-header fxHide fxShow.gt-sm>Status</mat-header-cell>
                     <mat-cell *cdkCellDef="let user" fxHide fxShow.gt-sm>
                         <span>
-                            {{user.status}}
+                            <!--{{user.status}}-->
                         </span>
                     </mat-cell>
                 </ng-container>

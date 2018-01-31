@@ -10,13 +10,10 @@ import { LoginModule } from './main/pages/authentication/login/login.module';
 })
 export class AppComponent
 {
-    rootPage: any = LoginModule;
-
-
     constructor(
-        private splashScreen: SplashScreenService,
-
+         private splashScreen: SplashScreenService,
     )
     {
+
     }
 }

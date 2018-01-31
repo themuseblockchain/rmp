@@ -12,7 +12,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/observable/fromEvent';
 import { Utils } from '../../../../core/utils';
-// import {DataService} from '../../../../core/services/data.services';
+import {DataService} from '../../../../core/services/data.service';
 
 @Component({
     selector   : 'users',
@@ -23,7 +23,7 @@ import { Utils } from '../../../../core/utils';
 export class UsersComponent implements OnInit
 {
     dataSource: FilesDataSource | null; 
-    displayedColumns = ['id', 'museId', 'email', 'permissions', 'status', 'validated'];
+    displayedColumns = ['id', 'muserName', 'email', 'permissions', 'status', 'validated'];
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild('filter') filter: ElementRef;
@@ -31,26 +31,28 @@ export class UsersComponent implements OnInit
 
     constructor(
         private usersService: UsersService, 
-        // private dataService: DataService
+        private dataService: DataService
     )
     {
     }
 
     ngOnInit()
     {
-        this.dataSource = new FilesDataSource(this.usersService, this.paginator, this.sort);
+        // this.dataSource = new FilesDataSource(this.usersService, this.paginator, this.sort);
+        alert('004');
+        this.dataSource = new FilesDataSource(this.dataService.getAllAccounts(), this.paginator, this.sort);
+         alert('005');
         Observable.fromEvent(this.filter.nativeElement, 'keyup')
                   .debounceTime(150)
                   .distinctUntilChanged()
                   .subscribe(() => {
+
                       if ( !this.dataSource )
                       {
                           return;
                       }
                       this.dataSource.filter = this.filter.nativeElement.value;
                   });
-
-                //   const test = this.dataService.getAccounts();
     }
 }
 
@@ -81,6 +83,7 @@ export class FilesDataSource extends DataSource<any>
 
     constructor(
         private usersService: UsersService,
+        // private dataService: DataService,
         private _paginator: MatPaginator,
         private _sort: MatSort
     )
@@ -139,8 +142,8 @@ export class FilesDataSource extends DataSource<any>
                 case 'id':
                     [propertyA, propertyB] = [a.id, b.id];
                     break;
-                case 'museId':
-                    [propertyA, propertyB] = [a.museId, b.museId];
+                case 'muserName':
+                    [propertyA, propertyB] = [a.muserName, b.muserName];
                     break;
                 case 'email':
                     [propertyA, propertyB] = [a.email[0], b.email[0]];

@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfigService } from '../../../../core/services/config.service';
 import { Animations } from '../../../../core/animations';
+import { AuthenticationService } from '../Authentication.Service';
+import { Router } from '@angular/router';
+
+import { DataService } from '../../../../core/services/data.service';
+import * as muse from 'muse-js';
+
 
 @Component({
     selector   : 'login',
@@ -15,7 +20,13 @@ export class LoginComponent implements OnInit
     loginForm: FormGroup;
     loginFormErrors: any;
 
+    login: { muserName?: string, password?: string } = {};
+
+    private temp: string;
+
     constructor(
+        private  router: Router,
+        private dataService: DataService,
         private config: ConfigService,
         private formBuilder: FormBuilder
     )
@@ -29,7 +40,7 @@ export class LoginComponent implements OnInit
         });
 
         this.loginFormErrors = {
-            email   : {},
+            muserName   : {}, 
             password: {}
         };
     }
@@ -37,7 +48,7 @@ export class LoginComponent implements OnInit
     ngOnInit()
     {
         this.loginForm = this.formBuilder.group({
-            email   : ['', [Validators.required, Validators.email]],
+            muserName   : ['', Validators.required],
             password: ['', Validators.required]
         });
 
@@ -67,4 +78,26 @@ export class LoginComponent implements OnInit
             }
         }
     }
+
+
+    onLogin(form) {
+        if (form.valid) {
+            this.setConfig();
+            this.getConfig();
+
+            // const t = this.dataService.authAccount(this.login.muserName, this.login.password);
+            muse.login(this.login.muserName, this.login.password, function(err, response, data)
+            {
+                console.log(err, response, data);
+            });
+        }
+
+    }
+
+   setConfig() {
+     return muse.config.set('websocket', 'wss://api.muse.blckchnd.com');
+   }
+   getConfig() {
+     return muse.api.getConfig(function(err, response){console.log(response); } );
+   }
 }

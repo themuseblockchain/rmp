@@ -29,7 +29,6 @@ export class ProfileService implements Resolve<any>
     {
         return new Promise((resolve, reject) => {
             Promise.all([
-                this.getTimeline(),
                 this.getAbout(),
                 this.getPhotosVideos()
             ]).then(
@@ -41,52 +40,19 @@ export class ProfileService implements Resolve<any>
         });
     }
 
-    /**
-     * Get timeline
-     */
-    getTimeline(): Promise<any[]>
-    {
-        return new Promise((resolve, reject) => {
 
-            this.http.get('api/profile-timeline')
-                .subscribe((timeline: any) => {
-                    this.timeline = timeline;
-                    this.timelineOnChanged.next(this.timeline);
-                    resolve(this.timeline);
-                }, reject);
-        });
-    }
 
     /**
      * Get about
      */
-    getAbout(): Promise<any[]>
+    getAbout()
     {
-        return new Promise((resolve, reject) => {
 
-            this.http.get('api/profile-about')
-                .subscribe((about: any) => {
-                    this.about = about;
-                    this.aboutOnChanged.next(this.about);
-                    resolve(this.about);
-                }, reject);
-        });
     }
 
-    /**
-     * Get photos & videos
-     */
-    getPhotosVideos(): Promise<any[]>
+    getPhotosVideos()
     {
-        return new Promise((resolve, reject) => {
-
-            this.http.get('api/profile-photos-videos')
-                .subscribe((photosVideos: any) => {
-                    this.photosVideos = photosVideos;
-                    this.photosVideosOnChanged.next(this.photosVideos);
-                    resolve(this.photosVideos);
-                }, reject);
-        });
+        
     }
 
 }

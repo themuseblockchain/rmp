@@ -6,7 +6,7 @@ import { LoginComponent } from './login.component';
 
 const routes = [
     {
-        path     : 'pages/auth/login',
+        path     : 'login',
         component: LoginComponent
     }
 ];
@@ -21,7 +21,4 @@ const routes = [
     ]
 })
 
-export class LoginModule
-{
-
-}
+export class LoginModule {}
