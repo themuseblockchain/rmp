@@ -16,7 +16,7 @@ import { PagesModule } from './main/pages/pages.module';
 import { MainModule } from './main/main.module';
 
 // https://angular.io/guide/router
-// 
+//
 
 const appRoutes: Routes = [
 //     {
@@ -32,11 +32,11 @@ const appRoutes: Routes = [
     //     loadChildren: './main/pages/rights-management/post.module#PostModule'
     // },
     {
-        path      : '**', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined 
+        path      : '**', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined
         redirectTo: 'login'
     },
     // {
-    //     path      : '', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined 
+    //     path      : '', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined
     //     loadChildren: './main/pages/rights-management/post.module#PostModule'
     // }
 ];

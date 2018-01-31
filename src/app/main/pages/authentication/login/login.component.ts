@@ -2,9 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfigService } from '../../../../core/services/config.service';
 import { Animations } from '../../../../core/animations';
-import { AuthenticationService } from '../Authentication.Service';
 import { Router } from '@angular/router';
-
 import { DataService } from '../../../../core/services/data.service';
 import * as muse from 'muse-js';
 
@@ -40,7 +38,7 @@ export class LoginComponent implements OnInit
         });
 
         this.loginFormErrors = {
-            muserName   : {}, 
+            muserName   : {},
             password: {}
         };
     }
