@@ -8,35 +8,37 @@ import { RouterModule, Routes } from '@angular/router';
 import 'hammerjs';
 import { SharedModule } from './core/modules/shared.module';
 import { AppComponent } from './app.component';
-import { MainModule } from './main/main.module';
 import { SplashScreenService } from './core/services/splash-screen.service';
 import { ConfigService } from './core/services/config.service';
 import { NavigationService } from './core/components/navigation/navigation.service';
-import { SampleModule } from './main/content/sample/sample.module';
-import { AnotherSampleModule } from './main/content/another-sample/another-sample.module';
-import { WalletModule } from './main/content/wallet/wallet.module';
 import { DataService } from './core/services/data.service';
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { FakeDbService } from './fake-db/fake-db.service';
+import { PagesModule } from './main/pages/pages.module';
+import { MainModule } from './main/main.module';
+
+// https://angular.io/guide/router
+//
 
 const appRoutes: Routes = [
-
+//     {
+//         path        : 'user-management',
+//         loadChildren: './main/pages/user-management/user-management.module#UserManagementModule'
+//     },
+//    {
+//         path        : 'rights-management',
+//         loadChildren: './main/pages/rights-management/rights-management.module#RightsManagementModule'
+//     },
+    // {
+    //     path        : '',
+    //     loadChildren: './main/pages/rights-management/post.module#PostModule'
+    // },
     {
-        path        : 'user-management',
-        loadChildren: './main/content/user-management/user-management.module#UserManagementModule'
+        path      : '**', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined
+        redirectTo: 'login'
     },
-   {
-        path        : 'rights-management',
-        loadChildren: './main/content/rights-management/rights-management.module#RightsManagementModule'
-    },
-    {
-        path        : 'wallet',
-        loadChildren: './main/content/wallet/wallet.module#WalletModule'
-    },
-    {
-        path      : '**',
-        redirectTo: 'sample'
-    }
+    // {
+    //     path      : '', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined
+    //     loadChildren: './main/pages/rights-management/post.module#PostModule'
+    // }
 ];
 
 
@@ -53,13 +55,7 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes),
         SharedModule,
         MainModule,
-        SampleModule,
-        AnotherSampleModule,
-        WalletModule,
-        InMemoryWebApiModule.forRoot(FakeDbService, {
-            delay             : 0,
-            passThruUnknownUrl: true
-        }),
+        PagesModule
     ],
     providers   : [
         SplashScreenService,

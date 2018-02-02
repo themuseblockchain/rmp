@@ -5,7 +5,22 @@ export class NavigationModel
     constructor()
     {
         this.model = [
+            // {
+            //     'id'      : 'administration',
+            //     'title'   : 'User Management',
+            //     'type'    : 'group',
+            //     'children': [
+            //                     {
+            //                         'id'        : 'users',
+            //                         'title'     : 'Users',
+            //                         'type'      : 'item',
+            //                         'icon'    : 'person',
+            //                         'url'       : '/user-management/users'
+            //                     },
+            //                 ]
+            // },
             {
+<<<<<<< HEAD
                 'id'      : 'administration',
                 'title'   : 'Rights Management Portal',
                 'type'    : 'group',
@@ -44,8 +59,10 @@ export class NavigationModel
             },
 
                         {
+=======
+>>>>>>> dev
                 'id'      : 'rights-management',
-                'title'   : 'Rights Management',
+                'title'   : 'Rights Management Portal',
                 'type'    : 'group',
                 'children': [
                     {
@@ -53,8 +70,7 @@ export class NavigationModel
                         'title': 'Post Content',
                         'type' : 'item',
                         'icon' : 'star',
-                        'url'  : '/rights-management/content',
-                        'exactMatch': true
+                        'url'  : './post'
                     }
                 ]
             },
