@@ -1,108 +1,184 @@
 <div id="wallet" class="page-layout carded fullwidth" perfectScrollbar>
 
-    <!-- TOP BACKGROUND -->
-    <div class="top-bg mat-deep-purple-bg"></div>
-    <!-- / TOP BACKGROUND -->
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-deep-purple-bg"></div>
+  <!-- / TOP BACKGROUND -->
 
-    <!-- CENTER -->
-    <div class="center">
+  <!-- CENTER -->
+  <div class="center">
 
-        <!-- HEADER -->
-        <div class="header white-fg p-24" fxLayout="row" fxLayoutAlign="space-between center">
+    <!-- HEADER -->
+    <div class="header white-fg p-24" fxLayout="row" fxLayoutAlign="space-between center">
 
-            <h2>Wallet</h2>
-            <button mat-raised-button
-                class="save-content-button mat-white-bg mt-16 mt-sm-0">
-            <span>SAVE</span>
-            </button>
+      <h2>Wallet</h2>
+      <button mat-raised-button
+      class="save-content-button mat-white-bg mt-16 mt-sm-0">
+      <span>SAVE</span>
+    </button>
 
 
-        </div>
-        <!-- / HEADER -->
+  </div>
+  <!-- / HEADER -->
 
-        <!-- CONTENT CARD -->
-            <div class="content-card mat-white-bg">
-            <!-- CONTENT -->
-            <div class="content">
+  <!-- CONTENT CARD -->
+  <div class="content-card mat-white-bg">
+    <!-- CONTENT -->
+    <div class="content">
 
-                <form name="walletForm" [formGroup]="walletForm" class="user w-100-p" fxLayout="column" fxFlex>
-                    <mat-tab-group>
-                        <mat-tab label="Tab A">
-                            <div class="tab-content p-24" perfectScrollbar>
-                                <div class="py-16" fxLayout="row">
-                                    <mat-form-field class="w-100-p">
-                                        <input  
-                                            readonly
-                                            matInput
-                                            name="tempValue"
-                                            formControlName="tempValue"
-                                            placeholder="READONLY TEMP VALUE 1">
-                                    </mat-form-field>
-                                </div>
-                                <mat-form-field class="w-100-p">
-                                        <input  
-                                            matInput
-                                            name="tempValue"
-                                            formControlName="tempValue"
-                                            placeholder="TEMP VALUE 2">
-                                    </mat-form-field>
-                                <mat-form-field class="w-100-p">
-                                    <textarea 
-                                              matInput
-                                              name="tempValue"
-                                              formControlName="tempValue"
-                                              placeholder="TEMP VALUE 3" >
-                                    </textarea>
-                                </mat-form-field>
-                            </div>
-                        </mat-tab>
-
-                        <mat-tab label="Tab B">
-                            <div class="tab-content p-24" perfectScrollbar fxLayout="column">
-                                <div class="py-16" fxLayout="row">
-                                    <mat-form-field fxFlex>
-                                        <input matInput
-                                           name="tempValue"
-                                           formControlName="tempValue"
-                                           placeholder="TEMP VALUE 4">
-                                    </mat-form-field>
-                                    <mat-form-field fxFlex>
-                                        <input matInput
-                                           name="tempValue"
-                                           formControlName="tempValue"
-                                           placeholder="TEMP VALUE 5">
-                                    </mat-form-field>
-                                </div>
-
-                                <mat-form-field class="w-100-p">
-                                    <input matInput
-                                           name="tempValue"
-                                           formControlName="tempValue"
-                                           placeholder="TEMP VALUE 6">
-                                </mat-form-field>
-
-                                <mat-form-field class="w-100-p">
-                                    <input matInput
-                                           name="number"
-                                           formControlName="tempValue"
-                                           placeholder="TEMP VALUE 7" 
-                                           type="number">                  
-                                </mat-form-field>
-                            </div>
-                        </mat-tab>
-
-                    </mat-tab-group>
-                </form>
-
+      <form name="walletForm" [formGroup]="walletForm" class="user w-100-p" fxLayout="column" fxFlex>
+        <mat-tab-group>
+          <mat-tab label="Balances">
+            <div class="tab-content p-24" perfectScrollbar>
+              <div class="py-16" fxLayout="row">
+                <mat-form-field class="w-100-p">
+                  <input
+                  readonly
+                  matInput
+                  name="Muse"
+                  formControlName="tempValue"
+                  placeholder="Muse Balance">
+                </mat-form-field>
+              </div>
+              <mat-form-field class="w-100-p">
+                <input
+                readonly
+                matInput
+                name="Vests"
+                formControlName="tempValue"
+                placeholder="Vests Balance">
+              </mat-form-field>
+              <mat-form-field class="w-100-p">
+                <input
+                readonly
+                matInput
+                name="MBD"
+                formControlName="tempValue"
+                placeholder="Muse Backed Dollars Balance">
+              </mat-form-field>
+              <mat-form-field class="w-100-p">
+                <input
+                readonly
+                matInput
+                name="History"
+                formControlName="tempValue"
+                placeholder="History">
+              </mat-form-field>
             </div>
-            <!-- / CONTENT -->
+          </mat-tab>
 
+          <mat-tab label="Password">
+            <div class="tab-content p-24" perfectScrollbar fxLayout="column">
+              <div class="py-16" fxLayout="row">
+                <mat-form-field fxFlex>
+                  <input matInput
+                  name="CurrentPass"
+                  formControlName="tempValue"
+                  placeholder="Current Password">
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                  <input matInput
+                  name="NewPass"
+                  formControlName="tempValue"
+                  placeholder="New Password">
+                </mat-form-field>
+              </div>
 
+              <mat-form-field class="w-100-p">
+                <input matInput
+                name="Confirm"
+                formControlName="tempValue"
+                placeholder="Confirm Password">
+              </mat-form-field>
+
+              <mat-form-field class="w-100-p">
+                <input matInput
+                name="number"
+                formControlName="tempValue"
+                placeholder="TEMP VALUE 7"
+                type="number">
+              </mat-form-field>
             </div>
-            <!-- / CONTENT -->
+          </mat-tab>
 
-        </div>
-        <!-- / CONTENT CARD -->
+          <mat-tab label="Permissions">
+            <div class="tab-content p-24" perfectScrollbar fxLayout="column">
+              <div class="py-16" fxLayout="row">
+                <mat-form-field fxFlex>
+                  <input matInput
+                  name="tempValue"
+                  formControlName="tempValue"
+                  placeholder="TEMP VALUE 4">
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                  <input matInput
+                  name="tempValue"
+                  formControlName="tempValue"
+                  placeholder="TEMP">
+                </mat-form-field>
+              </div>
+
+              <mat-form-field class="w-100-p">
+                <input matInput
+                name="tempValue"
+                formControlName="tempValue"
+                placeholder="TEMP VALUE 6">
+              </mat-form-field>
+
+              <mat-form-field class="w-100-p">
+                <input matInput
+                name="number"
+                formControlName="tempValue"
+                placeholder="TEMP VALUE 7"
+                type="number">
+              </mat-form-field>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Witness-Voting">
+            <div class="tab-content p-24" perfectScrollbar fxLayout="column">
+              <div class="py-16" fxLayout="row">
+                <mat-form-field fxFlex>
+                  <input matInput
+                  name="tempValue"
+                  formControlName="tempValue"
+                  placeholder="TEMP VALUE 4">
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                  <input matInput
+                  name="tempValue"
+                  formControlName="tempValue"
+                  placeholder="TEMP VALUE 5">
+                </mat-form-field>
+              </div>
+
+              <mat-form-field class="w-100-p">
+                <input matInput
+                name="tempValue"
+                formControlName="tempValue"
+                placeholder="TEMP VALUE 6">
+              </mat-form-field>
+
+              <mat-form-field class="w-100-p">
+                <input matInput
+                name="number"
+                formControlName="tempValue"
+                placeholder="TEMP VALUE 7"
+                type="number">
+              </mat-form-field>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </form>
 
     </div>
-    <!-- / CENTER -->
+    <!-- / CONTENT -->
+
+
+  </div>
+  <!-- / CONTENT -->
+
+</div>
+<!-- / CONTENT CARD -->
+
+</div>
+<!-- / CENTER -->
