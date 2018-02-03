@@ -20,6 +20,13 @@ export class NavigationModel
             //                 ]
             // },
             {
+                'id'   : 'wallet',
+                'title': 'Wallet',
+                'type' : 'item',
+                'icon' : 'star',
+                'url'  : './wallet'
+            },
+            {
                 'id'      : 'rights-management',
                 'title'   : 'Rights Management Portal',
                 'type'    : 'group',

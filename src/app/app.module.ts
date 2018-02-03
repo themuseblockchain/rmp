@@ -19,18 +19,18 @@ import { MainModule } from './main/main.module';
 //
 
 const appRoutes: Routes = [
-//     {
-//         path        : 'user-management',
-//         loadChildren: './main/pages/user-management/user-management.module#UserManagementModule'
-//     },
+    // {
+    //     path        : 'user-management',
+    //     loadChildren: './main/pages/user-management/user-management.module#UserManagementModule'
+    // },
 //    {
 //         path        : 'rights-management',
 //         loadChildren: './main/pages/rights-management/rights-management.module#RightsManagementModule'
 //     },
-    // {
-    //     path        : '',
-    //     loadChildren: './main/pages/rights-management/post.module#PostModule'
-    // },
+    {
+        path        : '',
+        loadChildren: './main/pages/rights-management/post.module#PostModule'
+    },
     {
         path      : '**', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined
         redirectTo: 'login'

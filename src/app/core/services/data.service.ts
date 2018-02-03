@@ -1,7 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
-import * as muse from 'muse-js';
+import * as muse from 'museblockchain-js';
 import * as Rx from 'rxjs/Rx';
- import { of } from 'rxjs/observable/of';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class DataService
@@ -16,7 +16,7 @@ export class DataService
  authAccountParameterKey: any;
 
 constructor(
-  
+
 ) { }
 
 //  private subject: Rx.Subject<MessageEvent>;
@@ -48,7 +48,7 @@ constructor(
    }
    getDataForUser(getDataForUserParameter) {
      this.museConfig();
-     
+
      return muse.api.getContentByUploader(getDataForUserParameter, function(err, response, data)
      {
        console.log(response);
@@ -82,7 +82,7 @@ constructor(
        console.log(err, response, data);
      });
    }
-   
+
 
     authAccount(user, key) {
       // logic to transform data if needed and then return muse function;
@@ -91,14 +91,14 @@ constructor(
         {
           console.log(err, response, data);
         });
-       
+
       // Object.assign(this.item, (
       //   muse.login(user, key, function login(err, response, data)
       //   {
       //     this.item = response;
       //     console.log(err, response, data);
       //   })
-      
+
       // ));
       // return this.item;
 

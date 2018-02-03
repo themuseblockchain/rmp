@@ -4,7 +4,7 @@ import { ConfigService } from '../../../../core/services/config.service';
 import { Animations } from '../../../../core/animations';
 import { Router } from '@angular/router';
 import { DataService } from '../../../../core/services/data.service';
-import * as muse from 'muse-js';
+import * as muse from 'museblockchain-js';
 
 
 @Component({
