@@ -31,10 +31,10 @@ const appRoutes: Routes = [
         path        : '',
         loadChildren: './main/pages/wallet/wallet.module#WalletModule'
     },
-    {
-        path        : '',
-        loadChildren: './main/pages/rights-management/post.module#PostModule'
-    },
+    // {
+    //     path        : '',
+    //     loadChildren: './main/pages/rights-management/post.module#PostModule'
+    // },
     {
         path      : '**', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined
         redirectTo: 'login'
