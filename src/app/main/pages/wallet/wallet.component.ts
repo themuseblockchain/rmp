@@ -1,33 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../../core/services/data.service';
 import { Observable } from 'rxjs/Rx';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
    selector: 'wallet',
    templateUrl: './wallet.component.html',
    styleUrls  : ['./wallet.component.scss']
 })
-export class WalletComponent
+export class WalletComponent implements OnInit
 {
+  muser: any;
   Config: any;
   balance: any = 0;
+  walletForm: FormGroup;
 
    constructor(
-                public dataService: DataService)
+                public dataService: DataService,
+                private formBuilder: FormBuilder
+                )
    {
     //  this.dataService.setConfig();
     //  this.dataService.getAccount('johnstor5');
      console.log();
-       this.load();
+      //  this.load();
    }
 
-   // ngOnInit() {
+    ngOnInit()
+    {
+      this.walletForm = this.createUserForm();
 
-   // }
 
-   load()
-   {
-     this.dataService.postContent("****", "johnstor5",{"url":"something.something"});
+    }
+
+    createUserForm()
+    {
+        return this.formBuilder.group({
+            // id              : [this.muser.id],
+            tempValue              : [''],
+
+        });
+    }
+
+
+  //  load()
+  //  {
       // var UserName = "johnstor5";
       // localStorage.setItem('UserName', UserName);
       // //var UserName = localStorage.getItem('UserName');
@@ -55,5 +72,5 @@ export class WalletComponent
      // this.dataService.getStreamingPlatforms("");
      // this.dataService.getAllAccounts();
      // this.dataService.authAccount("******","******");
-   }
+  //  }
 }

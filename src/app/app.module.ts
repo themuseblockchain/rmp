@@ -25,7 +25,7 @@ const appRoutes: Routes = [
     // },
     {
         path        : '',
-        loadChildren: './main/pages/wallet.1/wallet.module#WalletModule'
+        loadChildren: './main/pages/wallet/wallet.module#WalletModule'
     },
     {
         path        : '',

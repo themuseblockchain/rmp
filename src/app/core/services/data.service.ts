@@ -170,7 +170,7 @@ constructor( private zone: NgZone
         10,
         5000,
     function(err, result){
-    return(err, result);
+    // return(err, result);
       });
     }
 }
