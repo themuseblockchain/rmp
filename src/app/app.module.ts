@@ -23,26 +23,18 @@ const appRoutes: Routes = [
     //     path        : 'user-management',
     //     loadChildren: './main/pages/user-management/user-management.module#UserManagementModule'
     // },
-//    {
-//         path        : 'rights-management',
-//         loadChildren: './main/pages/rights-management/rights-management.module#RightsManagementModule'
-//     },
     {
         path        : '',
         loadChildren: './main/pages/wallet.1/wallet.module#WalletModule'
     },
-    // {
-    //     path        : '',
-    //     loadChildren: './main/pages/rights-management/post.module#PostModule'
-    // },
+    {
+        path        : '',
+        loadChildren: './main/pages/rights-management/post.module#PostModule'
+    },
     {
         path      : '**', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined
         redirectTo: 'login'
     },
-    // {
-    //     path      : '', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined
-    //     loadChildren: './main/pages/rights-management/post.module#PostModule'
-    // }
 ];
 
 
