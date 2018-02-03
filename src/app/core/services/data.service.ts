@@ -93,7 +93,7 @@ constructor( private zone: NgZone
       this.museConfig();
       let userSuccess: any;
 
-      userSuccess = muse.login(user, key, (err, response, data) => {
+      userSuccess = muse.login(authAccountParameterUser, authAccountParameterKey, (err, response, data) => {
 
           return response;
 
@@ -170,8 +170,7 @@ constructor( private zone: NgZone
         10,
         5000,
     function(err, result){
-    return(err, result);
+    return result;
       });
     }
   }
-}
