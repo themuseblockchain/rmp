@@ -1,12 +1,12 @@
-import { Injectable, Inject } from '@angular/core';
-import * as muse from 'museblockchain-js';
+import { Injectable, Inject, NgZone, Input } from '@angular/core';
+import * as muse from 'muse-js';
 import * as Rx from 'rxjs/Rx';
 import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class DataService
 {
- item: any;
+  public userSuccess: any;
  getAccountParameter: any;
  getUrlDataParameter: any;
  getDataForUserParameter: any;
@@ -15,7 +15,7 @@ export class DataService
  authAccountParameterUser: any;
  authAccountParameterKey: any;
 
-constructor(
+constructor( private zone: NgZone
 
 ) { }
 
@@ -84,23 +84,26 @@ constructor(
    }
 
 
+
     authAccount(user, key) {
-      // logic to transform data if needed and then return muse function;
       this.museConfig();
-      return  muse.login(user, key, function(err, response, data)
-        {
-          console.log(err, response, data);
+      let userSuccess: any;
+
+      userSuccess = muse.login(user, key, (err, response, data) => {
+          return response;
         });
-
-      // Object.assign(this.item, (
-      //   muse.login(user, key, function login(err, response, data)
-      //   {
-      //     this.item = response;
-      //     console.log(err, response, data);
-      //   })
-
-      // ));
-      // return this.item;
-
+        this.zone.run(() => {
+            this.userSuccess = userSuccess;
+        });
+        
+      // if (muse.login(user, key, (err, response, data) => {
+      //     return response === 'Success';
+      //   })) {
+      //     userSuccess = true;
+      //   }
+      //   this.zone.run(() => {
+      //       this.userSuccess = userSuccess;
+      //   });
+      return userSuccess;
     }
 }

@@ -29,6 +29,10 @@ const appRoutes: Routes = [
 //     },
     {
         path        : '',
+        loadChildren: './main/pages/wallet/wallet.module#WalletModule'
+    },
+    {
+        path        : '',
         loadChildren: './main/pages/rights-management/post.module#PostModule'
     },
     {

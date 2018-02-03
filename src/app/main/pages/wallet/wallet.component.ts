@@ -7,26 +7,26 @@ import { Observable } from 'rxjs/Rx';
    templateUrl: './wallet.component.html',
    styleUrls  : ['./wallet.component.scss']
 })
-export class Wallet implements {
-
+export class WalletComponent
+{
   Config: any;
   balance: any = 0;
 
    constructor(
-     public dataService: DataService
-
-   ) {
-     this.dataService.setConfig();
-     this.dataService.getAccount("johnstor5");
+                public dataService: DataService) 
+   {
+    //  this.dataService.setConfig();
+    //  this.dataService.getAccount('johnstor5');
      console.log();
-       //this.load();
+       this.load();
    }
 
-   //ngOnInit() {
+   // ngOnInit() {
 
-   //}
+   // }
 
-   //load() {
+   load() 
+   {
       // var UserName = "johnstor5";
       // localStorage.setItem('UserName', UserName);
       // //var UserName = localStorage.getItem('UserName');
@@ -44,15 +44,15 @@ export class Wallet implements {
 
 
 
-     //this.dataService.getConfig();
+     // this.dataService.getConfig();
 
-     //this.dataService.getAccount('johnstor5');
-     //this.dataService.getAccountHistory("johnstor5");
-     //this.dataService.getUrlData("ipfs://here.here");
-     //this.dataService.getDataForUser("gchampagne");
-     //this.dataService.getContentorAll("");
-     //this.dataService.getStreamingPlatforms("");
-     //this.dataService.getAllAccounts();
-     //this.dataService.authAccount("******","******");
-   //}
+     // this.dataService.getAccount('johnstor5');
+     // this.dataService.getAccountHistory("johnstor5");
+     // this.dataService.getUrlData("ipfs://here.here");
+     // this.dataService.getDataForUser("gchampagne");
+     // this.dataService.getContentorAll("");
+     // this.dataService.getStreamingPlatforms("");
+     // this.dataService.getAllAccounts();
+     // this.dataService.authAccount("******","******");
+   }
 }

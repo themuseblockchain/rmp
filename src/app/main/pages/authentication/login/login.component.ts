@@ -4,7 +4,10 @@ import { ConfigService } from '../../../../core/services/config.service';
 import { Animations } from '../../../../core/animations';
 import { Router } from '@angular/router';
 import { DataService } from '../../../../core/services/data.service';
-import * as muse from 'museblockchain-js';
+
+import { AuthenticationService } from '../Authentication.Service';
+
+import * as muse from 'muse-js';
 
 
 @Component({
@@ -15,6 +18,7 @@ import * as muse from 'museblockchain-js';
 })
 export class LoginComponent implements OnInit
 {
+    item: any;
     loginForm: FormGroup;
     loginFormErrors: any;
 
@@ -83,11 +87,30 @@ export class LoginComponent implements OnInit
             this.setConfig();
             this.getConfig();
 
-            // const t = this.dataService.authAccount(this.login.muserName, this.login.password);
-            muse.login(this.login.muserName, this.login.password, function(err, response, data)
-            {
-                console.log(err, response, data);
-            });
+            const t = this.dataService.authAccount(this.login.muserName, this.login.password);
+            alert('t: ' + t);
+            // muse.login(this.login.muserName, this.login.password, function(err, response, data)
+            // {
+            //     console.log(err, response, data);
+            // });
+
+            // Object.assign(this.item, (
+                // muse.login(this.login.muserName, this.login.password, function login(err, response, data)
+                // {
+                //     localStorage.setItem('response', response);
+                //     console.log(err, response, data);
+                // });
+            // ));
+
+            // this.item = localStorage.getItem('logInResponse');
+            // alert('this.item: ' + this.item);
+
+            // if (localStorage.getItem('response') === 'Success')
+            // {
+                // this.router.navigateByUrl(['./main/pages/rights-management/post']);
+                // this.router.navigateByUrl('/post');
+            // }
+            
         }
 
     }
