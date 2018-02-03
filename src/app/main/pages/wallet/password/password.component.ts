@@ -13,7 +13,7 @@ export class WalletComponent
   balance: any = 0;
 
    constructor(
-                public dataService: DataService)
+                public dataService: DataService) 
    {
     //  this.dataService.setConfig();
     //  this.dataService.getAccount('johnstor5');
@@ -25,9 +25,8 @@ export class WalletComponent
 
    // }
 
-   load()
+   load() 
    {
-     this.dataService.postContent("****", "johnstor5",{"url":"something.something"});
       // var UserName = "johnstor5";
       // localStorage.setItem('UserName', UserName);
       // //var UserName = localStorage.getItem('UserName');

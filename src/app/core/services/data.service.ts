@@ -12,6 +12,7 @@ export class DataService
  getDataForUserParameter: any;
  getContentorAllParameter: any;
  getStreamingPlatformsParameter: any;
+ getPostContentData: any;
  authAccountParameterUser: any;
  authAccountParameterKey: any;
 
@@ -29,7 +30,10 @@ constructor( private zone: NgZone
      return muse.config.set('websocket', 'wss://api.muse.blckchnd.com');
    }
    getConfig() {
-     return muse.api.getConfig(function(err, response){console.log(response); } );
+     return muse.api.getConfig(function(err, response)
+     {
+       //console.log(response);
+     });
    }
 
    getAccount(getAccountParameter) {
@@ -85,17 +89,19 @@ constructor( private zone: NgZone
 
 
 
-    authAccount(user, key) {
+    authAccount(authAccountParameterUser, authAccountParameterKey) {
       this.museConfig();
       let userSuccess: any;
 
       userSuccess = muse.login(user, key, (err, response, data) => {
+
           return response;
+
         });
         this.zone.run(() => {
             this.userSuccess = userSuccess;
         });
-        
+
       // if (muse.login(user, key, (err, response, data) => {
       //     return response === 'Success';
       //   })) {
@@ -106,4 +112,66 @@ constructor( private zone: NgZone
       //   });
       return userSuccess;
     }
+    postContent(authAccountParameterKey,authAccountParameterUser, getPostContentData) {
+      this.museConfig();
+      muse.broadcast.content(
+        authAccountParameterKey,
+        authAccountParameterUser,
+        getPostContentData.url,
+        {
+          "part_of_album": getPostContentData.part_of_album, //bool
+          "album_title": getPostContentData.lbum_title,
+          "album_artist": [authAccountParameterUser],
+          "genre_1": getPostContentData.genre_1,
+          "country_of_origin": getPostContentData.country_of_origin,
+          "explicit_": getPostContentData.explicit_, //bool
+          "p_line": getPostContentData.p_line,
+          "c_line": getPostContentData.c_line,
+          "upc_or_ean": getPostContentData.upc_or_ean,
+          "release_date": getPostContentData.release_date,
+          "release_year": getPostContentData.release_year,
+          "sales_start_date": getPostContentData.sales_start_date,
+          "master_label_name": getPostContentData.master_label_name,
+          "display_label_name": getPostContentData.display_label_name
+        },
+        {
+          "track_title": getPostContentData.track_title,
+          "ISRC": getPostContentData.ISRC,
+          "track_artists": [authAccountParameterUser],
+          "genre_1": getPostContentData.genre_1,
+          "p_line": getPostContentData.track_p_line,
+          "track_no": getPostContentData.track_no,
+          "track_volume": getPostContentData.track_volume,
+          "track_duration": getPostContentData.track_duration,
+          "samples": getPostContentData.samples //bool
+        },
+        {
+          "composition_title": getPostContentData.composition_title,
+          "third_party_publishers": getPostContentData.third_party_publishers, //bool
+          "publishers": getPostContentData.publishers,
+          "writers": getPostContentData.writers,
+          "PRO": getPostContentData.pro
+        },
+
+        [{
+          "payee": authAccountParameterUser,
+          "bp": 10000
+        }
+        ],
+        [{
+          "voter": authAccountParameterUser,
+          "percentage": 100
+        }
+        ],
+        100,
+        [],
+        [],
+        100,
+        10,
+        5000,
+    function(err, result){
+    return(err, result);
+      });
+    }
+  }
 }

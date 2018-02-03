@@ -5,7 +5,7 @@ import { Animations } from '../../../../core/animations';
 import { Router } from '@angular/router';
 import { DataService } from '../../../../core/services/data.service';
 
-import { AuthenticationService } from '../Authentication.Service';
+//import { AuthenticationService } from '../Authentication.Service';
 
 import * as muse from 'muse-js';
 
@@ -84,10 +84,10 @@ export class LoginComponent implements OnInit
 
     onLogin(form) {
         if (form.valid) {
-            this.setConfig();
-            this.getConfig();
+            this.dataService.setConfig();
 
             const t = this.dataService.authAccount(this.login.muserName, this.login.password);
+
             alert('t: ' + t);
             // muse.login(this.login.muserName, this.login.password, function(err, response, data)
             // {
@@ -110,15 +110,15 @@ export class LoginComponent implements OnInit
                 // this.router.navigateByUrl(['./main/pages/rights-management/post']);
                 // this.router.navigateByUrl('/post');
             // }
-            
+
         }
 
     }
 
-   setConfig() {
-     return muse.config.set('websocket', 'wss://api.muse.blckchnd.com');
-   }
-   getConfig() {
-     return muse.api.getConfig(function(err, response){console.log(response); } );
-   }
+   // setConfig() {
+   //   return muse.config.set('websocket', 'wss://api.muse.blckchnd.com');
+   // }
+   // getConfig() {
+   //   return muse.api.getConfig(function(err, response){console.log(response); } );
+   // }
 }
