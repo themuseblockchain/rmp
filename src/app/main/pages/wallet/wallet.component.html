@@ -1,4 +1,4 @@
-<div id="wallet" class="page-layout carded fullwidth" perfectScrollbar>
+<div id="wallet" class="page-layout carded fullwidth">
 
   <!-- TOP BACKGROUND -->
   <div class="top-bg mat-deep-purple-bg"></div>
@@ -29,7 +29,7 @@
       <form name="walletForm" [formGroup]="walletForm" class="user w-100-p" fxLayout="column" fxFlex>
         <mat-tab-group>
           <mat-tab label="Balances">
-            <div class="tab-content p-24" perfectScrollbar fxLayout="column">
+            <div class="tab-content p-24" fxLayout="column">
               <div class="py-16" fxLayout="row">
                 <mat-form-field class="w-100-p">
                   <input
@@ -65,6 +65,15 @@ MUSE can be vested by clicking transfer to Vesting.</p>
                 <input
                 readonly
                 matInput
+                name="Next Withdrawal"
+                formControlName="MBDbalance"
+                placeholder="Next Withdrawal">
+
+              </mat-form-field>
+              <mat-form-field class="w-100-p">
+                <input
+                readonly
+                matInput
                 name="History"
                 formControlName="History"
                 placeholder="History">
@@ -73,34 +82,51 @@ MUSE can be vested by clicking transfer to Vesting.</p>
           </mat-tab>
 
           <mat-tab label="Password">
-            <div class="tab-content p-24" perfectScrollbar fxLayout="column">
+            <div class="tab-content p-24" fxLayout="column">
               <div class="py-16" fxLayout="row">
+
                 <mat-form-field fxFlex>
                   <input matInput
                   name="CurrentPass"
                   formControlName="tempValue"
                   placeholder="Current Password">
                 </mat-form-field>
+              </div>
+              <p>Do not lose your password.
+We cannot recover your password.
+If you can remember the password, It's not secure.
+Use only randomly-generated passwords.
+Do not tell anyone your password.
+Always back up your password.</p>
                 <mat-form-field fxFlex>
                   <input matInput
                   name="NewPass"
                   formControlName="tempValue"
                   placeholder="New Password">
                 </mat-form-field>
-              </div>
 
               <mat-form-field class="w-100-p">
                 <input matInput
                 name="Confirm"
                 formControlName="tempValue"
                 placeholder="Confirm Password">
-              </mat-form-field>
+                <div class="py-16" fxLayout="row">
 
+                <mat-checkbox>
+                    I UNDERSTAND THIS WALLET HOSTER CANNOT RECOVER LOST PASSWORDS
+                </mat-checkbox>
+              </div>
+              <div class="py-16" fxLayout="row">
+                <mat-checkbox>
+                    I HAVE SECURELY SAVED MY GENERATED PASSWORD
+                </mat-checkbox>
+              </div>
+              </mat-form-field>
             </div>
           </mat-tab>
 
           <mat-tab label="Permissions">
-            <div class="tab-content p-24" perfectScrollbar fxLayout="column">
+            <div class="tab-content p-24" fxLayout="column">
               <div class="py-16" fxLayout="row">
                 <mat-form-field class="w-100-p">
                   <input
@@ -149,7 +175,7 @@ The private key or password for the owner key should be kept offline as much as 
           </mat-tab>
 
           <mat-tab label="Witness-Voting">
-            <div class="tab-content p-24" perfectScrollbar fxLayout="column">
+            <div class="tab-content p-24" fxLayout="column">
               <div class="py-16" fxLayout="row">
                 <mat-form-field fxFlex>
                   <input matInput
