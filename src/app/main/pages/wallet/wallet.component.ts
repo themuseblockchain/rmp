@@ -37,7 +37,11 @@ export class WalletComponent implements OnInit
     {
         return this.formBuilder.group({
             // id              : [this.muser.id],
-            tempValue              : [''],
+            Musebalance : [''],
+            Vestbalance : [''],
+            MBDbalance : [''],
+            History : [''],
+            tempValue : ['']
 
         });
     }

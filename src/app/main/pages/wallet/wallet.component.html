@@ -5,6 +5,7 @@
   <!-- / TOP BACKGROUND -->
 
   <!-- CENTER -->
+
   <div class="center">
 
     <!-- HEADER -->
@@ -28,15 +29,18 @@
       <form name="walletForm" [formGroup]="walletForm" class="user w-100-p" fxLayout="column" fxFlex>
         <mat-tab-group>
           <mat-tab label="Balances">
-            <div class="tab-content p-24" perfectScrollbar>
+            <div class="tab-content p-24" perfectScrollbar fxLayout="column">
               <div class="py-16" fxLayout="row">
                 <mat-form-field class="w-100-p">
                   <input
                   readonly
                   matInput
                   name="Muse"
-                  formControlName="tempValue"
+                  formControlName="Musebalance"
                   placeholder="Muse Balance">
+<p>Tradeable tokens that may be transferred anywhere at anytime.
+MUSE can be vested by clicking transfer to Vesting.</p>
+
                 </mat-form-field>
               </div>
               <mat-form-field class="w-100-p">
@@ -44,23 +48,25 @@
                 readonly
                 matInput
                 name="Vests"
-                formControlName="tempValue"
+                formControlName="Vestbalance"
                 placeholder="Vests Balance">
+<p>Tokens that grant you more influence within the network.</p>
               </mat-form-field>
               <mat-form-field class="w-100-p">
                 <input
                 readonly
                 matInput
                 name="MBD"
-                formControlName="tempValue"
+                formControlName="MBDbalance"
                 placeholder="Muse Backed Dollars Balance">
+<p>Tokens worth about $1.00 of MUSE</p>
               </mat-form-field>
               <mat-form-field class="w-100-p">
                 <input
                 readonly
                 matInput
                 name="History"
-                formControlName="tempValue"
+                formControlName="History"
                 placeholder="History">
               </mat-form-field>
             </div>
@@ -90,46 +96,54 @@
                 placeholder="Confirm Password">
               </mat-form-field>
 
-              <mat-form-field class="w-100-p">
-                <input matInput
-                name="number"
-                formControlName="tempValue"
-                placeholder="TEMP VALUE 7"
-                type="number">
-              </mat-form-field>
             </div>
           </mat-tab>
 
           <mat-tab label="Permissions">
             <div class="tab-content p-24" perfectScrollbar fxLayout="column">
               <div class="py-16" fxLayout="row">
-                <mat-form-field fxFlex>
-                  <input matInput
-                  name="tempValue"
+                <mat-form-field class="w-100-p">
+                  <input
+                  readonly
+                  matInput
+                  name="Basic"
                   formControlName="tempValue"
-                  placeholder="TEMP VALUE 4">
-                </mat-form-field>
-                <mat-form-field fxFlex>
-                  <input matInput
-                  name="tempValue"
-                  formControlName="tempValue"
-                  placeholder="TEMP">
+                  placeholder="Basic">
+<p>The basic key is used for non-financial functions such as voting,
+connection with other users and approving/declining proposed modifications to your data.
+It should be different from the active and owner keys.</p>
                 </mat-form-field>
               </div>
+                <mat-form-field class="w-100-p">
+                  <input
+                  readonly
+                  matInput
+                  name="Active"
+                  formControlName="tempValue"
+                  placeholder="Active">
+<p>The active key is used for financial transactions and the creation of (or updates to) your data.
+It should be used from a secure workstation.</p>
+                </mat-form-field>
 
-              <mat-form-field class="w-100-p">
-                <input matInput
-                name="tempValue"
+                <mat-form-field class="w-100-p">
+                <input
+                readonly
+                matInput
+                name="Owner"
                 formControlName="tempValue"
-                placeholder="TEMP VALUE 6">
+                placeholder="Owner">
+<p>The owner key is the master key for the account and is required to change the other keys.
+The private key or password for the owner key should be kept offline as much as possible.</p>
               </mat-form-field>
 
               <mat-form-field class="w-100-p">
-                <input matInput
-                name="number"
+                <input
+                readonly
+                matInput
+                name="Memo"
                 formControlName="tempValue"
-                placeholder="TEMP VALUE 7"
-                type="number">
+                placeholder="Memo">
+<p>The memo key is used to create and read memos.</p>
               </mat-form-field>
             </div>
           </mat-tab>

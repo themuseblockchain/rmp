@@ -37,7 +37,7 @@ export class PerfectScrollbarDirective implements OnInit, AfterViewInit, OnDestr
 
     ngOnInit()
     {
-
+      console.log("I Started the scrollbar.");
     }
 
     ngAfterViewInit()

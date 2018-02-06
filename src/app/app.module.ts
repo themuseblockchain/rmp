@@ -18,6 +18,8 @@ import { MainModule } from './main/main.module';
 // https://angular.io/guide/router
 //
 
+
+
 const appRoutes: Routes = [
     // {
     //     path        : 'user-management',
@@ -41,7 +43,8 @@ const appRoutes: Routes = [
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+
     ],
     imports     : [
         BrowserModule,
@@ -51,13 +54,13 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes),
         SharedModule,
         MainModule,
-        PagesModule
+        PagesModule,
     ],
     providers   : [
         SplashScreenService,
         ConfigService,
         NavigationService,
-        DataService
+        DataService,
     ],
     bootstrap   : [
         AppComponent
