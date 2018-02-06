@@ -6,7 +6,7 @@ import { ObservableMedia } from '@angular/flex-layout';
 import { MainComponent } from '../../../main.component';
 import { NavigationEnd, Router } from '@angular/router';
 import { NavigationService } from '../../../../core/components/navigation/navigation.service';
-import { PerfectScrollbarDirective } from '../../../../core/directives/perfect-scrollbar/perfect-scrollbar.directive';
+//import { PerfectScrollbarDirective } from '../../../../core/directives/perfect-scrollbar/perfect-scrollbar.directive';
 import { animate, AnimationBuilder, AnimationPlayer, style } from '@angular/animations';
 
 @Component({
@@ -24,7 +24,7 @@ export class NavbarVerticalComponent implements OnInit, OnDestroy
     @HostBinding('class.folded') isFoldedActive: boolean;
     @HostBinding('class.folded-open') isFoldedOpen: boolean;
     @HostBinding('class.initialized') initialized: boolean;
-    @ViewChild(PerfectScrollbarDirective) perfectScrollbarDirective;
+    //@ViewChild(PerfectScrollbarDirective) perfectScrollbarDirective;
 
     @Input()
     set folded(value: boolean)
@@ -66,12 +66,12 @@ export class NavbarVerticalComponent implements OnInit, OnDestroy
     {
         navBarService.setNavBar(this);
 
-        this.navigationServiceWatcher =
-            this.navigationService.onNavCollapseToggle.subscribe(() => {
-                this.perfectScrollbarUpdateTimeout = setTimeout(() => {
-                    this.perfectScrollbarDirective.update();
-                }, 310);
-            });
+        // this.navigationServiceWatcher =
+        //     this.navigationService.onNavCollapseToggle.subscribe(() => {
+        //         this.perfectScrollbarUpdateTimeout = setTimeout(() => {
+        //             this.perfectScrollbarDirective.update();
+        //         }, 310);
+        //     });
 
         // this.matchMediaWatcher =
         //     this.matchMedia.onMediaChange
