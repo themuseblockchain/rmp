@@ -20,22 +20,12 @@ import { AsyncLocalStorageModule } from 'angular-async-local-storage';
 // https://angular.io/guide/router
 //
 
+
+
 const appRoutes: Routes = [
     // {
     //     path        : 'user-management',
     //     loadChildren: './main/pages/user-management/user-management.module#UserManagementModule'
-    // },
-    // {
-    //     path      : '', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined
-    //     loadChildren: './main/main.module#MainModule'
-    // },
-    // {
-    //     path        : '',
-    //     loadChildren: './main/pages/wallet/wallet.module#WalletModule'
-    // },
-    // {
-    //     path        : '',
-    //     loadChildren: './main/pages/rights-management/post.module#PostModule'
     // },
     {
         path      : '**', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined
@@ -48,6 +38,7 @@ const appRoutes: Routes = [
 @NgModule({
     declarations: [
         AppComponent
+
     ],
     imports     : [
         BrowserModule,
@@ -57,8 +48,7 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes),
         SharedModule,
         MainModule,
-        AsyncLocalStorageModule,
-        PagesModule
+        AsyncLocalStorageModule
     ],
     providers   : [
         SplashScreenService,
