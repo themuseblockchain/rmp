@@ -1,5 +1,5 @@
 import { Injectable, Inject, NgZone, Input } from '@angular/core';
-import * as muse from 'muse-js';
+import * as muse from 'museblockchain-js';
 import * as Rx from 'rxjs/Rx';
 import { of } from 'rxjs/observable/of';
 import { HttpClient } from '@angular/common/http';
@@ -23,11 +23,11 @@ export class DataService
  authAccountParameterUser: any;
  authAccountParameterKey: any;
 
-constructor( 
+constructor(
             private zone: NgZone,
             private http: HttpClient,
             protected storage: AsyncLocalStorage
-) { 
+) {
 }
 
 //  private subject: Rx.Subject<MessageEvent>;
@@ -119,7 +119,7 @@ constructor(
         //             // resolve(response);
         //         }, reject);
         // });
- 
+
          muse.login(user, key, function (err, response, data) {
             this.storage.setItem('isAuthenticated', response).subscribe(() => {});
           });
@@ -128,7 +128,7 @@ constructor(
       // return new Promise((resolve, reject) => {
       //     muse.login(user, key, function(err, response, data) {
       //     // if (response === 'Success')
-      //     // { 
+      //     // {
       //       this.storage.setItem('isAuthenticated', response).subscribe(() => {
       //         // Done
       //            resolve(response);
@@ -136,11 +136,11 @@ constructor(
       //     })
       //     .then((response) => { console.log(response); })
       //       .catch((err) => { console.log(err); });
-      //     }); 
-         
-          
+      //     });
 
-    
+
+
+
     }
     postContent(authAccountParameterKey, authAccountParameterUser, getPostContentData) {
       this.museConfig();

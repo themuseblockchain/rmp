@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { DataService } from '../../../../core/services/data.service';
 
-import * as muse from 'muse-js';
+import * as muse from 'museblockchain-js';
 
 @Injectable()
 export class UsersService implements Resolve<any>
@@ -29,7 +29,7 @@ export class UsersService implements Resolve<any>
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Promise<any> | any
     {
         return new Promise((resolve, reject) => {
-           
+
             Promise.all([
                  this.getUsers()
             ]).then(
@@ -43,14 +43,14 @@ export class UsersService implements Resolve<any>
 
     getUsers(): Promise<any>
     {
-        
+
         return new Promise((resolve, reject) => {
 // https://tutorialedge.net/typescript/angular/angular-websockets-tutorial/
             // this.ds = <Subject<Message>>dataService
             //  this.dataService.museSetup();
             //  this.http.get(this.dataService.getAllAccounts())
              const test = this.http.get(this.dataService.getAllAccounts());
-                test.subscribe((response: any) => {  
+                test.subscribe((response: any) => {
                 alert('003');
                     this.users = response;
                      alert('this.users:' + JSON.stringify(this.users));
