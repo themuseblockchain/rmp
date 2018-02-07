@@ -2,11 +2,18 @@ import { Injectable, Inject, NgZone, Input } from '@angular/core';
 import * as muse from 'muse-js';
 import * as Rx from 'rxjs/Rx';
 import { of } from 'rxjs/observable/of';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { AsyncLocalStorage } from 'angular-async-local-storage';
+import CryptoJS from 'crypto-js';
+
 
 @Injectable()
 export class DataService
 {
-  public userSuccess: any;
+
+ private isAuthen: any;
+ public userSuccess: any;
  getAccountParameter: any;
  getUrlDataParameter: any;
  getDataForUserParameter: any;
@@ -16,9 +23,12 @@ export class DataService
  authAccountParameterUser: any;
  authAccountParameterKey: any;
 
-constructor( private zone: NgZone
-
-) { }
+constructor( 
+            private zone: NgZone,
+            private http: HttpClient,
+            protected storage: AsyncLocalStorage
+) { 
+}
 
 //  private subject: Rx.Subject<MessageEvent>;
    museConfig(){
@@ -36,9 +46,9 @@ constructor( private zone: NgZone
      });
    }
 
-   getAccount(getAccountParameter) {
+   getAccount(userName) {
      this.museConfig();
-     return muse.accountInfo(getAccountParameter, function(err, response, data)
+     muse.accountInfo(userName, function(err, response, data)
      {
        console.log(data);
      });
@@ -91,26 +101,46 @@ constructor( private zone: NgZone
 
     authAccount(user, key) {
       this.museConfig();
-      let userSuccess: any;
+        // return new Promise((resolve, reject) => {
+        //     this.http.get('api/e-commerce-orders/')
+        //         .subscribe((response: any) => {
+        //             this.order = response;
+        //             this.onOrderChanged.next(this.order);
+        //             resolve(response);
+        //         }, reject);
+        // });
 
-      userSuccess = muse.login(user, key, (err, response, data) => {
 
-          return response;
 
-        });
-        this.zone.run(() => {
-            this.userSuccess = userSuccess;
-        });
+        // return new Promise((resolve, reject) => {
+        //     muse.login(user, key, function(err, response, data)
+        //         {
+        //           this.storage.setItem('isAuthenticated', response).subscribe(() => {});
+        //             // resolve(response);
+        //         }, reject);
+        // });
+ 
+         muse.login(user, key, function (err, response, data) {
+            this.storage.setItem('isAuthenticated', response).subscribe(() => {});
+          });
 
-      // if (muse.login(user, key, (err, response, data) => {
-      //     return response === 'Success';
-      //   })) {
-      //     userSuccess = true;
-      //   }
-      //   this.zone.run(() => {
-      //       this.userSuccess = userSuccess;
-      //   });
-      return userSuccess;
+
+      // return new Promise((resolve, reject) => {
+      //     muse.login(user, key, function(err, response, data) {
+      //     // if (response === 'Success')
+      //     // { 
+      //       this.storage.setItem('isAuthenticated', response).subscribe(() => {
+      //         // Done
+      //            resolve(response);
+      //       });
+      //     })
+      //     .then((response) => { console.log(response); })
+      //       .catch((err) => { console.log(err); });
+      //     }); 
+         
+          
+
+    
     }
     postContent(authAccountParameterKey, authAccountParameterUser, getPostContentData) {
       this.museConfig();

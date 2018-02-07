@@ -22,10 +22,12 @@
 
   <!-- CONTENT CARD -->
   <div class="content-card mat-white-bg">
+    
     <!-- CONTENT -->
     <div class="content">
 
-      <form name="walletForm" [formGroup]="walletForm" class="user w-100-p" fxLayout="column" fxFlex>
+      <form name="walletForm" [formGroup]="walletForm" class="wallet w-100-p" fxLayout="column" fxFlex>
+
         <mat-tab-group>
           <mat-tab label="Balances">
             <div class="tab-content p-24" perfectScrollbar>
@@ -160,7 +162,7 @@
 
               <mat-form-field class="w-100-p">
                 <input matInput
-                name="number"
+                name="tempValue"
                 formControlName="tempValue"
                 placeholder="TEMP VALUE 7"
                 type="number">

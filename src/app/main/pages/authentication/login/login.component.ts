@@ -4,10 +4,10 @@ import { ConfigService } from '../../../../core/services/config.service';
 import { Animations } from '../../../../core/animations';
 import { Router } from '@angular/router';
 import { DataService } from '../../../../core/services/data.service';
+import { AsyncLocalStorage } from 'angular-async-local-storage';
 
-//import { AuthenticationService } from '../Authentication.Service';
+// import { AuthenticationService } from '../Authentication.Service';
 
-import * as muse from 'muse-js';
 
 
 @Component({
@@ -30,7 +30,8 @@ export class LoginComponent implements OnInit
         private  router: Router,
         private dataService: DataService,
         private config: ConfigService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        protected storage: AsyncLocalStorage
     )
     {
         this.config.setSettings({
@@ -86,9 +87,21 @@ export class LoginComponent implements OnInit
         if (form.valid) {
             this.dataService.setConfig();
 
-            const t = this.dataService.authAccount(this.login.muserName, this.login.password);
-
-            alert('t: ' + t);
+            this.dataService.authAccount(this.login.muserName, this.login.password);
+            
+                 this.storage.getItem('isAuthenticated').subscribe((isAuthenticated) => {
+                    if (isAuthenticated != null) {
+                        if (isAuthenticated === 'Success')
+                        {
+                            this.router.navigateByUrl('/post');
+                        }
+                    }
+                }, 
+                () => {});
+           
+                
+     
+         
             // muse.login(this.login.muserName, this.login.password, function(err, response, data)
             // {
             //     console.log(err, response, data);
@@ -111,14 +124,15 @@ export class LoginComponent implements OnInit
                 // this.router.navigateByUrl('/post');
             // }
 
-        }
+    //     }
 
-    }
+    // }
 
    // setConfig() {
    //   return muse.config.set('websocket', 'wss://api.muse.blckchnd.com');
-   // }
+//    }
    // getConfig() {
    //   return muse.api.getConfig(function(err, response){console.log(response); } );
-   // }
+        }
+    }
 }

@@ -1,33 +1,3 @@
-<!--<mat-sidenav-container>
-
-    <div id="main-content">
-        <div id="wrapper">
-            <navbar-vertical [folded]="settings.layout.navigationFolded"
-                                  class="left-navbar"
-                                  [ngClass]="settings.colorClasses.navbar"
-                                  *ngIf="settings.layout.navigation === 'left' || settings.layout.navigation === 'top'">
-            </navbar-vertical>
-
-
-            <div class="content-wrapper">
-
-
-                <ng-container *ngIf="settings.layout.toolbar === 'below'"> 
-                    <toolbar class="below" [ngClass]="settings.colorClasses.toolbar"></toolbar>
-                </ng-container>
-
-
-                
-                <pages></pages>
-
-            </div>
-
-        </div>
-
-    </div>
-</mat-sidenav-container>-->
-
-
 <mat-sidenav-container>
 
     <div id="main-content">
@@ -37,13 +7,6 @@
             <toolbar class="above" [ngClass]="settings.colorClasses.toolbar"></toolbar>
         </ng-container>
         <!-- / TOOLBAR: Above -->
-
-        <!-- NAVBAR: Top -->
-        <!--<navbar-horizontal class="top-navbar" fxHide fxShow.gt-md
-                                [ngClass]="settings.colorClasses.navbar"
-                                *ngIf="settings.layout.navigation === 'top'">
-        </navbar-horizontal>-->
-        <!-- / NAVBAR: Top -->
 
         <div id="wrapper">
 
@@ -91,12 +54,6 @@
 
     </div>
 
-    <!-- QUICK PANEL -->
-    <!--<mat-sidenav matSidenavHelper="quick-panel" align="end">
-        <fuse-quick-panel></fuse-quick-panel>
-    </mat-sidenav>-->
-    <!-- / QUICK PANEL -->
-
 </mat-sidenav-container>
 
-<theme></theme>
+<!--<theme></theme>-->
