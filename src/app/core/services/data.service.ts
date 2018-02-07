@@ -53,6 +53,10 @@ constructor(
        console.log(data);
      });
    }
+   getAccountHistory(userName) {
+     this.museConfig();
+     muse.accountHistory(userName, null, 100, this.defaultHistoryFormatter, this.callbackWalletHistory);
+   }
    getUrlData(getUrlDataParameter) {
      this.museConfig();
      return muse.api.getContentByUrl(getUrlDataParameter, function(err, response, data)
@@ -202,5 +206,91 @@ constructor(
     function(err, result){
     // return(err, result);
       });
+    }
+    defaultHistoryFormatter(userName, operationName, date, operationData, additionnal) {
+    const history_info = { name: operationName, date: date, raw: operationData };
+
+    switch (operationName)
+    {
+    case 'account_create':
+        if (operationData.creator === userName)
+        {
+        history_info.text = 'Created Account ' + operationData.new_account_name;
+        }
+        else if (operationData.new_account_name === userName)
+        {
+        history_info.text = 'Account Creation';
+        }
+        break;
+    case 'transfer':
+        if (operationData.to === userName)
+        {
+        history_info.text = 'Received ' + operationData.amount.split(' ')[0] + ' MUSE from ' + operationData.from;
+        }
+        else
+        {
+        history_info.text = 'Sent ' + operationData.amount.split(' ')[0] + ' MUSE to ' + operationData.to;
+        }
+        break;
+    case 'transfer':
+        if (operationData.to === userName)
+        {
+        history_info.text = 'Received ' + operationData.amount.split(' ')[0] + ' MUSE from ' + operationData.from;
+        }
+        else
+        {
+        history_info.text = 'Sent ' + operationData.amount.split(' ')[0] + ' MUSE to ' + operationData.to;
+        }
+        break;
+
+    case 'transfer_to_vesting':
+        if (operationData.to === userName)
+        {
+        // history_info.text = 'Received ' + operationData.amount.split(" ")[0] + ' VEST from ' + operationData.from;
+        history_info.text = 'Transferred ' + operationData.amount.split(' ')[0] + ' MUSE to VEST';
+        }
+        else
+        {
+        history_info.text = 'Sent ' + operationData.amount.split(' ')[0] + ' VEST to ' + operationData.to;
+        }
+        break;
+    case 'withdraw_vesting':
+        history_info.text = 'Withdrawing ' + operationData.vesting_shares.split(' ')[0] + ' VEST';
+        break;
+    case 'account_witness_vote':
+
+        if (operationData.approve)
+        {
+        history_info.text =  operationData.account + ' Voted Witness ' + operationData.witness;
+        }
+        else
+        {
+        history_info.text = operationData.account + ' UnVoted Witness ' + operationData.witness;
+        }
+        break;
+    case 'witness_update':
+        history_info.text = 'Witness Update';
+        break;
+    case 'account_update':
+        history_info.text = 'Account Update';
+        break;
+    case 'content':
+        history_info.text = 'Content Listed: URL: ' + operationData.url + ' Uploader: ' + operationData.uploader;
+        break;
+    case 'fill_vesting_withdraw':
+        history_info.text = 'Withdrawal: ' + operationData.from_account + ' to account: ' + operationData.to_account + ' of ' + operationData.deposited.split(' ')[0] + ' MUSE.';
+        break;
+    case 'custom_json':
+        history_info.text = 'Custom Json ' + operationData.id + ' ' + operationData.json + ' ' + operationData.required_auths + ' ' + operationData.required_basic_auths;
+        break;
+    default:
+        history_info.text = 'Unknown operation: ' + operationName;
+    }
+    console.log(history_info);
+    return history_info;
+}
+callbackWalletHistory(code, message, result){
+        localStorage.setItem('walletHistory', walletHistory);
+
     }
 }

@@ -22,8 +22,8 @@ export class WalletComponent implements OnInit
    {
     //  this.dataService.setConfig();
     //  this.dataService.getAccount('johnstor5');
-     console.log();
-      //  this.load();
+    console.log();
+    this.load();
    }
 
     ngOnInit()
@@ -47,8 +47,8 @@ export class WalletComponent implements OnInit
     }
 
 
-  //  load()
-  //  {
+  load()
+  {
       // var UserName = "johnstor5";
       // localStorage.setItem('UserName', UserName);
       // //var UserName = localStorage.getItem('UserName');
@@ -68,7 +68,7 @@ export class WalletComponent implements OnInit
 
      // this.dataService.getConfig();
 
-     // this.dataService.getAccount('johnstor5');
+     this.dataService.getAccountHistory('johnstor5');
      // this.dataService.getAccountHistory("johnstor5");
      // this.dataService.getUrlData("ipfs://here.here");
      // this.dataService.getDataForUser("gchampagne");
@@ -76,5 +76,5 @@ export class WalletComponent implements OnInit
      // this.dataService.getStreamingPlatforms("");
      // this.dataService.getAllAccounts();
      // this.dataService.authAccount("******","******");
-  //  }
+  }
 }
