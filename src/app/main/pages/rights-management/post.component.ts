@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DataService } from '../../../core/services/data.service';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
     selector: 'post',
@@ -8,10 +10,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class PostComponent implements OnInit
 {
-    form: FormGroup;
+    postForm: FormGroup;
     formErrors: any;
 
-    constructor(private formBuilder: FormBuilder)
+    constructor(
+      public dataService: DataService,
+      private formBuilder: FormBuilder
+    )
     {
         this.formErrors = {
             muserId   : {},
@@ -36,7 +41,7 @@ export class PostComponent implements OnInit
 
     ngOnInit()
     {
-        this.form = this.formBuilder.group({
+        this.postForm = this.formBuilder.group({
             muserId   : [
                 {
                     value   : '@MuserKing',
@@ -60,10 +65,11 @@ export class PostComponent implements OnInit
             trackNo : ['', Validators.required],
             // trackNo: ['', [Validators.required, Validators.maxLength(5)]],
 
-            compositionTitle : ['', Validators.required]
+            compositionTitle : ['', Validators.required],
+            tempValue : ['']
         });
 
-        this.form.valueChanges.subscribe(() => {
+        this.postForm.valueChanges.subscribe(() => {
             this.onFormValuesChanged();
         });
     }

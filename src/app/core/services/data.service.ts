@@ -208,7 +208,7 @@ constructor(
       });
     }
     defaultHistoryFormatter(userName, operationName, date, operationData, additionnal) {
-    const history_info = { name: operationName, date: date, raw: operationData };
+    const history_info = { name: operationName, date: date, raw: operationData, text: '' };
 
     switch (operationName)
     {
