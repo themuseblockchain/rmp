@@ -87,7 +87,7 @@ export class PostComponent implements OnInit
             this.formErrors[field] = {};
 
             // Get the control
-            const control = this.form.get(field);
+            const control = this.postForm.get(field);
 
             if ( control && control.dirty && !control.valid )
             {

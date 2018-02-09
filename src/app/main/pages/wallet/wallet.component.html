@@ -23,7 +23,7 @@
 
   <!-- CONTENT CARD -->
   <div class="content-card mat-white-bg">
-    
+
     <!-- CONTENT -->
     <div class="content">
 
@@ -178,35 +178,73 @@ The private key or password for the owner key should be kept offline as much as 
 
           <mat-tab label="Witness-Voting">
             <div class="tab-content p-24" fxLayout="column">
-              <div class="py-16" fxLayout="row">
+              <p>As a MUSE holder you get 30 witness votes, use them wisely.
+You have 19 witness votes left.</p>
+
+<p>If you whould like to vote for a witness outside of the top 50, enter the account name below to cast a vote.</p>
+
+<mat-form-field fxFlex>
+  <input matInput
+  name="VoteFor"
+  formControlName="tempValue"
+  placeholder="Vote for:">
+</mat-form-field>
+<div class="tab-content p-8" fxLayout="row">
+              <div class="tab-content p-4" fxLayout="column">
+
                 <mat-form-field fxFlex>
                   <input matInput
-                  name="tempValue"
+                  readonly
+                  name="Witness #"
                   formControlName="tempValue"
-                  placeholder="TEMP VALUE 4">
-                </mat-form-field>
-                <mat-form-field fxFlex>
-                  <input matInput
-                  name="tempValue"
-                  formControlName="tempValue"
-                  placeholder="TEMP VALUE 5">
+                  placeholder="Witness #">
                 </mat-form-field>
               </div>
 
-              <mat-form-field class="w-100-p">
-                <input matInput
-                name="tempValue"
-                formControlName="tempValue"
-                placeholder="TEMP VALUE 6">
-              </mat-form-field>
+              <div class="tab-content p-4" fxLayout="column">
 
-              <mat-form-field class="w-100-p">
-                <input matInput
-                name="tempValue"
-                formControlName="tempValue"
-                placeholder="TEMP VALUE 7"
-                type="number">
-              </mat-form-field>
+                <mat-form-field fxFlex>
+                  <input matInput
+                  readonly
+                  name="Vote For"
+                  formControlName="tempValue"
+                  placeholder="Vote For">
+                </mat-form-field>
+              </div>
+
+              <div class="tab-content p-4" fxLayout="column">
+
+                <mat-form-field fxFlex>
+                  <input matInput
+                  readonly
+                  name="WitnessName"
+                  formControlName="tempValue"
+                  placeholder="WitnessName">
+                </mat-form-field>
+              </div>
+
+              <div class="tab-content p-4" fxLayout="column">
+
+                <mat-form-field fxFlex>
+                  <input matInput
+                  readonly
+                  name="LastMinted"
+                  formControlName="tempValue"
+                  placeholder="Last Minted Block">
+                </mat-form-field>
+              </div>
+
+              <div class="tab-content p-4" fxLayout="column">
+
+                <mat-form-field fxFlex>
+                  <input matInput
+                  readonly
+                  name="WitnessURL"
+                  formControlName="tempValue"
+                  placeholder="Witness Announcement URL">
+                </mat-form-field>
+              </div>
+            </div>
             </div>
           </mat-tab>
         </mat-tab-group>

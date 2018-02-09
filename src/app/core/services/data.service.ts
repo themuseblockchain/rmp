@@ -290,7 +290,7 @@ constructor(
     return history_info;
 }
 callbackWalletHistory(code, message, result){
-        localStorage.setItem('walletHistory', walletHistory);
+        // localStorage.setItem('walletHistory', walletHistory);
 
     }
 }
