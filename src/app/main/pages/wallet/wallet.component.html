@@ -34,12 +34,16 @@
             <div class="tab-content p-24" fxLayout="column">
               <div class="py-16" fxLayout="row">
                 <mat-form-field class="w-100-p">
+                  <div>
                   <input
                   readonly
                   matInput
                   name="Muse"
                   formControlName="Musebalance"
-                  placeholder="Muse Balance">
+                  placeholder="Muse Balance: ">
+                  {{Musebalance}}
+                </div>
+
 <p>Tradeable tokens that may be transferred anywhere at anytime.
 MUSE can be vested by clicking transfer to Vesting.</p>
 
@@ -51,7 +55,8 @@ MUSE can be vested by clicking transfer to Vesting.</p>
                 matInput
                 name="Vests"
                 formControlName="Vestbalance"
-                placeholder="Vests Balance">
+                placeholder="Vests Balance: ">
+                {{Vestbalance}}
 <p>Tokens that grant you more influence within the network.</p>
               </mat-form-field>
               <mat-form-field class="w-100-p">
@@ -60,7 +65,8 @@ MUSE can be vested by clicking transfer to Vesting.</p>
                 matInput
                 name="MBD"
                 formControlName="MBDbalance"
-                placeholder="Muse Backed Dollars Balance">
+                placeholder="Muse Backed Dollars Balance: ">
+                {{MBDbalance}}
 <p>Tokens worth about $1.00 of MUSE</p>
               </mat-form-field>
               <mat-form-field class="w-100-p">
@@ -69,8 +75,8 @@ MUSE can be vested by clicking transfer to Vesting.</p>
                 matInput
                 name="Next Withdrawal"
                 formControlName="MBDbalance"
-                placeholder="Next Withdrawal">
-
+                placeholder="Next Withdrawal: ">
+                {{NextwithDraw}}
               </mat-form-field>
               <mat-form-field class="w-100-p">
                 <input

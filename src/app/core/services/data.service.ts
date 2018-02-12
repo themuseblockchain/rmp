@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AsyncLocalStorage } from 'angular-async-local-storage';
 import CryptoJS from 'crypto-js';
-
+import { Observable } from 'rxjs/Rx';
 
 @Injectable()
 export class DataService
@@ -37,22 +37,34 @@ constructor(
    }
    // because of the way we instantiate muse we must set config each time we use a function.
    setConfig() {
-     return muse.config.set('websocket', 'wss://api.muse.blckchnd.com');
+    return muse.config.set('websocket', 'wss://api.muse.blckchnd.com');
+    return console.log('Set Config Done!');
    }
    getConfig() {
      return muse.api.getConfig(function(err, response)
      {
-       // console.log(response);
+       console.log(response);
      });
    }
 
-   getAccount(userName) {
+   getAccount(authAccountParameterUser) {
+     // this.setConfig();
      this.museConfig();
-     muse.accountInfo(userName, function(err, response, data)
-     {
-       console.log(data);
-     });
+
+      return muse.api.getAccountsAsync([authAccountParameterUser])
+      .then((result) => result.map(this.transformUserInfo));
    }
+
+   private transformUserInfo(user) {
+     user.meta = JSON.parse(user.json_metadata);
+     console.log(user);
+     return user;
+   }
+
+
+
+
+
    getAccountHistory(userName) {
      this.museConfig();
      muse.accountHistory(userName, null, 100, this.defaultHistoryFormatter, this.callbackWalletHistory);

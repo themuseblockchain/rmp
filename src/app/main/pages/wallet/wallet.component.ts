@@ -12,11 +12,11 @@ export class WalletComponent implements OnInit
 {
   muser: any;
   Config: any;
-  balance: any = 0;
+  balance = [];
   walletForm: FormGroup;
 
    constructor(
-                public dataService: DataService,
+                private dataService: DataService,
                 private formBuilder: FormBuilder
                 )
    {
@@ -30,6 +30,14 @@ export class WalletComponent implements OnInit
     {
       this.walletForm = this.createUserForm();
 
+      this.dataService.getAccount('johnstor5').then((result => {
+        this.Musebalance  = result[0].balance;
+        this.Vestbalance  = result[0].vesting_shares;
+        this.MBDbalance   = result[0].mbd_balance;
+        this.NextwithDraw = result[0].next_vesting.withdraw;
+        console.log(result);
+      }));
+
 
     }
 
@@ -40,6 +48,7 @@ export class WalletComponent implements OnInit
             Musebalance : [''],
             Vestbalance : [''],
             MBDbalance : [''],
+            NextwithDraw : [''],
             History : [''],
             tempValue : ['']
 
@@ -49,26 +58,20 @@ export class WalletComponent implements OnInit
 
   load()
   {
-      // var UserName = "johnstor5";
-      // localStorage.setItem('UserName', UserName);
-      // //var UserName = localStorage.getItem('UserName');
-      // //console.log(UserName);
+
+
+
+
       // muse.config.set('websocket', 'wss://api.muse.blckchnd.com');
       // muse.api.getConfig(function(err, response){
       //    console.log(response);
       //  });
-      //  muse.accountInfo(UserName, function(err, response, data)
-      //  {
-      //    //this.balance = data.balance;
-      //    console.log(data);
-      //    console.log(data.balance);
-      //  });
-
+      this.Musebalance = '2001';
 
 
      // this.dataService.getConfig();
 
-     this.dataService.getAccountHistory('johnstor5');
+     // this.dataService.getAccountHistory('johnstor5');
      // this.dataService.getAccountHistory("johnstor5");
      // this.dataService.getUrlData("ipfs://here.here");
      // this.dataService.getDataForUser("gchampagne");
