@@ -30,6 +30,7 @@ constructor(
 ) {
 }
 
+
 //  private subject: Rx.Subject<MessageEvent>;
    museConfig(){
       this.setConfig();
@@ -55,7 +56,7 @@ constructor(
 
    private transformUserInfo(user) {
      user.meta = JSON.parse(user.json_metadata);
-     console.log(user);
+     // console.log(user);
      return user;
    }
 
@@ -65,13 +66,16 @@ constructor(
     authAccount(authAccountParameterUser, authAccountParameterKey) {
          this.museConfig();
 
-         muse.auth.toWif(authAccountParameterUser, authAccountParameterKey, 'owner')
-         .then((result) => result.map(this.verifyKey));
-
-    }
-    private verifyKey(key){
-      return key;
-    }
+         return new Promise(function(resolve, reject){
+           muse.login(authAccountParameterUser, authAccountParameterKey, function(err, success){
+             if (err === 0) {
+               reject(err);
+             } else {
+               resolve(success);
+             }
+           });
+         });
+  }
 
 
 
