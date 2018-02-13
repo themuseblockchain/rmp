@@ -38,7 +38,6 @@ constructor(
    // because of the way we instantiate muse we must set config each time we use a function.
    setConfig() {
     return muse.config.set('websocket', 'wss://api.muse.blckchnd.com');
-    return console.log('Set Config Done!');
    }
    getConfig() {
      return muse.api.getConfig(function(err, response)
@@ -48,7 +47,6 @@ constructor(
    }
 
    getAccount(authAccountParameterUser) {
-     // this.setConfig();
      this.museConfig();
 
       return muse.api.getAccountsAsync([authAccountParameterUser])
@@ -60,6 +58,20 @@ constructor(
      console.log(user);
      return user;
    }
+
+
+
+
+    authAccount(authAccountParameterUser, authAccountParameterKey) {
+         this.museConfig();
+
+         muse.auth.toWif(authAccountParameterUser, authAccountParameterKey, 'owner')
+         .then((result) => result.map(this.verifyKey));
+
+    }
+    private verifyKey(key){
+      return key;
+    }
 
 
 
@@ -114,50 +126,6 @@ constructor(
    }
 
 
-
-    authAccount(user, key) {
-      this.museConfig();
-        // return new Promise((resolve, reject) => {
-        //     this.http.get('api/e-commerce-orders/')
-        //         .subscribe((response: any) => {
-        //             this.order = response;
-        //             this.onOrderChanged.next(this.order);
-        //             resolve(response);
-        //         }, reject);
-        // });
-
-
-
-        // return new Promise((resolve, reject) => {
-        //     muse.login(user, key, function(err, response, data)
-        //         {
-        //           this.storage.setItem('isAuthenticated', response).subscribe(() => {});
-        //             // resolve(response);
-        //         }, reject);
-        // });
-
-         muse.login(user, key, function (err, response, data) {
-            this.storage.setItem('isAuthenticated', response).subscribe(() => {});
-          });
-
-
-      // return new Promise((resolve, reject) => {
-      //     muse.login(user, key, function(err, response, data) {
-      //     // if (response === 'Success')
-      //     // {
-      //       this.storage.setItem('isAuthenticated', response).subscribe(() => {
-      //         // Done
-      //            resolve(response);
-      //       });
-      //     })
-      //     .then((response) => { console.log(response); })
-      //       .catch((err) => { console.log(err); });
-      //     });
-
-
-
-
-    }
     postContent(authAccountParameterKey, authAccountParameterUser, getPostContentData) {
       this.museConfig();
       muse.broadcast.content(

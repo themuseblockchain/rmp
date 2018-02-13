@@ -20,23 +20,16 @@ export class WalletComponent implements OnInit
                 private formBuilder: FormBuilder
                 )
    {
-    //  this.dataService.setConfig();
-    //  this.dataService.getAccount('johnstor5');
-    console.log();
-    this.load();
+
+
    }
 
     ngOnInit()
     {
       this.walletForm = this.createUserForm();
+      this.load();
 
-      this.dataService.getAccount('johnstor5').then((result => {
-        this.Musebalance  = result[0].balance;
-        this.Vestbalance  = result[0].vesting_shares;
-        this.MBDbalance   = result[0].mbd_balance;
-        this.NextwithDraw = result[0].next_vesting.withdraw;
-        console.log(result);
-      }));
+
 
 
     }
@@ -58,7 +51,18 @@ export class WalletComponent implements OnInit
 
   load()
   {
+    this.dataService.getAccount('johnstor5').then((result => {
 
+      // this.Musebalance  = result[0].balance;
+      // this.Vestbalance  = result[0].vesting_shares;
+      // this.MBDbalance   = result[0].mbd_balance;
+      // this.NextwithDraw = result[0].next_vesting.withdraw;
+      console.log(result);
+    }));
+
+    // this.dataService.authAccount('johnstor5', '****').then((result => {
+    //   console.log(result);
+    // }));
 
 
 
@@ -66,7 +70,7 @@ export class WalletComponent implements OnInit
       // muse.api.getConfig(function(err, response){
       //    console.log(response);
       //  });
-      this.Musebalance = '2001';
+      // this.Musebalance = '2001';
 
 
      // this.dataService.getConfig();
