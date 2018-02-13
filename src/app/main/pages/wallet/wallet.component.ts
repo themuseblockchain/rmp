@@ -11,18 +11,25 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class WalletComponent implements OnInit
 {
   walletForm: FormGroup;
+  Musebalance: any;
+  Vestbalance: any;
+  MBDbalance: any;
+  NextwithDraw: any;
+  History: any;
+  tempValue: any;
 
    constructor(
                 private dataService: DataService,
                 private formBuilder: FormBuilder
                 )
    {
+     this.load();
    }
 
     ngOnInit()
     {
       this.walletForm = this.createUserForm();
-      this.load();
+
     }
 
     createUserForm()
@@ -33,7 +40,7 @@ export class WalletComponent implements OnInit
             Vestbalance : [''],
             MBDbalance : [''],
             NextwithDraw : [''],
-            History : [''],
+            History : [],
             tempValue : ['']
           });
     }
@@ -47,6 +54,11 @@ export class WalletComponent implements OnInit
       this.MBDbalance   = result[0].mbd_balance.split(' ')[0];
       this.NextwithDraw = result[0].next_vesting_withdrawal;
       // console.log(result);
+    }));
+    this.dataService.getAccountHistory('johnstor5').then((result => {
+      this.History = result;
+      console.log(result);
+      console.log(this.History);
     }));
   }
 }
