@@ -25,7 +25,6 @@ import { PagesModule } from './main/pages/pages.module';
 import { AsyncLocalStorageModule } from 'angular-async-local-storage';
 import { LayoutModule } from './main/components/layout.module'; 
 import { AppRoutingModule } from './app-routing.module';
-import { ScriptLoaderService } from './core/services/script-loader.service';
 import { MainRoutingModule } from './main/main-routing.module';
 import { LoginModule } from './auth/login/login.module';
 import { LogoutModule } from './auth/logout/logout.module';

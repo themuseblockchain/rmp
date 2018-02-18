@@ -14,7 +14,6 @@ import { AsyncLocalStorage } from 'angular-async-local-storage';
 // import { AuthenticationService } from '../services/Authentication.Service';
 
 import { ActivatedRoute, Router } from '@angular/router';
-// import { ScriptLoaderService } from '../core/services/script-loader.service';
 import { AuthenticationService } from '../services/authentication.service';
 import { AlertService } from '../services/alert.service';
 // import { UserService } from '../services/user.service';
