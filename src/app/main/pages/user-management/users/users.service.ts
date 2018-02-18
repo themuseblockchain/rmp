@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { DataService } from '../../../../core/services/data.service';
 
-import * as muse from 'museblockchain-js';
+import * as muse from 'muse-js';
 
 @Injectable()
 export class UsersService implements Resolve<any>

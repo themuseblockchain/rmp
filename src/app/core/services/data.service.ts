@@ -1,5 +1,5 @@
 import { Injectable, Inject, NgZone, Input } from '@angular/core';
-import * as muse from 'museblockchain-js';
+import * as muse from 'muse-js';
 import * as Rx from 'rxjs/Rx';
 import { of } from 'rxjs/observable/of';
 import { HttpClient } from '@angular/common/http';
@@ -13,15 +13,15 @@ export class DataService
 {
 
  private isAuthen: any;
- public userSuccess: any;
- getAccountParameter: any;
- getUrlDataParameter: any;
- getDataForUserParameter: any;
- getContentorAllParameter: any;
- getStreamingPlatformsParameter: any;
- getPostContentData: any;
- authAccountParameterUser: any;
- authAccountParameterKey: any;
+ private userSuccess: any;
+ private getAccountParameter: any;
+ private getUrlDataParameter: any;
+ private getDataForUserParameter: any;
+ private getContentorAllParameter: any;
+ private getStreamingPlatformsParameter: any;
+ private getPostContentData: any;
+ private authAccountParameterUser: any;
+ private authAccountParameterKey: any; private defaultHistoryFormatter: any; private callbackWalletHistory: any;
 
 constructor(
             private zone: NgZone,
@@ -47,10 +47,10 @@ constructor(
      });
    }
 
-   getAccount(authAccountParameterUser) {
+   getAccount(userName) {
      this.museConfig();
 
-      return muse.api.getAccounts([authAccountParameterUser])
+      return muse.api.getAccountsAsync([userName])
       .then((result) => result.map(this.transformUserInfo));
    }
 
@@ -60,7 +60,7 @@ constructor(
      return user;
    }
 
-   authAccount(authAccountParameterUser, authAccountParameterKey) {
+  authAccount(authAccountParameterUser, authAccountParameterKey) {
          this.museConfig();
 
          return new Promise(function(resolve, reject){
@@ -75,23 +75,23 @@ constructor(
   }
 
   getAccountHistory(authAccountParameterUser) {
-     this.museConfig();
+      this.museConfig();
 
-     return new Promise(function(resolve, reject){
-       muse.api.getAccountHistory(authAccountParameterUser, 10, 10,
-         function(err, success) {
-         if (err) {
-           reject(err);
-         } else {
-
-
-           resolve(success);
-         }
-       });
-     });
+      return new Promise(function(resolve, reject){
+        muse.api.getAccountHistory(authAccountParameterUser, 10, 10,
+          function(err, success) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(success);
+          }
+        });
+      });
 
 
-    // muse.accountHistory(userName, null, 100, this.defaultHistoryFormatter, this.callbackWalletHistory);
+  //  getAccountHistory(userName) {
+  //    this.museConfig();
+  //    muse.accountHistory(userName, null, 100, this.defaultHistoryFormatter, this.callbackWalletHistory);
    }
 
 
@@ -141,6 +141,9 @@ constructor(
        console.log(err, response, data);
      });
    }
+
+
+
 
 
     postContent(authAccountParameterKey, authAccountParameterUser, getPostContentData) {

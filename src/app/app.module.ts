@@ -1,3 +1,4 @@
+// Node Modules
 import { Comment } from '@angular/compiler/public_api';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -6,50 +7,45 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import 'hammerjs';
-import { SharedModule } from './core/modules/shared.module';
+
+// Components
 import { AppComponent } from './app.component';
+import { MainComponent } from './main/main.component';
+import { PagesComponent } from './main/pages/pages.component';
+import { NavbarVerticalComponent } from './main/components/navbar/vertical/navbar-vertical.component';
+import { ToolbarComponent } from './main/components/toolbar/toolbar.component';
+import { NavigationModule } from './core/components/navigation/navigation.module';
+import { NavbarVerticalToggleDirective } from './main/components/navbar/vertical/navbar-vertical-toggle.directive';
+import { ThemeComponent } from './core/components/theme/theme.component';
+import { SearchBarModule } from './core/components/search-bar/search-bar.module';
+
+// Modules
+import { SharedModule } from './core/modules/shared.module';
+import { PagesModule } from './main/pages/pages.module';
+import { AsyncLocalStorageModule } from 'angular-async-local-storage';
+import { LayoutModule } from './main/components/layout.module'; 
+import { AppRoutingModule } from './app-routing.module';
+import { ScriptLoaderService } from './core/services/script-loader.service';
+import { MainRoutingModule } from './main/main-routing.module';
+import { LoginModule } from './auth/login/login.module';
+import { LogoutModule } from './auth/logout/logout.module';
+import { RegisterModule } from './auth/register/register.module';
+
+// Services
 import { SplashScreenService } from './core/services/splash-screen.service';
 import { ConfigService } from './core/services/config.service';
 import { NavigationService } from './core/components/navigation/navigation.service';
 import { DataService } from './core/services/data.service';
-import { PagesModule } from './main/pages/pages.module';
-import { MainModule } from './main/main.module';
-import { AsyncLocalStorageModule } from 'angular-async-local-storage';
-
-
-// https://angular.io/guide/router
-//
-
-
-
-const appRoutes: Routes = [
-    // {
-    //     path      : '', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined
-    //     loadChildren: './main/main.module#MainModule'
-    // },
-    {
-        path        : '',
-        loadChildren: './main/pages/wallet/wallet.module#WalletModule'
-    },
-    {
-        path        : '',
-        loadChildren: './main/pages/rights-management/post.module#PostModule'
-    },
-    {
-        path        : 'login',
-        loadChildren: './main/pages/authentication/login/login.module#LoginModule'
-    },
-    {
-        path      : '**', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined
-        redirectTo: 'login'
-    },
-];
-
-
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        PagesComponent,
+        MainComponent,
+        NavbarVerticalComponent,
+        ToolbarComponent,
+        NavbarVerticalToggleDirective,
+        ThemeComponent,
 
     ],
     imports     : [
@@ -57,10 +53,22 @@ const appRoutes: Routes = [
         HttpModule,
         HttpClientModule,
         BrowserAnimationsModule,
-        RouterModule.forRoot(appRoutes),
         SharedModule,
-        MainModule,
-        AsyncLocalStorageModule
+        LoginModule,
+        MainRoutingModule,
+        AsyncLocalStorageModule,
+        LayoutModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        MainRoutingModule,
+        LoginModule,
+        LogoutModule,
+        RegisterModule,
+        SharedModule,
+        RouterModule,
+        NavigationModule,
+        SearchBarModule
     ],
     providers   : [
         SplashScreenService,

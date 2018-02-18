@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfigService } from '../../../../core/services/config.service';
 import { Animations } from '../../../../core/animations';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../../../core/services/data.service';
 import { AsyncLocalStorage } from 'angular-async-local-storage';
 
@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit
     item: any;
     loginForm: FormGroup;
     loginFormErrors: any;
+    returnUrl: string;
 
     login: { muserName?: string, password?: string } = {};
 
@@ -31,7 +32,8 @@ export class LoginComponent implements OnInit
         private dataService: DataService,
         private config: ConfigService,
         private formBuilder: FormBuilder,
-        protected storage: AsyncLocalStorage
+        protected storage: AsyncLocalStorage,
+        private route: ActivatedRoute
     )
     {
         this.config.setSettings({
@@ -50,6 +52,10 @@ export class LoginComponent implements OnInit
 
     ngOnInit()
     {
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        this.router.navigate([this.returnUrl]);
+
+
         this.loginForm = this.formBuilder.group({
             muserName   : ['', Validators.required],
             password: ['', Validators.required]
@@ -83,56 +89,40 @@ export class LoginComponent implements OnInit
     }
 
 
+
+//  this.dataService.getAccount('johnstor5').then((result => {
+//         this.Musebalance  = result[0].balance;
+//         this.Vestbalance  = result[0].vesting_shares;
+//         this.MBDbalance   = result[0].mbd_balance;
+//         this.NextwithDraw = result[0].next_vesting.withdraw;
+//         console.log(result);
+//       }));
+
     onLogin(form) {
-        if (form.valid) {
-            this.dataService.setConfig();
 
-            this.dataService.authAccount(this.login.muserName, this.login.password);
-            
-                 this.storage.getItem('isAuthenticated').subscribe((isAuthenticated) => {
-                    if (isAuthenticated != null) {
-                        if (isAuthenticated === 'Success')
-                        {
-                            this.router.navigateByUrl('/post');
-                        }
-                    }
-                }, 
-                () => {});
-           
-                
-     
-         
-            // muse.login(this.login.muserName, this.login.password, function(err, response, data)
-            // {
-            //     console.log(err, response, data);
-            // });
-
-            // Object.assign(this.item, (
-                // muse.login(this.login.muserName, this.login.password, function login(err, response, data)
-                // {
-                //     localStorage.setItem('response', response);
-                //     console.log(err, response, data);
-                // });
-            // ));
-
-            // this.item = localStorage.getItem('logInResponse');
-            // alert('this.item: ' + this.item);
-
-            // if (localStorage.getItem('response') === 'Success')
-            // {
-                // this.router.navigateByUrl(['./main/pages/rights-management/post']);
-                // this.router.navigateByUrl('/post');
-            // }
-
-    //     }
-
-    // }
-
-   // setConfig() {
-   //   return muse.config.set('websocket', 'wss://api.muse.blckchnd.com');
-//    }
-   // getConfig() {
-   //   return muse.api.getConfig(function(err, response){console.log(response); } );
+            this.dataService.authAccount(this.login.muserName, this.login.password).then((result) => {
+                this.item = result;
+                if (result === 'Success')
+                {
+                    this.router.navigate([this.returnUrl]);
+                    // this.router.navigate(['/rights-management/post']);
+                    // this.router.navigate(['./post']);
+                }
+            }).catch((error) => console.error(error));
         }
-    }
+
+
+
+             
+            
+                //  this.storage.getItem('isAuthenticated').subscribe((isAuthenticated) => {
+                //     if (isAuthenticated != null) {
+                //         if (isAuthenticated === 'Success')
+                //         {
+                //             this.router.navigateByUrl('/post');
+                //         }
+                //     }
+                // }, 
+                // () => {});
+           
 }

@@ -3,14 +3,14 @@ import { Subscription } from 'rxjs/Subscription';
 import { ConfigService } from '../core/services/config.service';
 import { Platform } from '@angular/cdk/platform';
 import { DOCUMENT } from '@angular/common';
-// import { Animations } from '../core/animations';
+import { Animations } from '../core/animations';
 
 @Component({
     selector     : 'main',
     templateUrl  : './main.component.html',
-    styleUrls    : ['./main.component.scss'],
+    styleUrls    : ['./main.component.scss'],  
     encapsulation: ViewEncapsulation.None,
-    // animations   : Animations
+    animations   : Animations
 })
 export class MainComponent implements OnInit, OnDestroy
 {

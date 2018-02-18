@@ -4,7 +4,7 @@ import { DataService } from '../../../core/services/data.service';
 import { Observable } from 'rxjs/Rx';
 
 @Component({
-    selector: 'post',
+    selector: '/post',
     templateUrl: './post.component.html',
     styleUrls  : ['./post.component.scss']
 })

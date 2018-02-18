@@ -10,13 +10,21 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class WalletComponent implements OnInit
 {
-  walletForm: FormGroup;
-  Musebalance: any;
-  Vestbalance: any;
-  MBDbalance: any;
-  NextwithDraw: any;
-  History: any;
-  tempValue: any;
+  // private Musebalance: any;
+  // private Vestbalance: any;
+  // private MBDbalance: any;
+  // private NextwithDraw: any;
+  
+  private muser: any;
+  private Config: any;
+  private balance = [];
+  private walletForm: FormGroup;
+  private Musebalance: any;
+  private Vestbalance: any;
+  private MBDbalance: any;
+  private NextwithDraw: any;
+  private History: any;
+  private tempValue: any;
 
    constructor(
                 private dataService: DataService,

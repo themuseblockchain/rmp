@@ -12,15 +12,11 @@
 
             <div class="title">LOGIN TO YOUR ACCOUNT</div>
 
-<!--<form (ngSubmit)="signin()" #f="ngForm">-->
             <form name="loginForm" [formGroup]="loginForm" novalidate>
-            <!--<form (ngSubmit)="signin()" name="loginForm" [formGroup]="loginForm" novalidate>-->
-
                 <mat-form-field>
                     <input matInput placeholder="Muser Name" formControlName="muserName" [(ngModel)]="login.muserName">
-                    <!--<input matInput placeholder="Email" type="email" [(ngModel)]="login.email" formControlName="email" #email="ngModel">-->
                     <mat-error *ngIf="loginFormErrors.muserName.required">
-                        Muser Name is required
+                        Email is required
                     </mat-error>
                     <mat-error *ngIf="!loginFormErrors.muserName.required && loginFormErrors.muserName.muserName">
                         Please enter a valid Muser Name
@@ -29,7 +25,6 @@
 
                 <mat-form-field>
                     <input matInput type="password" placeholder="Password" formControlName="password" [(ngModel)]="login.password">
-                    <!--<input matInput placeholder="Password" type="password" [(ngModel)]="login.password" formControlName="password" #password="ngModel">-->
                     <mat-error *ngIf="loginFormErrors.password.required">
                         Password is required
                     </mat-error>
@@ -39,8 +34,6 @@
                      fxLayoutAlign="space-between center">
  
                      <a class="register" [routerLink]="'/pages/auth/register'">Register</a>
-
-                    <!--<a class="forgot-password" [routerLink]="'/pages/auth/forgot-password'">Forgot Password?</a>-->
                 </div>
 
                 <button mat-raised-button color="accent" class="submit-button" aria-label="LOG IN"
