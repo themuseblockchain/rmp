@@ -39,8 +39,13 @@ export class WalletComponent implements OnInit
             Musebalance : [''],
             Vestbalance : [''],
             MBDbalance : [''],
+            BasicKey : [''],
+            ActiveKey : [''],
+            OwnerKey : [''],
+            MemoKey : [''],
             NextwithDraw : [''],
-            History : [],
+            History : [''],
+            WitnessListArray : [''],
             tempValue : ['']
           });
     }
@@ -48,6 +53,13 @@ export class WalletComponent implements OnInit
   load()
   {
     this.dataService.getAccount('johnstor5').then((result => {
+
+      this.BasicKey = result[0].basic.key_auths[0][0];
+      this.ActiveKey = result[0].active.key_auths[0][0];
+      this.OwnerKey = result[0].owner.key_auths[0][0];
+      this.MemoKey = result[0].memo_key;
+
+      // console.log(this.MemoKey);
 
       this.Musebalance  = result[0].balance.split(' ')[0];
       this.Vestbalance  = result[0].vesting_shares.split(' ')[0];
@@ -57,8 +69,12 @@ export class WalletComponent implements OnInit
     }));
     this.dataService.getAccountHistory('johnstor5').then((result => {
       this.History = result;
+      // console.log(this.History);
+
+    }));
+    this.dataService.getWitnesses().then((result => {
+      this.WitnessListArray = result;
       console.log(result);
-      console.log(this.History);
     }));
   }
 }
