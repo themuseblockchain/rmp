@@ -74,7 +74,23 @@ export class WalletComponent implements OnInit
     }));
     this.dataService.getWitnesses().then((result => {
       this.WitnessListArray = result;
-      console.log(result);
+      // console.log(result);
     }));
   }
+  transferMuseBtn() {
+    console.log('transfer!!');
+  }
+
+  vestMuseBtn() {
+    console.log('vest!!!');
+  }
+
+  withdrawVestBtn() {
+    console.log('withdraw!!');
+  }
+
+  cancelWithdrawBtn() {
+    console.log('cancel!');
+  }
+
 }

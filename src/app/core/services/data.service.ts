@@ -103,12 +103,11 @@ getAccountHistory(authAccountParameterUser) {
     function(err, success) {
       if (err) {
         reject(err);
-
       } else {
         resolve(success);
       }
     });
-  };
+  });
 }
 
   getUrlData(getUrlDataParameter) {
@@ -225,6 +224,20 @@ getAccountHistory(authAccountParameterUser) {
   function(err, result){
     // return(err, result);
   });
+}
+
+transferMuse(authAccountParameterUser, authAccountParameterKey, transferTo, amount, memo) {
+  this.museConfig();
+  return new Promise(function(resolve, reject){
+  muse.transferFunds(authAccountParameterUser, authAccountParameterKey, transferTo, amount, memo, function(err, success){
+    if (err === 0) {
+      reject(err);
+    } else {
+      resolve(success);
+    }
+  });
+});
+
 }
 
 

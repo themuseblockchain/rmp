@@ -42,12 +42,12 @@
                   formControlName="Musebalance"
                   placeholder="Muse Balance: ">
                   {{Musebalance}}
-                  <button mat-raised-button
-                  class="save-content-button mat-purple-bg mt-16 mt-sm-0">
+                  <button mat-raised-button (click)="transferMuseBtn()"
+                  class="mat-purple-bg mt-16 mt-sm-0">
                   Transfer
                   </button>
-                  <button mat-raised-button
-                  class="save-content-button mat-purple-bg mt-16 mt-sm-0">
+                  <button mat-raised-button (click)="vestMuseBtn()"
+                  class="mat-purple-bg mt-16 mt-sm-0">
                   Transfer to Vesting
                   </button>
                 </div>
@@ -65,12 +65,12 @@ MUSE can be vested by clicking transfer to Vesting.</p>
                 formControlName="Vestbalance"
                 placeholder="Vests Balance: ">
                 {{Vestbalance}}
-                <button mat-raised-button
-                class="save-content-button mat-purple-bg mt-16 mt-sm-0">
+                <button mat-raised-button (click)="withdrawVestBtn()"
+                class="mat-purple-bg mt-16 mt-sm-0">
                 Withdraw
                 </button>
-                <button mat-raised-button
-                class="save-content-button mat-purple-bg mt-16 mt-sm-0">
+                <button mat-raised-button (click)="cancelWithdrawBtn()"
+                class="mat-purple-bg mt-16 mt-sm-0">
                 Cancel Withdrawal
                 </button>
 <p>Tokens that grant you more influence within the network.</p>
@@ -221,7 +221,7 @@ The private key or password for the owner key should be kept offline as much as 
                     {{ witness.owner }}
                     {{ witness.last_confirmed_block_num }}
                     {{ witness.url }}
-                  
+
 
               </div>
             </mat-tab>
