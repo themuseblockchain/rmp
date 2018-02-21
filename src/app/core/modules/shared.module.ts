@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
 import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ColorPickerModule } from 'ngx-color-picker';
@@ -12,7 +11,7 @@ import { ConfirmDialogComponent } from '../components/confirm-dialog/confirm-dia
 import { CountdownComponent } from '../components/countdown/countdown.component';
 import { NavbarVerticalService } from '../../main/components/navbar/vertical/navbar-vertical.service';
 import { HljsComponent } from '../components/hljs/hljs.component';
-//import { PerfectScrollbarDirective } from '../directives/perfect-scrollbar/perfect-scrollbar.directive';
+// import { PerfectScrollbarDirective } from '../directives/perfect-scrollbar/perfect-scrollbar.directive';
 import { IfOnDomDirective } from '../directives/if-on-dom/if-on-dom.directive';
 import { MaterialColorPickerComponent } from '../components/material-color-picker/material-color-picker.component';
 
@@ -25,7 +24,7 @@ import { MaterialColorPickerComponent } from '../components/material-color-picke
         CountdownComponent,
         HljsComponent,
         IfOnDomDirective,
-        //PerfectScrollbarDirective,
+        // PerfectScrollbarDirective,
         MaterialColorPickerComponent
     ],
     imports        : [
@@ -47,7 +46,7 @@ import { MaterialColorPickerComponent } from '../components/material-color-picke
         PipesModule,
         CountdownComponent,
         HljsComponent,
-        //PerfectScrollbarDirective,
+        // PerfectScrollbarDirective,
         ReactiveFormsModule,
         ColorPickerModule,
         IfOnDomDirective,

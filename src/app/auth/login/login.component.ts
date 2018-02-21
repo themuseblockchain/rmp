@@ -1,20 +1,11 @@
-import {
-    Component,
-    ComponentFactoryResolver,
-    OnInit,
-    ViewChild,
-    ViewContainerRef,
-    ViewEncapsulation,
-} from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfigService } from '../../core/services/config.service';
 import { Animations } from '../../core/animations';
 import { DataService } from '../../core/services/data.service';
 import { AsyncLocalStorage } from 'angular-async-local-storage';
-// import { AuthenticationService } from '../services/Authentication.Service';
-
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthenticationService } from '../services/authentication.service';
+// import { AuthenticationService } from '../services/authentication.service';
 import { AlertService } from '../services/alert.service';
 // import { UserService } from '../services/user.service';
 import { AlertComponent } from '../directives/alert.component';
@@ -24,9 +15,9 @@ import { AlertComponent } from '../directives/alert.component';
     selector   : 'login',
     templateUrl: './login.component.html',
     styleUrls  : ['./login.component.scss'],
-    encapsulation: ViewEncapsulation.None,
     animations : Animations
 })
+
 export class LoginComponent implements OnInit
 {
     model: any = {};
@@ -41,9 +32,9 @@ export class LoginComponent implements OnInit
 
     constructor(
         private router: Router,
-         private route: ActivatedRoute,
+        private route: ActivatedRoute,
         private dataService: DataService,
-        private authService: AuthenticationService,
+        // private authService: AuthenticationService,
         private config: ConfigService,
         private formBuilder: FormBuilder,
         protected storage: AsyncLocalStorage,
@@ -60,7 +51,7 @@ export class LoginComponent implements OnInit
         });
 
         this.loginFormErrors = {
-            muserName   : {},
+            muserName: {},
             password: {}
         };
     }
@@ -113,66 +104,43 @@ export class LoginComponent implements OnInit
     }
 
 
-    onLogin(form) {
+    onLogin(loginForm) {
         // this.loading = true;
             // this.authService.login(this.model.email, this.model.password).subscribe(
             //     data => {
+            //         // this.router.navigate([this.returnUrl]);
+            //         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/post';
             //         this.router.navigate([this.returnUrl]);
             //     },
             //     error => {
             //         // this.showAlert('alertSignin');
-            //         // this.alertService.error(error);
+            //         this.alertService.error(error);
             //         // this.loading = false;
             //     });
-//         if (form.valid) {
-//             this.dataService.setConfig();
 
-//             this.dataService.authAccount(this.login.muserName, this.login.password);
+            this.dataService.authAccount(this.login.muserName, this.login.password).then(
+                data => {
+                    // this.router.navigate([this.returnUrl]);
+                    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/post';
+                    this.router.navigate([this.returnUrl]);
+                },
+                error => {
+                    // this.showAlert('alertSignin');
+                    this.alertService.error(error);
+                    // this.loading = false;
+                }
+
+            );
             
-//                  this.storage.getItem('isAuthenticated').subscribe((isAuthenticated) => {
-//                     if (isAuthenticated != null) {
-//                         if (isAuthenticated === 'Success')
-//                         {
-//                             this.router.navigateByUrl('/post');
-//                         }
-//                     }
-//                 }, 
-//                 () => {});
-           
-                
-     
-         
-//             // muse.login(this.login.muserName, this.login.password, function(err, response, data)
-//             // {
-//             //     console.log(err, response, data);
-//             // });
-
-//             // Object.assign(this.item, (
-//                 // muse.login(this.login.muserName, this.login.password, function login(err, response, data)
-//                 // {
-//                 //     localStorage.setItem('response', response);
-//                 //     console.log(err, response, data);
-//                 // });
-//             // ));
-
-//             // this.item = localStorage.getItem('logInResponse');
-//             // alert('this.item: ' + this.item);
-
-//             // if (localStorage.getItem('response') === 'Success')
-//             // {
-//                 // this.router.navigateByUrl(['./main/pages/rights-management/post']);
-//                 // this.router.navigateByUrl('/post');
-//             // }
-
-//     //     }
-
-//     // }
-
-//    // setConfig() {
-//    //   return muse.config.set('websocket', 'wss://api.muse.blckchnd.com');
-// //    }
-//    // getConfig() {
-//    //   return muse.api.getConfig(function(err, response){console.log(response); } );
+                //  this.storage.getItem('isAuthenticated').subscribe((isAuthenticated) => {
+                //     if (isAuthenticated != null) {
+                //         if (isAuthenticated === 'Success')
+                //         {
+                //             this.router.navigateByUrl('/post');
+                //         }
+                //     }
+                // }, 
+                // () => {});
         }
     }
 

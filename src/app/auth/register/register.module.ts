@@ -9,7 +9,16 @@ import { AuthRoutingModule } from '../auth-routing.routing';
 import { AuthGuard } from '../guards/auth.guard';
 import { AlertService } from '../services/alert.service';
 // import { AuthenticationService } from '../services/authentication.service';
-import { UserService } from '../services/user.service';
+// import { UserService } from '../services/user.service';
+import { RegisterComponent } from './register.component';
+
+const routes = [
+    {
+        path     : 'register', 
+        component: RegisterComponent
+    }
+];
+
 
 @NgModule({
     declarations: [
@@ -24,9 +33,9 @@ import { UserService } from '../services/user.service';
     ],
     providers: [
         AuthGuard,
-        AlertService,
+        AlertService
         // AuthenticationService,
-        UserService
+        // UserService
     ],
     // entryComponents: [AlertComponent],
 })

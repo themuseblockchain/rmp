@@ -1,24 +1,27 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// import { ConfigService } from '../../core/services/config.service';
-// import { Animations } from '../../core/animations';
+import { ConfigService } from '../../core/services/config.service';
+import { Animations } from '../../core/animations';
 
 @Component({
     selector   : 'register',
     templateUrl: './register.component.html',
     styleUrls  : ['./register.component.scss'],
-    encapsulation: ViewEncapsulation.None,
-    // animations : Animations
+    animations : Animations,
+    // encapsulation: ViewEncapsulation.None
 })
 export class RegisterComponent implements OnInit
 {
     registerForm: FormGroup;
     registerFormErrors: any;
+    returnUrl: string;
 
     constructor(
-        // private config: ConfigService,
-        private formBuilder: FormBuilder
+        private config: ConfigService,
+        private formBuilder: FormBuilder,
+        private route: ActivatedRoute,
+        private router: Router
     )
     {
         // this.config.setSettings({
@@ -50,6 +53,9 @@ export class RegisterComponent implements OnInit
         this.registerForm.valueChanges.subscribe(() => {
             this.onRegisterFormValuesChanged();
         });
+
+                this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/register';
+        this.router.navigate([this.returnUrl]);
     }
 
     onRegisterFormValuesChanged()

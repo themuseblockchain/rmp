@@ -10,32 +10,19 @@ const routes: Routes = [
         'canActivate': [AuthGuard],
         'children': [
             // {
-            //     'path': 'angular\/ng-bootstrap',
-            //     'loadChildren': '.\/pages\/angular\/ng-bootstrap\/ng-bootstrap.module#NgBootstrapModule'
-            // },
-            // {
-            //     'path': 'angular\/primeng',
-            //     'loadChildren': '.\/pages\/angular\/primeng\/primeng.module#PrimengModule'
-            // },
-            // {
-            //     'path': 'index',
-            //     'loadChildren': '.\/pages\/index\/index.module#IndexModule'
-            // },
-            // {
             //     'path': '404',
             //     'loadChildren': '.\/pages\/not-found\/not-found.module#NotFoundModule'
             // },
             {
-                'path': '',
-                'redirectTo': 'index',
-                'pathMatch': 'full'
-            }
+                'path': 'wallet',
+                'loadChildren': './pages/wallet/wallet.module#WalletModule'
+            },
+            {
+                'path': 'post',
+                'loadChildren': './pages/rights-management/post.module#PostModule'
+            },
         ]
     },
-    // {
-        // 'path': 'snippets\/pages\/errors\/error-6',
-        // 'loadChildren': '.\/pages\/self-layout-blank\/snippets\/pages\/errors\/errors-error-6\/errors-error-6.module#ErrorsError6Module'
-    // },
     // {
         // 'path': '**',
         // 'redirectTo': '404',

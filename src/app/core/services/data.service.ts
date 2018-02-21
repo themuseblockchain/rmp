@@ -26,7 +26,7 @@ export class DataService
 constructor(
             private zone: NgZone,
             private http: HttpClient,
-            protected storage: AsyncLocalStorage
+            private storage: AsyncLocalStorage
 ) {
 }
 
@@ -60,15 +60,19 @@ constructor(
      return user;
    }
 
-  authAccount(authAccountParameterUser, authAccountParameterKey) {
+  authAccount(muserName, password) {
          this.museConfig();
 
          return new Promise(function(resolve, reject){
-           muse.login(authAccountParameterUser, authAccountParameterKey, function(err, success){
-             if (err === 0) {
+           muse.login(muserName, password, function(err, success){
+             if (err !== 1) {
                reject(err);
              } else {
                resolve(success);
+               //  const data = [muserName, 'true'];
+               //  localStorage.setItem('currentUser', JSON.stringify(data));
+               localStorage.setItem('currentUser', muserName);
+               localStorage.setItem('is_logged_in', 'true');
              }
            });
          });

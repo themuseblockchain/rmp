@@ -14,7 +14,7 @@
 
             <div class="title">CREATE AN ACCOUNT</div>
 
-            <!--<form name="registerForm" [formGroup]="registerForm" novalidate>
+            <form name="registerForm" [formGroup]="registerForm" novalidate>
 
                 <mat-form-field>
                     <input matInput placeholder="Name" formControlName="name">
@@ -59,11 +59,11 @@
                     CREATE AN ACCOUNT
                 </button>
 
-            </form>-->
+            </form>
 
             <div class="register" fxLayout="column" fxLayoutAlign="center center">
                 <span class="text">Already have an account?</span>
-                <a class="link" [routerLink]="'./auth/login'">Login</a>
+                <a class="link" [routerLink]="'/login'">Login</a>
             </div>
 
         </div>

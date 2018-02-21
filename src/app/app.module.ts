@@ -23,7 +23,7 @@ import { SearchBarModule } from './core/components/search-bar/search-bar.module'
 import { SharedModule } from './core/modules/shared.module';
 import { PagesModule } from './main/pages/pages.module';
 import { AsyncLocalStorageModule } from 'angular-async-local-storage';
-import { LayoutModule } from './main/components/layout.module'; 
+// import { LayoutModule } from './main/components/layout.module'; 
 import { AppRoutingModule } from './app-routing.module';
 import { MainRoutingModule } from './main/main-routing.module';
 import { LoginModule } from './auth/login/login.module';
@@ -56,7 +56,7 @@ import { DataService } from './core/services/data.service';
         LoginModule,
         MainRoutingModule,
         AsyncLocalStorageModule,
-        LayoutModule,
+        // LayoutModule,
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,

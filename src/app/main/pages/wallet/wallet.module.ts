@@ -16,7 +16,7 @@ const routes = [
     ],
     imports     : [
          SharedModule,
-        RouterModule.forChild(routes)
+         RouterModule.forChild(routes)
     ],
     exports     : [
         WalletComponent

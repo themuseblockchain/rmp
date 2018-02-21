@@ -1,3 +1,5 @@
+// import { AuthGuard } from './auth/guards/auth.guard';
+
 export class NavigationModel
 {
     public model: any[];
@@ -5,33 +7,19 @@ export class NavigationModel
     constructor()
     {
         this.model = [
-            // {
-            //     'id'      : 'administration',
-            //     'title'   : 'User Management',
-            //     'type'    : 'group',
-            //     'children': [
-            //                     {
-            //                         'id'        : 'users',
-            //                         'title'     : 'Users',
-            //                         'type'      : 'item',
-            //                         'icon'    : 'person',
-            //                         'url'       : '/user-management/users'
-            //                     },
-            //                 ]
-            // },
             {
                 'id'      : 'wallet',
                 'title'   : 'Muser Wallet',
                 'type'    : 'group',
                 'children': [
-                                {
-                                    'id'   : 'wallet',
-                                    'title': 'Wallet',
-                                    'type' : 'item',
-                                    'icon' : 'star',
-                                    'url'  : './wallet'
-                                },
-                            ]
+                    {
+                        'id'   : 'wallet',
+                        'title': 'Wallet',
+                        'type' : 'item',
+                        'icon' : 'star',
+                        'url'  : './wallet'
+                    },
+                ]
             },
             {
                 'id'      : 'rights-management',
