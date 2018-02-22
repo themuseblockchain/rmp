@@ -1,12 +1,11 @@
 import { Injectable, Inject, NgZone, Input } from '@angular/core';
 import * as muse from 'museblockchain-js';
 import * as Rx from 'rxjs/Rx';
-import { of } from 'rxjs/observable/of';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AsyncLocalStorage } from 'angular-async-local-storage';
 import CryptoJS from 'crypto-js';
-import { Observable } from 'rxjs/Rx';
+
 
 @Injectable()
 export class DataService
@@ -85,8 +84,9 @@ getAccountHistory(authAccountParameterUser) {
            // console.log(success);
           for (const each of success) {
 
+          console.log(each);
             // define case switches here.
-            fakearray.push(JSON.stringify(each[1].op) + ' ' + each[1].timestamp);
+            fakearray.push(each[1].timestamp.split('T')[0] + ' ' + each[1].op[0] + ' ' + JSON.stringify(each[1].op[1]));
           }
           const makecorrectorder = fakearray.reverse();
           // console.log(fakearray);

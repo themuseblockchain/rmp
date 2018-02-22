@@ -1,4 +1,4 @@
-<div id="wallet" class="page-layout carded fullwidth">
+<div id="walletpage" class="page-layout carded fullwidth">
 
   <!-- TOP BACKGROUND -->
   <div class="top-bg mat-deep-purple-bg"></div>
@@ -39,7 +39,7 @@
                   readonly
                   matInput
                   name="Muse"
-                  formControlName="Musebalance"
+                  formControlName="tempValue"
                   placeholder="Muse Balance: ">
                   {{Musebalance}}
                   <button mat-raised-button (click)="transferMuseBtn()"
@@ -62,7 +62,7 @@ MUSE can be vested by clicking transfer to Vesting.</p>
                 readonly
                 matInput
                 name="Vests"
-                formControlName="Vestbalance"
+                formControlName="tempValue"
                 placeholder="Vests Balance: ">
                 {{Vestbalance}}
                 <button mat-raised-button (click)="withdrawVestBtn()"
@@ -80,7 +80,7 @@ MUSE can be vested by clicking transfer to Vesting.</p>
                 readonly
                 matInput
                 name="MBD"
-                formControlName="MBDbalance"
+                formControlName="tempValue"
                 placeholder="Muse Backed Dollars Balance: ">
                 {{MBDbalance}}
 <p>Tokens worth about $1.00 of MUSE</p>
@@ -90,7 +90,7 @@ MUSE can be vested by clicking transfer to Vesting.</p>
                 readonly
                 matInput
                 name="Next Withdrawal"
-                formControlName="MBDbalance"
+                formControlName="tempValue"
                 placeholder="Next Withdrawal: ">
                 {{NextwithDraw}}
                 <p></p>
@@ -100,7 +100,7 @@ MUSE can be vested by clicking transfer to Vesting.</p>
                 readonly
                 matInput
                 name="History"
-                formControlName="History"
+                formControlName="tempValue"
                 placeholder="History">
               </mat-form-field>
 
