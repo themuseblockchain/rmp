@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../../core/services/data.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Modal, ModalDialog } from './modal/modal-dialog';
-
+import { ModalDialogComponent } from './modal/modal-dialog.component';
+import { MatDialog, MatDialogRef  } from '@angular/material';
 
 @Component({
   selector: 'wallet',
@@ -23,12 +23,13 @@ export class WalletComponent implements OnInit
   MemoKey: any;
   WitnessListArray: any;
   tempValue: any;
+  dialogRef: MatDialogRef<ModalDialogComponent>;
+
 
   constructor(
     private dataService: DataService,
     private formBuilder: FormBuilder,
-    private modalDialog: ModalDialog, 
-    private modal: Modal
+    private dialog: MatDialog
   ){}
   ngOnInit()
   {
@@ -64,7 +65,7 @@ export class WalletComponent implements OnInit
   }
   transferMuseBtn() {
     // console.log('transfer!!');
-      this.modal.openDialog();
+      this.dialogRef = this.dialog.open(ModalDialogComponent);
   }
 
   vestMuseBtn() {

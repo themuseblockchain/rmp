@@ -38,21 +38,21 @@ export class UsersComponent implements OnInit
 
     ngOnInit()
     {
-        // this.dataSource = new FilesDataSource(this.usersService, this.paginator, this.sort);
-        alert('004');
-        this.dataSource = new FilesDataSource(this.dataService.getAllAccounts(), this.paginator, this.sort);
-         alert('005');
-        Observable.fromEvent(this.filter.nativeElement, 'keyup')
-                  .debounceTime(150)
-                  .distinctUntilChanged()
-                  .subscribe(() => {
+        // // this.dataSource = new FilesDataSource(this.usersService, this.paginator, this.sort);
+        // alert('004');
+        // this.dataSource = new FilesDataSource(this.dataService.getAllAccounts(), this.paginator, this.sort);
+        //  alert('005');
+        // Observable.fromEvent(this.filter.nativeElement, 'keyup')
+        //           .debounceTime(150)
+        //           .distinctUntilChanged()
+        //           .subscribe(() => {
 
-                      if ( !this.dataSource )
-                      {
-                          return;
-                      }
-                      this.dataSource.filter = this.filter.nativeElement.value;
-                  });
+        //               if ( !this.dataSource )
+        //               {
+        //                   return;
+        //               }
+        //               this.dataSource.filter = this.filter.nativeElement.value;
+        //           });
     }
 }
 

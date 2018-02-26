@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../../core/modules/shared.module';
 import { WalletComponent } from './wallet.component';
-import { ModalDialog } from './modal/modal-dialog';
+import { ModalDialogComponent } from './modal/modal-dialog.component';
 
 const routes = [
     {
@@ -14,16 +14,18 @@ const routes = [
 @NgModule({
     declarations: [
         WalletComponent,
-        ModalDialog
+        ModalDialogComponent
         ],
     imports     : [
         SharedModule,
         RouterModule.forChild(routes)
     ],
     exports     : [
-        WalletComponent,
-        ModalDialog
-    ]
+        WalletComponent
+    ],
+    entryComponents: [
+        ModalDialogComponent
+    ],
 })
 
 export class WalletModule

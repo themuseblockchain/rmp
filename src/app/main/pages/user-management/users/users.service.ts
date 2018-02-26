@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { DataService } from '../../../../core/services/data.service';
 
-import * as muse from 'museblockchain-js';
+import * as muse from 'muse-js';
 
 @Injectable()
 export class UsersService implements Resolve<any>
@@ -45,25 +45,25 @@ export class UsersService implements Resolve<any>
     {
 
         return new Promise((resolve, reject) => {
-// https://tutorialedge.net/typescript/angular/angular-websockets-tutorial/
-            // this.ds = <Subject<Message>>dataService
-            //  this.dataService.museSetup();
-            //  this.http.get(this.dataService.getAllAccounts())
-             const test = this.http.get(this.dataService.getAllAccounts());
-                test.subscribe((response: any) => {
-                alert('003');
-                    this.users = response;
-                     alert('this.users:' + JSON.stringify(this.users));
-                    this.onUserChanged.next(this.users);
-                    // resolve(response);
-                });
+// // https://tutorialedge.net/typescript/angular/angular-websockets-tutorial/
+//             // this.ds = <Subject<Message>>dataService
+//             //  this.dataService.museSetup();
+//             //  this.http.get(this.dataService.getAllAccounts())
+//              const test = this.http.get(this.dataService.getAllAccounts());
+//                 test.subscribe((response: any) => {
+//                 alert('003');
+//                     this.users = response;
+//                      alert('this.users:' + JSON.stringify(this.users));
+//                     this.onUserChanged.next(this.users);
+//                     // resolve(response);
+//                 });
 
-        //     this.http.get('api/users')
-        //         .subscribe((response: any) => {
-        //             this.users = response;
-        //             this.onUserChanged.next(this.users);
-        //             resolve(response);
-        //         }, reject);
+//         //     this.http.get('api/users')
+//         //         .subscribe((response: any) => {
+//         //             this.users = response;
+//         //             this.onUserChanged.next(this.users);
+//         //             resolve(response);
+//         //         }, reject);
          });
     }
 }
