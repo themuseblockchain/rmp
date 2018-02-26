@@ -13,14 +13,10 @@ export class DataService
 
   private isAuthen: any;
   public userSuccess: any;
-  getAccountParameter: any;
-  getUrlDataParameter: any;
-  getDataForUserParameter: any;
-  getContentorAllParameter: any;
-  getStreamingPlatformsParameter: any;
-  getPostContentData: any;
-  authAccountParameterUser: any;
-  authAccountParameterKey: any;
+  getData: any;
+  submitContent: any;
+  authUser: any;
+  authKey: any;
 
   constructor(
     private zone: NgZone,
@@ -46,10 +42,10 @@ getConfig() {
   });
 }
 
-getAccount(authAccountParameterUser) {
+getAccount(authUser) {
   this.museConfig();
 
-  return muse.api.getAccounts([authAccountParameterUser])
+  return muse.api.getAccounts([authUser])
   .then((result) => result.map(this.transformUserInfo));
 }
 
@@ -59,10 +55,10 @@ private transformUserInfo(user) {
   return user;
 }
 
-authAccount(authAccountParameterUser, authAccountParameterKey) {
+authAccount(authUser, authKey) {
   this.museConfig();
   return new Promise(function(resolve, reject){
-    muse.login(authAccountParameterUser, authAccountParameterKey, function(err, success){
+    muse.login(authUser, authKey, function(err, success){
       if (err === 0) {
         reject(err);
       } else {
@@ -72,10 +68,10 @@ authAccount(authAccountParameterUser, authAccountParameterKey) {
   });
 }
 
-getAccountHistory(authAccountParameterUser) {
+getAccountHistory(authUser) {
   this.museConfig();
   return new Promise(function(resolve, reject){
-    muse.api.getAccountHistory(authAccountParameterUser, 9999, 24,
+    muse.api.getAccountHistory(authUser, 9999, 24,
       function(err, success) {
         if (err) {
           reject(err);
@@ -110,10 +106,10 @@ getAccountHistory(authAccountParameterUser) {
   });
 }
 
-  getUrlData(getUrlDataParameter) {
+  getUrlData(getData) {
     this.museConfig();
     return new Promise(function(resolve, reject){
-      muse.api.getContentByUrl(getUrlDataParameter,
+      muse.api.getContentByUrl(getData,
         function(err, success) {
           if (err) {
             reject(err);
@@ -126,92 +122,116 @@ getAccountHistory(authAccountParameterUser) {
 
 
 
-  getDataForUser(getDataForUserParameter) {
+  getDataForUser(getData) {
     this.museConfig();
+    return new Promise(function(resolve, reject){
+      muse.api.getContentByUploader(getData,
+        function(err, success) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(success);
+          }
+        });
+      });
+    }
 
-    return muse.api.getContentByUploader(getDataForUserParameter, function(err, response, data)
-    {
-      console.log(response);
+  // optionally provide a lowerbound parameter to lookup by
+
+  getContentorAll(getData) {
+    this.museConfig();
+    return new Promise(function(resolve, reject){
+    muse.api.lookupContent(getData, 50,
+      function(err, success) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(success);
+      }
     });
+  });
   }
 
   // optionally provide a lowerbound parameter to lookup by
 
-  getContentorAll(getContentorAllParameter) {
+  getStreamingPlatforms(getData) {
     this.museConfig();
-    return muse.api.lookupContent(getContentorAllParameter, 50, function(err, response, data)
-    {
-      console.log(response);
-    });
-  }
+    return new Promise(function(resolve, reject){
+      muse.api.lookupStreamingPlatformAccounts(getData, 50,
+        function(err, success) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(success);
+          }
+        });
+      });
+    }
 
-  // optionally provide a lowerbound parameter to lookup by
+    getAllAccounts(){
+      this.museConfig();
+      return new Promise(function(resolve, reject){
+        muse.api.lookupAccounts('', 9999,
+        function(err, success) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(success);
+          }
+        });
+      });
+    }
 
-  getStreamingPlatforms(getStreamingPlatformsParameter) {
+
+  postContent(authKey, authUser, submitContent) {
     this.museConfig();
-    return muse.api.lookupStreamingPlatformAccounts(getStreamingPlatformsParameter, 50, function(err, response, data)
-    {
-      console.log(err, response, data);
-    });
-  }
-
-  getAllAccounts(){
-    this.museConfig();
-    return muse.api.lookupAccounts('', 9999, function(err, response, data)
-    {
-      console.log(err, response, data);
-    });
-  }
-
-
-  postContent(authAccountParameterKey, authAccountParameterUser, getPostContentData) {
-    this.museConfig();
+    return new Promise(function(resolve, reject){
     muse.broadcast.content(
-      authAccountParameterKey,
-      authAccountParameterUser,
-      getPostContentData.url,
+      authKey,
+      authUser,
+      submitContent.url,
       {
-        'part_of_album': getPostContentData.part_of_album, // bool
-        'album_title': getPostContentData.lbum_title,
-        'album_artist': [authAccountParameterUser],
-        'genre_1': getPostContentData.genre_1,
-        'country_of_origin': getPostContentData.country_of_origin,
-        'explicit_': getPostContentData.explicit_, // bool
-        'p_line': getPostContentData.p_line,
-        'c_line': getPostContentData.c_line,
-        'upc_or_ean': getPostContentData.upc_or_ean,
-        'release_date': getPostContentData.release_date,
-        'release_year': getPostContentData.release_year,
-        'sales_start_date': getPostContentData.sales_start_date,
-        'master_label_name': getPostContentData.master_label_name,
-        'display_label_name': getPostContentData.display_label_name
+        'part_of_album': submitContent.part_of_album, // bool
+        'album_title': submitContent.lbum_title,
+        'album_artist': [authUser],
+        'genre_1': submitContent.genre_1,
+        'country_of_origin': submitContent.country_of_origin,
+        'explicit_': submitContent.explicit_, // bool
+        'p_line': submitContent.p_line,
+        'c_line': submitContent.c_line,
+        'upc_or_ean': submitContent.upc_or_ean,
+        'release_date': submitContent.release_date,
+        'release_year': submitContent.release_year,
+        'sales_start_date': submitContent.sales_start_date,
+        'master_label_name': submitContent.master_label_name,
+        'display_label_name': submitContent.display_label_name
       },
       {
-        'track_title': getPostContentData.track_title,
-        'ISRC': getPostContentData.ISRC,
-        'track_artists': [authAccountParameterUser],
-        'genre_1': getPostContentData.genre_1,
-        'p_line': getPostContentData.track_p_line,
-        'track_no': getPostContentData.track_no,
-        'track_volume': getPostContentData.track_volume,
-        'track_duration': getPostContentData.track_duration,
-        'samples': getPostContentData.samples // bool
+        'track_title': submitContent.track_title,
+        'ISRC': submitContent.ISRC,
+        'track_artists': [authUser],
+        'genre_1': submitContent.genre_1,
+        'p_line': submitContent.track_p_line,
+        'track_no': submitContent.track_no,
+        'track_volume': submitContent.track_volume,
+        'track_duration': submitContent.track_duration,
+        'samples': submitContent.samples // bool
       },
       {
-        'composition_title': getPostContentData.composition_title,
-        'third_party_publishers': getPostContentData.third_party_publishers, // bool
-        'publishers': getPostContentData.publishers,
-        'writers': getPostContentData.writers,
-        'PRO': getPostContentData.pro
+        'composition_title': submitContent.composition_title,
+        'third_party_publishers': submitContent.third_party_publishers, // bool
+        'publishers': submitContent.publishers,
+        'writers': submitContent.writers,
+        'PRO': submitContent.pro
       },
 
       [{
-        'payee': authAccountParameterUser,
+        'payee': authUser,
         'bp': 10000
       }
     ],
     [{
-      'voter': authAccountParameterUser,
+      'voter': authUser,
       'percentage': 100
     }
   ],
@@ -221,15 +241,20 @@ getAccountHistory(authAccountParameterUser) {
   100,
   10,
   5000,
-  function(err, result){
-    // return(err, result);
+  function(err, success) {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(success);
+    }
   });
+});
 }
 
-transferMuse(authAccountParameterUser, authAccountParameterKey, transferTo, amount, memo) {
+transferMuse(authUser, authKey, transferTo, amount, memo) {
   this.museConfig();
   return new Promise(function(resolve, reject){
-  muse.transferFunds(authAccountParameterUser, authAccountParameterKey, transferTo, amount, memo, function(err, success){
+  muse.transferFunds(authUser, authKey, transferTo, amount, memo, function(err, success){
     if (err === 0) {
       reject(err);
     } else {
