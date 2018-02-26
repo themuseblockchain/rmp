@@ -80,9 +80,91 @@ getAccountHistory(authUser) {
            // console.log(success);
           for (const each of success) {
 
-          console.log(each);
+          const history_info;
+
+          switch (each[1].op[0])
+        {
+        case 'account_create':
+            if (each[1].op[1].creator === authUser)
+            {
+            history_info = 'Created Account ' + each[1].op[1].new_account_name;
+            }
+            else if (each[1].op[1].new_account_name === authUser)
+            {
+            history_info = 'Account Creation';
+            }
+            break;
+        case 'transfer':
+            if (each[1].op[1].to === authUser)
+            {
+            history_info = 'Received ' + each[1].op[1].amount.split(' ')[0] + ' MUSE from ' + each[1].op[1].from;
+            }
+            else
+            {
+            history_info = 'Sent ' + each[1].op[1].amount.split(' ')[0] + ' MUSE to ' + each[1].op[1].to;
+            }
+            break;
+        case 'transfer':
+            if (each[1].op[1].to === authUser)
+            {
+            history_info = 'Received ' + each[1].op[1].amount.split(' ')[0] + ' MUSE from ' + each[1].op[1].from;
+            }
+            else
+            {
+            history_info = 'Sent ' + each[1].op[1].amount.split(' ')[0] + ' MUSE to ' + each[1].op[1].to;
+            }
+            break;
+
+        case 'transfer_to_vesting':
+            if (each[1].op[1].to === authUser)
+            {
+            // history_info = 'Received ' + each[1].op[1].amount.split(' ')[0] + ' VEST from ' + each[1].op[1].from;
+            history_info = 'Transferred ' + each[1].op[1].amount.split(' ')[0] + ' MUSE to VEST';
+            }
+            else
+            {
+            history_info = 'Sent ' + each[1].op[1].amount.split(' ')[0] + ' VEST to ' + each[1].op[1].to;
+            }
+            break;
+        case 'withdraw_vesting':
+            history_info = 'Withdrawing ' + each[1].op[1].vesting_shares.split(' ')[0] + ' VEST';
+            break;
+        case 'account_witness_vote':
+
+            if (each[1].op[1].approve)
+            {
+            history_info =  each[1].op[1].account + ' Voted Witness ' + each[1].op[1].witness;
+            }
+            else
+            {
+            history_info = each[1].op[1].account + ' UnVoted Witness ' + each[1].op[1].witness;
+            }
+            break;
+        case 'witness_update':
+            history_info = 'Witness Update';
+            break;
+        case 'account_update':
+            history_info = 'Account Update';
+            break;
+        case 'content':
+            history_info = 'Content Listed: URL: ' + each[1].op[1].url + ' Uploader: ' + each[1].op[1].uploader;
+            break;
+        case 'fill_vesting_withdraw':
+            history_info = 'Withdrawal of VESTS from: ' + each[1].op[1].from_account + ' to: ' + each[1].op[1].to_account + ' of ' + each[1].op[1].deposited.split(' ')[0];
+            break;
+        case 'custom_json':
+            history_info = 'Custom Json ' + each[1].op[1].id + ' ' + each[1].op[1].json + ' ' + each[1].op[1].required_auths + ' ' + each[1].op[1].required_basic_auths;
+            break;
+        default:
+            history_info = 'Unknown operation: ' + each[1].op[0];
+        }
+
+        fakearray.push(history_info);
+
+
+          // console.log(each);
             // define case switches here.
-            fakearray.push(each[1].timestamp.split('T')[0] + ' ' + each[1].op[0] + ' ' + JSON.stringify(each[1].op[1]));
+            // fakearray.push(each[1].timestamp.split('T')[0] + ' ' + each[1].op[0] + ' ' + JSON.stringify(each[1].op[1]));
           }
           const makecorrectorder = fakearray.reverse();
           // console.log(fakearray);
