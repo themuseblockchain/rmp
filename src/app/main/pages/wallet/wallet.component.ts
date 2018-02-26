@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../../core/services/data.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Modal, ModalDialog } from './modal/modal-dialog';
+
 
 @Component({
   selector: 'wallet',
@@ -24,7 +26,9 @@ export class WalletComponent implements OnInit
 
   constructor(
     private dataService: DataService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private modalDialog: ModalDialog, 
+    private modal: Modal
   ){}
   ngOnInit()
   {
@@ -59,7 +63,8 @@ export class WalletComponent implements OnInit
     }));
   }
   transferMuseBtn() {
-    console.log('transfer!!');
+    // console.log('transfer!!');
+      this.modal.openDialog();
   }
 
   vestMuseBtn() {
@@ -73,5 +78,7 @@ export class WalletComponent implements OnInit
   cancelWithdrawBtn() {
     console.log('cancel!');
   }
+
+
 
 }
