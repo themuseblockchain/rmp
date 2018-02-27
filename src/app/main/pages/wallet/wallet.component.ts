@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DataService } from '../../../core/services/data.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ModalDialogComponent } from './modal/modal-dialog.component';
+import { ModalDialogTransferComponent } from './modal/modaldialogtransfer.component';
+import { ModalDialogVestComponent } from './modal/modaldialogvest.component';
+import { ModalDialogWithdrawComponent } from './modal/modaldialogwithdraw.component';
 import { MatDialog, MatDialogRef  } from '@angular/material';
 
 @Component({
@@ -23,7 +25,9 @@ export class WalletComponent implements OnInit
   MemoKey: any;
   WitnessListArray: any;
   tempValue: any;
-  dialogRef: MatDialogRef<ModalDialogComponent>;
+  dialogRefTrans: MatDialogRef<ModalDialogTransferComponent>;
+  dialogRefVest: MatDialogRef<ModalDialogVestComponent>;
+  dialogRefWithd: MatDialogRef<ModalDialogWithdrawComponent>;
 
 
   constructor(
@@ -65,15 +69,17 @@ export class WalletComponent implements OnInit
   }
   transferMuseBtn() {
     // console.log('transfer!!');
-      this.dialogRef = this.dialog.open(ModalDialogComponent);
+      this.dialogRefTrans = this.dialog.open(ModalDialogTransferComponent);
   }
 
   vestMuseBtn() {
-    console.log('vest!!!');
+    this.dialogRefVest = this.dialog.open(ModalDialogVestComponent);
+    // console.log('vest!!!');
   }
 
   withdrawVestBtn() {
-    console.log('withdraw!!');
+    this.dialogRefWithd = this.dialog.open(ModalDialogWithdrawComponent);
+    // console.log('withdraw!!');
   }
 
   cancelWithdrawBtn() {

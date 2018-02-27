@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../../core/modules/shared.module';
 import { WalletComponent } from './wallet.component';
-import { ModalDialogComponent } from './modal/modal-dialog.component';
+import { ModalDialogTransferComponent } from './modal/modaldialogtransfer.component';
+import { ModalDialogVestComponent } from './modal/modaldialogvest.component';
+import { ModalDialogWithdrawComponent } from './modal/modaldialogwithdraw.component';
 
 const routes = [
     {
@@ -14,7 +16,9 @@ const routes = [
 @NgModule({
     declarations: [
         WalletComponent,
-        ModalDialogComponent
+        ModalDialogTransferComponent,
+        ModalDialogVestComponent,
+        ModalDialogWithdrawComponent
         ],
     imports     : [
         SharedModule,
@@ -24,7 +28,9 @@ const routes = [
         WalletComponent
     ],
     entryComponents: [
-        ModalDialogComponent
+        ModalDialogTransferComponent,
+        ModalDialogVestComponent,
+        ModalDialogWithdrawComponent
     ],
 })
 

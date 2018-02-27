@@ -80,7 +80,7 @@ getAccountHistory(authUser) {
           // console.log(success);
           for (const each of success) {
 
-          const history_info;
+          let history_info;
 
           switch (each[1].op[0])
           {
