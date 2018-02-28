@@ -71,6 +71,9 @@ export class WalletComponent implements OnInit
     // console.log('transfer!!');
       this.dialogRefTrans = this.dialog.open(ModalDialogTransferComponent);
   }
+  transferMuseAct() {
+    console.log('works!');
+  }
 
   vestMuseBtn() {
     this.dialogRefVest = this.dialog.open(ModalDialogVestComponent);

@@ -1,11 +1,18 @@
 <h1 mat-dialog-title>Transfer</h1>
 <div mat-dialog-content>
+  <div mat-dialog-content>Move tokens to another Muse account.</div>
     <mat-form-field>
-        <input matInput placeholder="Placeholder Text" tabindex="1" [(ngModel)]="data">
+        <input matInput placeholder="Transfer to" tabindex="1" [(ngModel)]="toaccount">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Amount" tabindex="1" [(ngModel)]="amount">
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Memo" tabindex="1" [(ngModel)]="memo">
     </mat-form-field>
 </div>
 
-<div mat-dialog-content>Some more dialog elements.</div>
 <div mat-dialog-actions>
+    <button mat-button (click)="transferMuseAct()">Submit</button>
     <button mat-button mat-dialog-close>Close</button>
 </div>

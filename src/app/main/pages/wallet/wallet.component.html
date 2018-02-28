@@ -217,11 +217,13 @@ The private key or password for the owner key should be kept offline as much as 
             </div>
               <div class="tab-content p-4" fxLayout="column" *ngFor="let witness of WitnessListArray">
 
-
+                <div class="tab-content p-24" fxLayout="row">
+                  <li>
                     {{ witness.owner }}
                     {{ witness.last_confirmed_block_num }}
                     {{ witness.url }}
-
+                  </li>
+                </div>
 
               </div>
             </mat-tab>
