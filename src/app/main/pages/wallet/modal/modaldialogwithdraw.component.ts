@@ -8,4 +8,8 @@ import { MatDialog, MatDialogRef  } from '@angular/material';
 
 export class ModalDialogWithdrawComponent {
 
+
+  data: any;
+
+
 }

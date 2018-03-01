@@ -25,6 +25,7 @@ export class WalletComponent implements OnInit
   MemoKey: any;
   WitnessListArray: any;
   tempValue: any;
+  testing: '';
   dialogRefTrans: MatDialogRef<ModalDialogTransferComponent>;
   dialogRefVest: MatDialogRef<ModalDialogVestComponent>;
   dialogRefWithd: MatDialogRef<ModalDialogWithdrawComponent>;
@@ -68,11 +69,12 @@ export class WalletComponent implements OnInit
     }));
   }
   transferMuseBtn() {
-    // console.log('transfer!!');
-      this.dialogRefTrans = this.dialog.open(ModalDialogTransferComponent);
-  }
-  transferMuseAct() {
-    console.log('works!');
+       this.dialogRefTrans = this.dialog.open(ModalDialogTransferComponent);
+       this.dialogRefTrans.afterClosed().subscribe(
+        data => this.dataService.transferMuse('johnstor5', '******', data.transferto, data.amount, data.memo
+      ));
+
+      // trigger reload after success return and alert error if fails.
   }
 
   vestMuseBtn() {

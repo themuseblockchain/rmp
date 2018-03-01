@@ -337,7 +337,7 @@ getUrlData(getData) {
         this.museConfig();
         return new Promise(function(resolve, reject){
           muse.transferFunds(authUser, authKey, transferTo, amount, memo, function(err, success){
-            if (err === 0) {
+            if (err === -1) {
               reject(err);
             } else {
               resolve(success);

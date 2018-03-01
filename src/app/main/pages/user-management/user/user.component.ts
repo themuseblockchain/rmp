@@ -28,6 +28,8 @@ export class UserComponent implements OnInit, OnDestroy
     onUserChanged: Subscription;
     pageType: string;
     userForm: FormGroup;
+    userPermissions: any;
+    userStatuses: any;
 
     constructor(
         private userService: UserService,
