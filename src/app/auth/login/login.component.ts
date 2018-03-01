@@ -121,7 +121,7 @@ export class LoginComponent implements OnInit
             this.dataService.authAccount(this.login.muserName, this.login.password).then(
                 data => {
                     // this.router.navigate([this.returnUrl]);
-                    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/post';
+                    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {

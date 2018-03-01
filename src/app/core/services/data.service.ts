@@ -1,5 +1,5 @@
 import { Injectable, Inject, NgZone, Input } from '@angular/core';
-import * as muse from 'muse-js';
+import * as muse from 'museblockchain-js';
 import * as Rx from 'rxjs/Rx';
 import { of } from 'rxjs/observable/of';
 import { HttpClient } from '@angular/common/http';
@@ -21,7 +21,9 @@ export class DataService
  private getStreamingPlatformsParameter: any;
  private getPostContentData: any;
  private authAccountParameterUser: any;
- private authAccountParameterKey: any; private defaultHistoryFormatter: any; private callbackWalletHistory: any;
+ private authAccountParameterKey: any; 
+ private defaultHistoryFormatter: any; 
+ private callbackWalletHistory: any;
 
 constructor(
             private zone: NgZone,
@@ -64,6 +66,8 @@ constructor(
          this.museConfig();
 
          return new Promise(function(resolve, reject){
+          // muse.auth.verify(muserName, password);
+
            muse.login(muserName, password, function(err, success){
              if (err !== 1) {
                reject(err);

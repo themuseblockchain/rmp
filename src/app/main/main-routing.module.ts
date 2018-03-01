@@ -21,6 +21,10 @@ const routes: Routes = [
                 'path': 'post',
                 'loadChildren': './pages/rights-management/post.module#PostModule'
             },
+            {
+                'path': 'login',
+                'redirectTo': '../auth/login/login.module#LoginModule'
+            }
         ]
     },
     // {
