@@ -18,3 +18,4 @@ export class ModalDialogWithdrawComponent {
   close() {
     this.dialogRef.close();
   }
+}
