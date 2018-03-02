@@ -7,9 +7,14 @@ import { MatDialog, MatDialogRef  } from '@angular/material';
 })
 
 export class ModalDialogWithdrawComponent {
-
-
-  data: any;
-
-
-}
+  data = '';
+  constructor(
+    public dialogRef: MatDialogRef<ModalDialogWithdrawComponent>
+  ) {}
+  save() {
+    console.log(this.data);
+    this.dialogRef.close(this.data);
+  }
+  close() {
+    this.dialogRef.close();
+  }

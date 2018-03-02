@@ -79,12 +79,16 @@ export class WalletComponent implements OnInit
 
   vestMuseBtn() {
     this.dialogRefVest = this.dialog.open(ModalDialogVestComponent);
-    // console.log('vest!!!');
+    this.dialogRefVest.afterClosed().subscribe(
+     data => this.dataService.transferMusetoVest('johnstor5', '*****', data
+   ));
   }
 
   withdrawVestBtn() {
     this.dialogRefWithd = this.dialog.open(ModalDialogWithdrawComponent);
-    // console.log('withdraw!!');
+    this.dialogRefWithd.afterClosed().subscribe(
+     data => this.dataService.withdrawVesting('johnstor5', 'CmOS3601', data
+   ));
   }
 
   cancelWithdrawBtn() {

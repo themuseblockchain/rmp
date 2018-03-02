@@ -344,7 +344,32 @@ getUrlData(getData) {
             }
           });
         });
+      }
 
+      transferMusetoVest(authUser, authKey, amount) {
+        this.museConfig();
+        return new Promise(function(resolve, reject){
+          muse.transferFundsToVestings(authUser, authKey, null, amount, function(err, success){
+            if (err === -1) {
+              reject(err);
+            } else {
+              resolve(success);
+            }
+          });
+        });
+      }
+
+      withdrawVesting(authUser, authKey, amount) {
+        this.museConfig();
+        return new Promise(function(resolve, reject){
+          muse.withdrawVesting(authUser, authKey, amount, function(err, success){
+            if (err === -1) {
+              reject(err);
+            } else {
+              resolve(success);
+            }
+          });
+        });
       }
 
 

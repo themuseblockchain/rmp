@@ -7,9 +7,15 @@ import { MatDialog, MatDialogRef  } from '@angular/material';
 })
 
 export class ModalDialogVestComponent {
-
-
-  data: any;
-
-  
+  data = '';
+  constructor(
+    public dialogRef: MatDialogRef<ModalDialogVestComponent>
+  ) {}
+  save() {
+    console.log(this.data);
+    this.dialogRef.close(this.data);
+  }
+  close() {
+    this.dialogRef.close();
+  }
 }
