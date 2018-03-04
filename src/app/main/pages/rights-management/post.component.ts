@@ -48,9 +48,16 @@ export class PostComponent implements OnInit
                     disabled: true
                 }, Validators.required
             ],
+
+
             ipfsUrl : ['', Validators.required],
             albumTitle : ['', Validators.required],
             albumGenre : ['', Validators.required],
+            albumArtist : ['', Validators.required],
+            partofAlbum : [false, Validators.required],
+            explicit : [false, Validators.required],
+            albumPline : ['', Validators.required],
+            albumCline : ['', Validators.required],
 
             countryOrigin : ['', Validators.required],
             upcEan : ['', Validators.required],
@@ -59,13 +66,23 @@ export class PostComponent implements OnInit
             salesStartDate : ['', Validators.required],
             masterLabelName : ['', Validators.required],
             displayLabelName : ['', Validators.required],
+            samples : [false, Validators.required],
 
             trackTitle : ['', Validators.required],
+            trackArtist : ['', Validators.required],
+            trackGenre : ['', Validators.required],
+            trackArtistAlias : ['', Validators.required],
+            trackVolume : ['', Validators.required],
+            trackPline : ['', Validators.required],
             isrc : ['', Validators.required],
             trackNo : ['', Validators.required],
             // trackNo: ['', [Validators.required, Validators.maxLength(5)]],
 
             compositionTitle : ['', Validators.required],
+            compositionPublishers : ['', Validators.required],
+            compositionWriters : ['', Validators.required],
+            thirdParty : [false, Validators.required],
+            PRO : ['', Validators.required],
             tempValue : ['']
         });
 
@@ -94,5 +111,9 @@ export class PostComponent implements OnInit
                 this.formErrors[field] = control.errors;
             }
         }
+    }
+
+    postcontent() {
+      console.log(this.postForm);
     }
 }

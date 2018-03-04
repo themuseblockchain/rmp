@@ -8,7 +8,7 @@
     <div class="header white-fg p-24" fxLayout="row" fxLayoutAlign="space-between center">
       <h2>Post Content</h2>
       <button mat-raised-button
-      class="save-content-button mat-white-bg mt-16 mt-sm-0">
+      class="save-content-button mat-white-bg mt-16 mt-sm-0" (click)="postcontent()">
       <span>SAVE</span>
     </button>
   </div>
@@ -27,7 +27,7 @@
                   <input
                   matInput
                   name="Album Title"
-                  formControlName="tempValue"
+                  formControlName="albumTitle"
                   placeholder="Album Title">
                 </mat-form-field>
               </div>
@@ -35,7 +35,7 @@
                 <input
                 matInput
                 name="Album Artist"
-                formControlName="tempValue"
+                formControlName="albumArtist"
                 placeholder="Album Artist">
               </mat-form-field>
               <button mat-raised-button
@@ -46,7 +46,7 @@
               <input
               matInput
               name="Album Genre"
-              formControlName="tempValue"
+              formControlName="albumGenre"
               placeholder="Album Genre">
             </mat-form-field>
             <button mat-raised-button
@@ -57,7 +57,7 @@
             <input
             matInput
             name="Country of Origin"
-            formControlName="tempValue"
+            formControlName="countryOrigin"
             placeholder="Country of Origin">
           </mat-form-field>
           <div fxLayout="row" fxLayout.xs="column" fxFlex="1 0 auto" fxLayoutAlign="space-between center">
@@ -191,28 +191,28 @@
           <input
           matInput
           name="Track Title"
-          formControlName="tempValue"
+          formControlName="trackTitle"
           placeholder="Track Title">
         </mat-form-field>
         <mat-form-field class="w-100-p">
           <input
           matInput
           name="ISRC code"
-          formControlName="tempValue"
+          formControlName="isrc"
           placeholder="ISRC code">
         </mat-form-field>
         <mat-form-field class="w-100-p">
           <input
           matInput
           name="Track Artist"
-          formControlName="tempValue"
+          formControlName="trackArtist"
           placeholder="Track Artist">
         </mat-form-field>
         <mat-form-field class="w-100-p">
           <input
           matInput
           name="Track Artist aliases / different spelling"
-          formControlName="tempValue"
+          formControlName="trackArtistAlias"
           placeholder="Track Artist aliases / different spelling">
         </mat-form-field>
 

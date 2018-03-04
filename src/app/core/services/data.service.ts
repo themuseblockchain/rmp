@@ -290,7 +290,7 @@ getUrlData(getData) {
               },
               {
                 'track_title': submitContent.track_title,
-                'ISRC': submitContent.ISRC,
+                'ISRC': submitContent.isrc,
                 'track_artists': [authUser],
                 'genre_1': submitContent.genre_1,
                 'p_line': submitContent.track_p_line,
