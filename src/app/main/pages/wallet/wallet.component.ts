@@ -87,12 +87,12 @@ export class WalletComponent implements OnInit
   withdrawVestBtn() {
     this.dialogRefWithd = this.dialog.open(ModalDialogWithdrawComponent);
     this.dialogRefWithd.afterClosed().subscribe(
-     data => this.dataService.withdrawVesting('johnstor5', '*****', data
+     data => this.dataService.withdrawVesting('johnstor5', '****', data
    ));
   }
 
   cancelWithdrawBtn() {
-    console.log('cancel!');
+     this.dataService.withdrawVesting('johnstor5', '****', 0);
   }
 
 
