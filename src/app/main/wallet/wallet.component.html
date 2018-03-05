@@ -1,0 +1,244 @@
+<div id="walletpage" class="page-layout carded fullwidth">
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-deep-purple-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header white-fg p-24" fxLayout="row" fxLayoutAlign="space-between center">
+
+      <h2>Wallet</h2>
+      <button mat-raised-button
+      class="save-content-button mat-white-bg mt-16 mt-sm-0">
+      <span>SAVE</span>
+    </button>
+
+
+  </div>
+  <!-- / HEADER -->
+
+  <!-- CONTENT CARD -->
+  <div class="content-card mat-white-bg">
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <form name="walletForm" [formGroup]="walletForm" class="wallet w-100-p" fxLayout="column" fxFlex>
+
+        <mat-tab-group>
+          <mat-tab label="Balances">
+            <div class="tab-content p-24" fxLayout="column">
+              <div class="py-16" fxLayout="row">
+                <mat-form-field class="w-100-p">
+                  <div>
+                  <input
+                  readonly
+                  matInput
+                  name="Muse"
+                  formControlName="tempValue"
+                  placeholder="Muse Balance: ">
+                  {{Musebalance}}
+                  <button mat-raised-button (click)="transferMuseBtn()"
+                  class="mat-purple-bg mt-16 mt-sm-0">
+                  Transfer
+                  </button>
+                  <button mat-raised-button (click)="vestMuseBtn()"
+                  class="mat-purple-bg mt-16 mt-sm-0">
+                  Transfer to Vesting
+                  </button>
+                </div>
+
+<p>Tradeable tokens that may be transferred anywhere at anytime.
+MUSE can be vested by clicking transfer to Vesting.</p>
+
+                </mat-form-field>
+              </div>
+              <mat-form-field class="w-100-p">
+                <input
+                readonly
+                matInput
+                name="Vests"
+                formControlName="tempValue"
+                placeholder="Vests Balance: ">
+                {{Vestbalance}}
+                <button mat-raised-button (click)="withdrawVestBtn()"
+                class="mat-purple-bg mt-16 mt-sm-0">
+                Withdraw
+                </button>
+                <button mat-raised-button (click)="cancelWithdrawBtn()"
+                class="mat-purple-bg mt-16 mt-sm-0">
+                Cancel Withdrawal
+                </button>
+<p>Tokens that grant you more influence within the network.</p>
+              </mat-form-field>
+              <mat-form-field class="w-100-p">
+                <input
+                readonly
+                matInput
+                name="MBD"
+                formControlName="tempValue"
+                placeholder="Muse Backed Dollars Balance: ">
+                {{MBDbalance}}
+<p>Tokens worth about $1.00 of MUSE</p>
+              </mat-form-field>
+              <mat-form-field class="w-100-p">
+                <input
+                readonly
+                matInput
+                name="Next Withdrawal"
+                formControlName="tempValue"
+                placeholder="Next Withdrawal: ">
+                {{NextwithDraw}}
+                <p></p>
+              </mat-form-field>
+              <mat-form-field class="w-100-p">
+                <input
+                readonly
+                matInput
+                name="History"
+                formControlName="tempValue"
+                placeholder="History">
+              </mat-form-field>
+
+              <li *ngFor="let hist of History">
+                  {{ hist }}
+              </li>
+
+
+          </div>
+          </mat-tab>
+
+          <mat-tab label="Password">
+            <div class="tab-content p-24" fxLayout="column">
+              <div class="py-16" fxLayout="row">
+
+                <mat-form-field fxFlex>
+                  <input matInput
+                  name="CurrentPass"
+                  formControlName="tempValue"
+                  placeholder="Current Password">
+                </mat-form-field>
+              </div>
+              <p>Do not lose your password.
+We cannot recover your password.
+If you can remember the password, It's not secure.
+Use only randomly-generated passwords.
+Do not tell anyone your password.
+Always back up your password.</p>
+                <mat-form-field fxFlex>
+                  <input matInput
+                  name="NewPass"
+                  formControlName="tempValue"
+                  placeholder="New Password">
+                </mat-form-field>
+
+              <mat-form-field class="w-100-p">
+                <input matInput
+                name="Confirm"
+                formControlName="tempValue"
+                placeholder="Confirm Password">
+                <div class="py-16" fxLayout="row">
+
+                <mat-checkbox>
+                    I UNDERSTAND THIS WALLET HOSTER CANNOT RECOVER LOST PASSWORDS
+                </mat-checkbox>
+              </div>
+              <div class="py-16" fxLayout="row">
+                <mat-checkbox>
+                    I HAVE SECURELY SAVED MY GENERATED PASSWORD
+                </mat-checkbox>
+              </div>
+              </mat-form-field>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Permissions">
+            <div class="tab-content p-24" fxLayout="column">
+              <div class="py-16" fxLayout="row">
+                <mat-form-field class="w-100-p">
+                  <input
+                  readonly
+                  matInput
+                  name="Basic"
+                  formControlName="tempValue"
+                  placeholder="Basic">
+                  {{BasicKey}}
+<p>The basic key is used for non-financial functions such as voting,
+connection with other users and approving/declining proposed modifications to your data.
+It should be different from the active and owner keys.</p>
+                </mat-form-field>
+              </div>
+                <mat-form-field class="w-100-p">
+                  <input
+                  readonly
+                  matInput
+                  name="Active"
+                  formControlName="tempValue"
+                  placeholder="Active">
+                  {{ActiveKey}}
+<p>The active key is used for financial transactions and the creation of (or updates to) your data.
+It should be used from a secure workstation.</p>
+                </mat-form-field>
+
+                <mat-form-field class="w-100-p">
+                <input
+                readonly
+                matInput
+                name="Owner"
+                formControlName="tempValue"
+                placeholder="Owner">
+                {{OwnerKey}}
+<p>The owner key is the master key for the account and is required to change the other keys.
+The private key or password for the owner key should be kept offline as much as possible.</p>
+              </mat-form-field>
+
+              <mat-form-field class="w-100-p">
+                <input
+                readonly
+                matInput
+                name="Memo"
+                formControlName="tempValue"
+                placeholder="Memo">
+                {{MemoKey}}
+<p>The memo key is used to create and read memos.</p>
+              </mat-form-field>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Witness-Voting">
+            <div class="tab-content p-24" fxLayout="column">
+            <p>As a MUSE holder you get 30 witness votes, use them wisely.
+              You have 19 witness votes left.</p>
+              <p>If you whould like to vote for a witness outside of the top 50, enter the account name below to cast a vote.</p>
+            </div>
+              <div class="tab-content p-4" fxLayout="column" *ngFor="let witness of WitnessListArray">
+
+                <div class="tab-content p-24" fxLayout="row">
+                  <li>
+                    {{ witness.owner }}
+                    {{ witness.last_confirmed_block_num }}
+                    {{ witness.url }}
+                  </li>
+                </div>
+
+              </div>
+            </mat-tab>
+          </mat-tab-group>
+        </form>
+
+      </div>
+    <!-- / CONTENT -->
+
+
+  </div>
+  <!-- / CONTENT -->
+
+</div>
+<!-- / CONTENT CARD -->
+
+</div>
+<!-- / CENTER -->
