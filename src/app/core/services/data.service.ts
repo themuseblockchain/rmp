@@ -274,36 +274,37 @@ getUrlData(getData) {
               submitContent.url,
               {
                 'part_of_album': submitContent.part_of_album, // bool
-                'album_title': submitContent.lbum_title,
-                'album_artist': [authUser],
-                'genre_1': submitContent.genre_1,
+                'album_title': submitContent.album_title,
+                'album_artist': [authUser], // array
+                'genre_1': submitContent.genre_1, // integer ??? what do these numbers relate to?
                 'country_of_origin': submitContent.country_of_origin,
-                'explicit_': submitContent.explicit_, // bool
+                'explicit_': submitContent.explicit_, // apperently int???? wtf?
                 'p_line': submitContent.p_line,
                 'c_line': submitContent.c_line,
                 'upc_or_ean': submitContent.upc_or_ean,
-                'release_date': submitContent.release_date,
-                'release_year': submitContent.release_year,
-                'sales_start_date': submitContent.sales_start_date,
+                'release_date': submitContent.release_date, // integer
+                'release_year': submitContent.release_year, // integer
+                'sales_start_date': submitContent.sales_start_date, // integer
                 'master_label_name': submitContent.master_label_name,
                 'display_label_name': submitContent.display_label_name
               },
               {
                 'track_title': submitContent.track_title,
                 'ISRC': submitContent.isrc,
-                'track_artists': [authUser],
-                'genre_1': submitContent.genre_1,
+                'artist': [authUser], // array
+                'track_artists': submitContent.track_artists, // array
+                'genre_1': submitContent.genre_1, // integer
                 'p_line': submitContent.track_p_line,
-                'track_no': submitContent.track_no,
-                'track_volume': submitContent.track_volume,
-                'track_duration': submitContent.track_duration,
+                'track_no': submitContent.track_no, // integer
+                'track_volume': submitContent.track_volume, // integer
+                'track_duration': submitContent.track_duration, // integer
                 'samples': submitContent.samples // bool
               },
               {
                 'composition_title': submitContent.composition_title,
                 'third_party_publishers': submitContent.third_party_publishers, // bool
-                'publishers': submitContent.publishers,
-                'writers': submitContent.writers,
+                'publishers': submitContent.publishers, // array
+                'writers': submitContent.writers, // array
                 'PRO': submitContent.pro
               },
 
@@ -311,66 +312,66 @@ getUrlData(getData) {
                 'payee': authUser,
                 'bp': 10000
               }
-            ],
+            ], // This array describes the distributions for master side, total must equal 10k between all entries.
             [{
-              'voter': authUser,
-              'percentage': 100
-            }
-          ],
-          100,
-          [],
-          [],
-          100,
-          10,
-          5000,
-          function(err, success) {
-            if (err) {
-              reject(err);
-            } else {
-              resolve(success);
-            }
-          });
-        });
-      }
+            'voter': authUser,
+            'percentage': 100
+          }
+        ], // This array describes the voting rights on the master side.
+        100, // Management threshold on master side
+        [], // distributions_comp this array describes the distributions for composition side.
+        [], // management_comp this array describes the voting rights on the composition side.
+        100, // management threshold composition side
+        10, // playing reward
+        5000, // publishers share
+        function(err, success) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(success);
+        }
+      });
+    });
+  }
 
-      transferMuse(authUser, authKey, transferTo, amount, memo) {
-        this.museConfig();
-        return new Promise(function(resolve, reject){
-          muse.transferFunds(authUser, authKey, transferTo, amount, memo, function(err, success){
-            if (err === -1) {
-              reject(err);
-            } else {
-              resolve(success);
-            }
-          });
-        });
-      }
+  transferMuse(authUser, authKey, transferTo, amount, memo) {
+    this.museConfig();
+    return new Promise(function(resolve, reject){
+      muse.transferFunds(authUser, authKey, transferTo, amount, memo, function(err, success){
+        if (err === -1) {
+          reject(err);
+        } else {
+          resolve(success);
+        }
+      });
+    });
+  }
 
-      transferMusetoVest(authUser, authKey, amount) {
-        this.museConfig();
-        return new Promise(function(resolve, reject){
-          muse.transferFundsToVestings(authUser, authKey, null, amount, function(err, success){
-            if (err === -1) {
-              reject(err);
-            } else {
-              resolve(success);
-            }
-          });
-        });
-      }
+  transferMusetoVest(authUser, authKey, amount) {
+    this.museConfig();
+    return new Promise(function(resolve, reject){
+      muse.transferFundsToVestings(authUser, authKey, null, amount, function(err, success){
+        if (err === -1) {
+          reject(err);
+        } else {
+          resolve(success);
+        }
+      });
+    });
+  }
 
-      withdrawVesting(authUser, authKey, amount) {
-        this.museConfig();
-        return new Promise(function(resolve, reject){
-          muse.withdrawVesting(authUser, authKey, amount, function(err, success){
-            if (err === -1) {
-              reject(err);
-            } else {
-              resolve(success);
-            }
-          });
-        });
-      }
+  withdrawVesting(authUser, authKey, amount) {
+    this.museConfig();
+    return new Promise(function(resolve, reject){
+      muse.withdrawVesting(authUser, authKey, amount, function(err, success){
+        if (err === -1) {
+          reject(err);
+        } else {
+          resolve(success);
+        }
+      });
+    });
+  }
 
 
-    }
+}
