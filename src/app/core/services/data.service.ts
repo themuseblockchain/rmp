@@ -59,10 +59,12 @@ authAccount(authUser, authKey) {
   this.museConfig();
   return new Promise(function(resolve, reject){
     muse.login(authUser, authKey, function(err, success){
-      if (err === 0) {
+      if (err !== 1) {
         reject(err);
       } else {
         resolve(success);
+         localStorage.setItem('isAuthenticated', 'true');
+         localStorage.setItem('currentUser', authUser);
       }
     });
   });

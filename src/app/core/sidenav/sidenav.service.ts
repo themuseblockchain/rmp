@@ -26,14 +26,11 @@ export class SidenavService {
     const dashboard = menu.addItem('Dashboard', 'dashboard', '/', 1);
     menu.addItem('Wallet', 'mail', '/wallet', 2);
     menu.addItem('Post', 'mail', '/post', 3);
-    menu.addItem('Calendar', 'date_range', '/apps/calendar', 4);
 
-    const customPages = menu.addItem('Custom Pages', 'web', null, 8);
-    menu.addSubItem(customPages, 'Login Page', '/login', 1);
-    menu.addSubItem(customPages, 'Register Page', '/register', 2);
+    // const customPages = menu.addItem('Custom Pages', 'web', null, 8);
+    // menu.addSubItem(customPages, 'Login Page', '/login', 1);
+    // menu.addSubItem(customPages, 'Register Page', '/register', 2);
 
-
-    const icons = menu.addItem('Material Icons', 'grade', '/icons', 7);
 
     // const multiLevel = menu.addItem('Multi-Level Menu', 'menu', null, 11);
     // const level1 = menu.addSubItem(multiLevel, 'Level 1', '/level1', 1);
