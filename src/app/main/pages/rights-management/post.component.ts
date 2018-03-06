@@ -113,7 +113,12 @@ export class PostComponent implements OnInit
         }
     }
 
-    postcontent() {
-      console.log(this.postForm);
+    firecontent() {
+      // this.dataService.postContent(
+      //   '****',
+      //   'johnstor5',
+      //   this.postForm.value.ipfsUrl,
+      // );
+      console.log(this.postForm.value);
     }
 }

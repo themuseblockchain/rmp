@@ -8,7 +8,7 @@
     <div class="header white-fg p-24" fxLayout="row" fxLayoutAlign="space-between center">
       <h2>Post Content</h2>
       <button mat-raised-button
-      class="save-content-button mat-white-bg mt-16 mt-sm-0" (click)="postcontent()">
+      class="save-content-button mat-white-bg mt-16 mt-sm-0" (click)="firecontent()">
       <span>SAVE</span>
     </button>
   </div>
@@ -23,6 +23,13 @@
             <div class="tab-content p-24" fxLayout="column">
               <h1>Album Info Section:</h1>
               <div class="py-16" fxLayout="row">
+                <mat-form-field class="w-100-p">
+                  <input
+                  matInput
+                  name="Album URL"
+                  formControlName="ipfsUrl"
+                  placeholder="Album URL">
+                </mat-form-field>
                 <mat-form-field class="w-100-p">
                   <input
                   matInput
@@ -61,7 +68,7 @@
             placeholder="Country of Origin">
           </mat-form-field>
           <div fxLayout="row" fxLayout.xs="column" fxFlex="1 0 auto" fxLayoutAlign="space-between center">
-            <mat-checkbox>
+            <mat-checkbox matInput formControlName="explicit">
               Content is explicit?
             </mat-checkbox>
           </div>
@@ -69,70 +76,56 @@
             <input
             matInput
             name="Album P line"
-            formControlName="tempValue"
+            formControlName="albumPline"
             placeholder="Album P line">
           </mat-form-field>
           <mat-form-field class="w-100-p">
             <input
             matInput
             name="Album C line"
-            formControlName="tempValue"
+            formControlName="albumCline"
             placeholder="Album C line">
           </mat-form-field>
           <mat-form-field class="w-100-p">
             <input
             matInput
             name="UPC or EAN"
-            formControlName="tempValue"
+            formControlName="upcEan"
             placeholder="UPC or EAN">
           </mat-form-field>
           <mat-form-field class="w-100-p">
             <input
             matInput
             name="Release Date"
-            formControlName="tempValue"
+            formControlName="releaseDate"
             placeholder="Release Date">
           </mat-form-field>
           <mat-form-field class="w-100-p">
             <input
             matInput
             name="Release Year"
-            formControlName="tempValue"
+            formControlName="releaseYear"
             placeholder="Release Year">
           </mat-form-field>
           <mat-form-field class="w-100-p">
             <input
             matInput
             name="Sales Start Date"
-            formControlName="tempValue"
+            formControlName="salesStartDate"
             placeholder="Sales Start Date">
           </mat-form-field>
           <mat-form-field class="w-100-p">
             <input
             matInput
-            name="Album Producer"
-            formControlName="tempValue"
-            placeholder="Album Producer">
-          </mat-form-field>
-          <mat-form-field class="w-100-p">
-            <input
-            matInput
-            name="Product Type"
-            formControlName="tempValue"
-            placeholder="Product Type">
-          </mat-form-field>
-          <mat-form-field class="w-100-p">
-            <input
-            matInput
             name="Master Label Name"
-            formControlName="tempValue"
+            formControlName="masterLabelName"
             placeholder="Master Label Name">
           </mat-form-field>
           <mat-form-field class="w-100-p">
             <input
             matInput
             name="Display Label Name (aka imprint label name)"
-            formControlName="tempValue"
+            formControlName="displayLabelName"
             placeholder="Display Label Name (aka imprint label name)">
           </mat-form-field>
           <button mat-raised-button
@@ -183,7 +176,7 @@
         </mat-form-field>
         <h1>Track Info Section:</h1>
         <div fxLayout="row" fxLayout.xs="column" fxFlex="1 0 auto" fxLayoutAlign="space-between center">
-          <mat-checkbox>
+          <mat-checkbox matInput formControlName="partofAlbum">
             Content is part of an album?
           </mat-checkbox>
         </div>
@@ -291,15 +284,15 @@
         placeholder="Copyright # (master recording)">
       </mat-form-field>
       <div fxLayout="row" fxLayout.xs="column" fxFlex="1 0 auto" fxLayoutAlign="space-between center">
-        <mat-checkbox>
+        <mat-checkbox matInput formControlName="samples">
           Content has a sample track?
         </mat-checkbox>
       </div>
       <mat-form-field class="w-100-p">
         <input
         matInput
-        name="Track Remixer"
-        formControlName="tempValue"
+        name="Track Artist"
+        formControlName="trackArtist"
         placeholder="Track Remixer">
       </mat-form-field>
       <mat-form-field class="w-100-p">
@@ -335,7 +328,7 @@
         placeholder="ISWC Code">
       </mat-form-field>
       <div fxLayout="row" fxLayout.xs="column" fxFlex="1 0 auto" fxLayoutAlign="space-between center">
-        <mat-checkbox>
+        <mat-checkbox matInput formControlName="thirdParty">
           Content is third party managed?
         </mat-checkbox>
       </div>
@@ -343,7 +336,7 @@
         <input
         matInput
         name="Publishers"
-        formControlName="tempValue"
+        formControlName="compositionPublishers"
         placeholder="Publishers">
       </mat-form-field>
       <button mat-raised-button
@@ -368,7 +361,7 @@
         <input
         matInput
         name="Writer"
-        formControlName="tempValue"
+        formControlName="compositionWriters"
         placeholder="Writer">
       </mat-form-field>
       <button mat-raised-button
