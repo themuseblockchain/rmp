@@ -13,7 +13,7 @@ import {fadeInAnimation} from '../../core/common/route.animation';
 })
 export class RegisterComponent implements OnInit {
 
-  name: string;
+  name: string; /// register should force lowercase on username
   email: string;
   password: string;
   passwordConfirm: string;
