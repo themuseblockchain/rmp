@@ -3,7 +3,7 @@ import * as muse from 'museblockchain-js';
 import * as Rx from 'rxjs/Rx';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { AsyncLocalStorage } from 'angular-async-local-storage';
+// import { LocalStorageService, SessionStorageService} from 'ngx-webstorage'; // https://github.com/PillowPillow/ng2-webstorage
 import CryptoJS from 'crypto-js';
 
 
@@ -20,8 +20,9 @@ export class DataService
 
   constructor(
     private zone: NgZone,
-    private http: HttpClient,
-    protected storage: AsyncLocalStorage
+    private http: HttpClient
+    // private webLocalStorage: LocalStorageService,
+    // private webSessionStorage: SessionStorageService
   ) {
   }
 
@@ -63,6 +64,10 @@ authAccount(authUser, authKey) {
         reject(err);
       } else {
         resolve(success);
+        // this.webLocalStorage.observe('isAuthenticated').subscribe((value) => console.log('new value', value));
+        // this.webLocalStorage.observe('currentUser').subscribe((value) => console.log('new value', value));
+        // this.webLocalStorage.store('isAuthenticated', 'true');
+        // this.webLocalStorage.observe('currentUser', authUser);
          localStorage.setItem('isAuthenticated', 'true');
          localStorage.setItem('currentUser', authUser);
       }

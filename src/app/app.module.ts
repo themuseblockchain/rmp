@@ -7,9 +7,8 @@ import { RoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { MainModule } from './main/main.module';
-import { AsyncLocalStorageModule } from 'angular-async-local-storage';
 import { DataService } from './core/services/data.service';
-
+// import { Ng2Webstorage } from 'ngx-webstorage';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,7 +16,7 @@ import { DataService } from './core/services/data.service';
     // Core Angular Module // Don't remove!
     CommonModule,
     BrowserAnimationsModule,
-    AsyncLocalStorageModule,
+    // Ng2Webstorage,
 
     // Muse Core Modules
     CoreModule,

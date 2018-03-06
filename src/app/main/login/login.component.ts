@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { AuthService } from '../../core/services/auth.service';
 import { fadeInAnimation } from '../../core/common/route.animation';
 import { DataService } from '../../core/services/data.service';
+// import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+
 
 @Component({
   selector: 'login',
@@ -16,6 +18,7 @@ import { DataService } from '../../core/services/data.service';
 })
 
 export class LoginComponent implements OnInit {
+  private isAuthenticated: any;
   form: FormGroup;
   loginFormErrors: any;
   muserName: string;
@@ -31,7 +34,9 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private dataService: DataService
-    // private authService: AuthService
+    // private webLocalStorage: LocalStorageService,
+    // private webSessionStorage: SessionStorageService
+
   ) { }
 
   ngOnInit() {
@@ -39,16 +44,19 @@ export class LoginComponent implements OnInit {
 
   // onLogin() {
   //   const val = this.form.value;
-
-
   // }
-    onLogin() {
-    this.dataService.authAccount(this.muserName, this.password);
-    const isAuthenticated = localStorage.getItem('isAuthenticated');
-      if (isAuthenticated != null) {
-        if (isAuthenticated === 'true') {
+
+  onLogin(authUser, authKey) {
+    //  this.isAuthenticated = this.webLocalStorage.observe('isAuthenticated').subscribe((isAuthenticated) => {
+    //       console.log(isAuthenticated);
+    //       });
+   this.dataService.authAccount(this.muserName, this.password).then(() => {
+    this.isAuthenticated = localStorage.getItem('isAuthenticated');
+     if (this.isAuthenticated != null && this.isAuthenticated === 'true') 
+        {
           this.router.navigateByUrl('/');
         }
-      }
+      }).catch(e => console.log('error' + e));
+      // this.webLocalStorage.retrieve('isAuthenticated');
     }
 }
