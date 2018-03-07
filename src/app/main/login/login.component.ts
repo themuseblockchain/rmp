@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
   muserName: string;
   password: string;
   // login: { muserName?: string, password?: string } = {};
+  // parse username as lowercase.
 
   messagePerErrorCode = {
     loginfailed: 'Invalid credentials'
@@ -52,7 +53,7 @@ export class LoginComponent implements OnInit {
     //       });
    this.dataService.authAccount(this.muserName, this.password).then(() => {
     this.isAuthenticated = localStorage.getItem('isAuthenticated');
-     if (this.isAuthenticated != null && this.isAuthenticated === 'true') 
+     if (this.isAuthenticated != null && this.isAuthenticated === 'true')
         {
           this.router.navigateByUrl('/');
         }
