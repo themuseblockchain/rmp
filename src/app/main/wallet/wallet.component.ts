@@ -112,7 +112,12 @@ export class WalletComponent implements OnInit {
   }
 
   cancelWithdrawBtn() {
-     this.dataService.withdrawVesting('johnstor5', '****', 0);
+    this.authUser = localStorage.getItem('currentUser');
+    this.password = localStorage.getItem('password');
+
+    const decrypt = cryptojs.AES.decrypt(this.password.toString(), this.authUser);
+    const authKey = JSON.stringify(decrypt.toString(cryptojs.enc.Utf8));
+    this.dataService.withdrawVesting(this.authUser, authKey, 0);
   }
 
 
