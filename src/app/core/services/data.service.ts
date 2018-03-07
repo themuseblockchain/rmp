@@ -1,11 +1,10 @@
 import { Injectable, Inject, NgZone, Input } from '@angular/core';
 import * as muse from 'museblockchain-js';
 import * as Rx from 'rxjs/Rx';
-import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 // import { LocalStorageService, SessionStorageService} from 'ngx-webstorage'; // https://github.com/PillowPillow/ng2-webstorage
-import CryptoJS from 'crypto-js';
-
+import * as cryptojs from 'crypto-js';
+// import { Muser } from '../modals/muser.modal';
 
 @Injectable()
 export class DataService
@@ -15,12 +14,11 @@ export class DataService
   public userSuccess: any;
   getData: any;
   submitContent: any;
-  authUser: any;
-  authKey: any;
+  private authUser: any;
+  private authKey: any;
 
   constructor(
-    private zone: NgZone,
-    private http: HttpClient
+    private zone: NgZone
     // private webLocalStorage: LocalStorageService,
     // private webSessionStorage: SessionStorageService
   ) {
@@ -64,12 +62,14 @@ authAccount(authUser, authKey) {
         reject(err);
       } else {
         resolve(success);
-        // this.webLocalStorage.observe('isAuthenticated').subscribe((value) => console.log('new value', value));
-        // this.webLocalStorage.observe('currentUser').subscribe((value) => console.log('new value', value));
-        // this.webLocalStorage.store('isAuthenticated', 'true');
-        // this.webLocalStorage.observe('currentUser', authUser);
-         localStorage.setItem('isAuthenticated', 'true');
-         localStorage.setItem('currentUser', authUser);
+          localStorage.setItem('isAuthenticated', 'true');
+          localStorage.setItem('currentUser', authUser);
+          // localStorage.setItem('password', authKey);
+
+          localStorage.setItem('password', cryptojs.AES.encrypt(authKey, authUser));
+          // const test = localStorage.getItem('encrypt');
+          // const decrypt = cryptojs.AES.decrypt(test.toString(), authUser);
+          // localStorage.setItem('decryptedData', JSON.stringify(decrypt.toString(cryptojs.enc.Utf8)));
       }
     });
   });
@@ -278,7 +278,7 @@ getUrlData(getData) {
             muse.broadcast.content(
               authKey,
               authUser,
-              submitContent.url,
+              submitContent.ipfsUrl,
               {
                 'part_of_album': submitContent.part_of_album, // bool
                 'album_title': submitContent.album_title,
@@ -303,43 +303,36 @@ getUrlData(getData) {
                 'genre_1': submitContent.genre_1, // integer
                 'p_line': submitContent.track_p_line,
                 'track_no': submitContent.track_no, // integer
-                'track_volume': submitContent.track_volume, // integer
-                'track_duration': submitContent.track_duration, // integer
+                'track_volume': submitContent.track_volume, // integer // this is volume number not volume level
+                'track_duration': submitContent.track_duration, // integer // still trying to figure the purpose of this
                 'samples': submitContent.samples // bool
               },
               {
                 'composition_title': submitContent.composition_title,
                 'third_party_publishers': submitContent.third_party_publishers, // bool
                 'publishers': submitContent.publishers, // array
-                'writers': submitContent.writers, // array
+                'writers': submitContent.writers, // array // wouldnt it be better to store both of these as one array???? this would be contract adjustments.
                 'PRO': submitContent.pro
               },
-
-              [{
-                'payee': authUser,
-                'bp': 10000
-              }
-            ], // This array describes the distributions for master side, total must equal 10k between all entries.
-            [{
-            'voter': authUser,
-            'percentage': 100
+              submitContent.masterdist,
+              // [{'payee': authUser, 'bp': 10000}], // This array describes the distributions for master side, total must equal 10k between all entries.
+              submitContent.masterright,
+              // [{'voter': authUser, 'percentage': 100}], // This array describes the voting rights on the master side.
+              submitContent.masterthresh, // 100, // Management threshold on master side
+              submitContent.compdist, // [], // distributions_comp this array describes the distributions for composition side.
+              submitContent.compright, // [], // management_comp this array describes the voting rights on the composition side.
+              submitContent.compthresh, // 100, // management threshold composition side
+              submitContent.playreward, // 10, // playing reward
+              submitContent.pubshare, // 5000, // publishers share
+              function(err, success) {
+                if (err) {
+                  reject(err);
+                } else {
+                  resolve(success);
+                }
+              });
+            });
           }
-        ], // This array describes the voting rights on the master side.
-        100, // Management threshold on master side
-        [], // distributions_comp this array describes the distributions for composition side.
-        [], // management_comp this array describes the voting rights on the composition side.
-        100, // management threshold composition side
-        10, // playing reward
-        5000, // publishers share
-        function(err, success) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(success);
-        }
-      });
-    });
-  }
 
   transferMuse(authUser, authKey, transferTo, amount, memo) {
     this.museConfig();
@@ -379,4 +372,6 @@ getUrlData(getData) {
       });
     });
   }
+
+
 }

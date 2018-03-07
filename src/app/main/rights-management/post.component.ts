@@ -45,25 +45,42 @@ export class PostComponent implements OnInit {
                     disabled: true
                 }, Validators.required
             ],
-            ipfsUrl: ['', Validators.required],
-            albumTitle: ['', Validators.required],
-            albumGenre: ['', Validators.required],
 
-            countryOrigin: ['', Validators.required],
-            upcEan: ['', Validators.required],
-            releaseDate: ['', Validators.required],
-            releaseYear: ['', Validators.required],
-            salesStartDate: ['', Validators.required],
-            masterLabelName: ['', Validators.required],
-            displayLabelName: ['', Validators.required],
 
-            trackTitle: ['', Validators.required],
-            isrc: ['', Validators.required],
-            trackNo: ['', Validators.required],
+            ipfsUrl : ['', Validators.required],
+            albumTitle : ['', Validators.required],
+            albumGenre : ['', Validators.required],
+            albumArtist : ['', Validators.required],
+            partofAlbum : [false, Validators.required],
+            explicit : [false, Validators.required],
+            albumPline : ['', Validators.required],
+            albumCline : ['', Validators.required],
+
+            countryOrigin : ['', Validators.required],
+            upcEan : ['', Validators.required],
+            releaseDate : ['', Validators.required],
+            releaseYear : ['', Validators.required],
+            salesStartDate : ['', Validators.required],
+            masterLabelName : ['', Validators.required],
+            displayLabelName : ['', Validators.required],
+            samples : [false, Validators.required],
+
+            trackTitle : ['', Validators.required],
+            trackArtist : ['', Validators.required],
+            trackGenre : ['', Validators.required],
+            trackArtistAlias : ['', Validators.required],
+            trackVolume : ['', Validators.required],
+            trackPline : ['', Validators.required],
+            isrc : ['', Validators.required],
+            trackNo : ['', Validators.required],
             // trackNo: ['', [Validators.required, Validators.maxLength(5)]],
 
-            compositionTitle: ['', Validators.required],
-            tempValue: ['']
+            compositionTitle : ['', Validators.required],
+            compositionPublishers : ['', Validators.required],
+            compositionWriters : ['', Validators.required],
+            thirdParty : [false, Validators.required],
+            PRO : ['', Validators.required],
+            tempValue : ['']
         });
 
         this.postForm.valueChanges.subscribe(() => {
@@ -71,9 +88,12 @@ export class PostComponent implements OnInit {
         });
     }
 
-    onFormValuesChanged() {
-        for (const field in this.formErrors) {
-            if (!this.formErrors.hasOwnProperty(field)) {
+    onFormValuesChanged()
+    {
+        for ( const field in this.formErrors )
+        {
+            if ( !this.formErrors.hasOwnProperty(field) )
+            {
                 continue;
             }
 
@@ -83,9 +103,19 @@ export class PostComponent implements OnInit {
             // Get the control
             const control = this.postForm.get(field);
 
-            if (control && control.dirty && !control.valid) {
+            if ( control && control.dirty && !control.valid )
+            {
                 this.formErrors[field] = control.errors;
             }
         }
+    }
+
+    firecontent() {
+      // this.dataService.postContent(
+      //   '****',
+      //   'johnstor5',
+      //   this.postForm.value.ipfsUrl,
+      // );
+      console.log(this.postForm.value);
     }
 }
