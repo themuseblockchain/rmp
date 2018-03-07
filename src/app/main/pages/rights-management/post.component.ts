@@ -52,37 +52,46 @@ export class PostComponent implements OnInit
 
             ipfsUrl : ['', Validators.required],
             albumTitle : ['', Validators.required],
-            albumGenre : ['', Validators.required],
+            albumGenre : [0, Validators.required],
             albumArtist : ['', Validators.required],
             partofAlbum : [false, Validators.required],
-            explicit : [false, Validators.required],
+            explicit : [0, Validators.required], // this must be 1 or zero
             albumPline : ['', Validators.required],
             albumCline : ['', Validators.required],
 
             countryOrigin : ['', Validators.required],
-            upcEan : ['', Validators.required],
-            releaseDate : ['', Validators.required],
-            releaseYear : ['', Validators.required],
-            salesStartDate : ['', Validators.required],
+            upcEan : [9993, Validators.required], // int
+            releaseDate : [0, Validators.required], // int
+            releaseYear : [0, Validators.required], // int
+            salesStartDate : [0, Validators.required], // int
             masterLabelName : ['', Validators.required],
             displayLabelName : ['', Validators.required],
-            samples : [false, Validators.required],
+            samples : [false, Validators.required], // bool
 
             trackTitle : ['', Validators.required],
-            trackArtist : ['', Validators.required],
-            trackGenre : ['', Validators.required],
+            trackArtists : [[], Validators.required],
+            trackGenre : [1, Validators.required], // int
             trackArtistAlias : ['', Validators.required],
-            trackVolume : ['', Validators.required],
+            trackVolume : [0, Validators.required], // int
             trackPline : ['', Validators.required],
             isrc : ['', Validators.required],
-            trackNo : ['', Validators.required],
+            trackNo : [0, Validators.required], // int
             // trackNo: ['', [Validators.required, Validators.maxLength(5)]],
 
             compositionTitle : ['', Validators.required],
-            compositionPublishers : ['', Validators.required],
-            compositionWriters : ['', Validators.required],
+            compositionPublishers : [[], Validators.required],
+            compositionWriters : [[], Validators.required],
             thirdParty : [false, Validators.required],
-            PRO : ['', Validators.required],
+            pro : ['', Validators.required],
+            masterdist : [[{'payee': 'johnstor5', 'bp': 10000}], Validators.required], // array
+            masterright : [[{'voter': 'johnstor5', 'percentage': 100}], Validators.required], // array
+            masterthresh : [100, Validators.required], // percent
+            compdist : [[], Validators.required], // array
+            compright : [[], Validators.required], // array
+            compthresh : [100, Validators.required], // percent
+
+            playreward : [100, Validators.required], // int
+            pubshare : [5000, Validators.required], // int
             tempValue : ['']
         });
 
@@ -114,11 +123,11 @@ export class PostComponent implements OnInit
     }
 
     firecontent() {
-      // this.dataService.postContent(
-      //   '****',
-      //   'johnstor5',
-      //   this.postForm.value.ipfsUrl,
-      // );
+      this.dataService.postContent(
+        '******',
+        'johnstor5',
+        this.postForm.value,
+      );
       console.log(this.postForm.value);
     }
 }
