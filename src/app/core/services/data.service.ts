@@ -280,38 +280,38 @@ getUrlData(getData) {
               authUser,
               submitContent.ipfsUrl,
               {
-                'part_of_album': submitContent.part_of_album, // bool
-                'album_title': submitContent.album_title,
+                'part_of_album': submitContent.partofAlbum, // bool
+                'album_title': submitContent.albumTitle,
                 'album_artist': [authUser], // array
-                'genre_1': submitContent.genre_1, // integer ??? what do these numbers relate to?
-                'country_of_origin': submitContent.country_of_origin,
-                'explicit_': submitContent.explicit_, // apperently int???? wtf?
-                'p_line': submitContent.p_line,
-                'c_line': submitContent.c_line,
-                'upc_or_ean': submitContent.upc_or_ean,
-                'release_date': submitContent.release_date, // integer
-                'release_year': submitContent.release_year, // integer
-                'sales_start_date': submitContent.sales_start_date, // integer
-                'master_label_name': submitContent.master_label_name,
-                'display_label_name': submitContent.display_label_name
+                'genre_1': submitContent.albumGenre, // integer ??? what do these numbers relate to?
+                'country_of_origin': submitContent.countryOrigin,
+                'explicit_': submitContent.explicit, // apperently int???? wtf?
+                'p_line': submitContent.albumPline,
+                'c_line': submitContent.albumCline,
+                'upc_or_ean': submitContent.upcEan,
+                'release_date': submitContent.releaseDate, // integer
+                'release_year': submitContent.releaseYear, // integer
+                'sales_start_date': submitContent.salesStartDate, // integer
+                'master_label_name': submitContent.masterLabelName,
+                'display_label_name': submitContent.displayLabelName
               },
               {
-                'track_title': submitContent.track_title,
+                'track_title': submitContent.trackTitle,
                 'ISRC': submitContent.isrc,
                 'artist': [authUser], // array
-                'track_artists': submitContent.track_artists, // array
-                'genre_1': submitContent.genre_1, // integer
-                'p_line': submitContent.track_p_line,
-                'track_no': submitContent.track_no, // integer
-                'track_volume': submitContent.track_volume, // integer // this is volume number not volume level
-                'track_duration': submitContent.track_duration, // integer // still trying to figure the purpose of this
+                'track_artists': submitContent.trackArtists, // array
+                'genre_1': submitContent.trackGenre, // integer
+                'p_line': submitContent.trackPline,
+                'track_no': submitContent.trackNo, // integer
+                'track_volume': submitContent.trackVolume, // integer // this is volume number not volume level
+                'track_duration': 0, // integer // still trying to figure the purpose of this
                 'samples': submitContent.samples // bool
               },
               {
-                'composition_title': submitContent.composition_title,
-                'third_party_publishers': submitContent.third_party_publishers, // bool
-                'publishers': submitContent.publishers, // array
-                'writers': submitContent.writers, // array // wouldnt it be better to store both of these as one array???? this would be contract adjustments.
+                'composition_title': submitContent.compositionTitle,
+                'third_party_publishers': submitContent.thirdParty, // bool
+                'publishers': submitContent.compositionPublishers, // array
+                'writers': submitContent.compositionWriters, // array // wouldnt it be better to store both of these as one array???? this would be contract adjustments.
                 'PRO': submitContent.pro
               },
               submitContent.masterdist,
@@ -326,8 +326,10 @@ getUrlData(getData) {
               submitContent.pubshare, // 5000, // publishers share
               function(err, success) {
                 if (err) {
+                  console.log(err);
                   reject(err);
                 } else {
+                  console.log(success);
                   resolve(success);
                 }
               });
