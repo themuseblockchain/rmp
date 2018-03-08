@@ -1,19 +1,11 @@
-import { Component } from '@angular/core';
-import { SplashScreenService } from './core/services/splash-screen.service';
-
-import { LoginModule } from './main/pages/authentication/login/login.module';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
-    selector   : 'root',
-    templateUrl: './app.component.html',
-    styleUrls  : ['./app.component.scss']
+  selector: 'root',
+  templateUrl: './app.component.html',
+  encapsulation: ViewEncapsulation.None
 })
-export class AppComponent
-{
-    constructor(
-         private splashScreen: SplashScreenService,
-    )
-    {
-
-    }
+export class AppComponent {
+  constructor() {
+  }
 }

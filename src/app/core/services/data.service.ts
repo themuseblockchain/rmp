@@ -1,11 +1,10 @@
 import { Injectable, Inject, NgZone, Input } from '@angular/core';
 import * as muse from 'museblockchain-js';
 import * as Rx from 'rxjs/Rx';
-import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { AsyncLocalStorage } from 'angular-async-local-storage';
-import CryptoJS from 'crypto-js';
-
+// import { LocalStorageService, SessionStorageService} from 'ngx-webstorage'; // https://github.com/PillowPillow/ng2-webstorage
+import * as cryptojs from 'crypto-js';
+// import { Muser } from '../modals/muser.modal';
 
 @Injectable()
 export class DataService
@@ -15,13 +14,13 @@ export class DataService
   public userSuccess: any;
   getData: any;
   submitContent: any;
-  authUser: any;
-  authKey: any;
+  private authUser: any;
+  private authKey: any;
 
   constructor(
-    private zone: NgZone,
-    private http: HttpClient,
-    protected storage: AsyncLocalStorage
+    private zone: NgZone
+    // private webLocalStorage: LocalStorageService,
+    // private webSessionStorage: SessionStorageService
   ) {
   }
 
@@ -59,10 +58,18 @@ authAccount(authUser, authKey) {
   this.museConfig();
   return new Promise(function(resolve, reject){
     muse.login(authUser, authKey, function(err, success){
-      if (err === 0) {
+      if (err !== 1) {
         reject(err);
       } else {
         resolve(success);
+          localStorage.setItem('isAuthenticated', 'true');
+          localStorage.setItem('currentUser', authUser);
+          // localStorage.setItem('password', authKey);
+
+          localStorage.setItem('password', cryptojs.AES.encrypt(authKey, authUser));
+          // const test = localStorage.getItem('encrypt');
+          // const decrypt = cryptojs.AES.decrypt(test.toString(), authUser);
+          // localStorage.setItem('decryptedData', JSON.stringify(decrypt.toString(cryptojs.enc.Utf8)));
       }
     });
   });

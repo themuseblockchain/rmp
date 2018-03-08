@@ -1,35 +1,54 @@
+// import { AgmCoreModule } from '@agm/core';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { SharedModule } from '../core/modules/shared.module';
-import { MainComponent } from './main.component';
-import { PagesComponent } from './pages/pages.component';
-import { NavbarVerticalComponent } from './components/navbar/vertical/navbar-vertical.component';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { NavigationModule } from '../core/components/navigation/navigation.module';
-import { NavbarVerticalToggleDirective } from './components/navbar/vertical/navbar-vertical-toggle.directive';
-import { ThemeComponent } from '../core/components/theme/theme.component';
-import { SearchBarModule } from '../core/components/search-bar/search-bar.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RoutingModule } from '../app-routing.module';
+import { MaterialModule } from '../core/common/material-components.module';
+import { SortablejsModule } from 'angular-sortablejs';
+import { QuillModule } from 'ngx-quill';
+
+import { ScrollbarModule } from '../core/scrollbar/scrollbar.module';
+import { WalletModule } from './wallet/wallet.module';
+
+import { environment } from '../../environments/environment';
+
+import { LoadingOverlayComponent } from '../core/loading-overlay/loading-overlay.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { PostComponent } from './rights-management/post.component';
+import { IconsComponent } from './icons/icons.component';
 
 @NgModule({
-    declarations: [
-        PagesComponent,
-        MainComponent,
-        NavbarVerticalComponent,
-        ToolbarComponent,
-        NavbarVerticalToggleDirective,
-        ThemeComponent,
-    ],
-    imports     : [
-        SharedModule,
-        RouterModule,
-        NavigationModule,
-        SearchBarModule
-    ],
-    exports     : [
-        MainComponent
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FormsModule,
+    HttpClientModule,
+    RoutingModule,
+    MaterialModule,
+    FlexLayoutModule,
+    WalletModule,
+    // AgmCoreModule.forRoot({
+    // apiKey: environment.googleApi
+    // }),
+    QuillModule,
+    SortablejsModule,
+    ScrollbarModule
+  ],
+  declarations: [
+    LoginComponent,
+    RegisterComponent,
+    DashboardComponent,
+    PostComponent,
+    IconsComponent,
+    LoadingOverlayComponent
+  ],
+  providers: [
+  ]
 })
-
-export class MainModule
-{
+export class MainModule {
 }

@@ -1,0 +1,24 @@
+<loading-indicator></loading-indicator>
+
+<mat-sidenav-container class="admin-container">
+
+  <mat-sidenav class="sidenav" [opened]="sidenavOpen" align="start" [mode]="sidenavMode" msIconSidenav #sidenav>
+
+    <sidenav></sidenav>
+
+  </mat-sidenav>
+
+  <div class="content-container" fxLayout="column">
+    <!-- TOOLBAR -->
+    <toolbar [quickpanel]="quickpanel" [sidenav]="sidenav"></toolbar>
+    <!-- END TOOLBAR -->
+
+    <!-- CONTENT -->
+    <div class="main-container" #scrollContainer>
+      <router-outlet (activate)="onActivate($event, scrollContainer)"></router-outlet>
+    </div>
+    <!-- END CONTENT -->
+
+  </div>
+
+</mat-sidenav-container>

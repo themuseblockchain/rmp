@@ -1,77 +1,34 @@
-import { Comment } from '@angular/compiler/public_api';
-import { NgModule, ErrorHandler } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule, Routes } from '@angular/router';
-import 'hammerjs';
-import { SharedModule } from './core/modules/shared.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+import { RoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SplashScreenService } from './core/services/splash-screen.service';
-import { ConfigService } from './core/services/config.service';
-import { NavigationService } from './core/components/navigation/navigation.service';
-import { DataService } from './core/services/data.service';
-import { PagesModule } from './main/pages/pages.module';
+import { CoreModule } from './core/core.module';
 import { MainModule } from './main/main.module';
-import { AsyncLocalStorageModule } from 'angular-async-local-storage';
-
-
-// https://angular.io/guide/router
-//
-
-
-
-const appRoutes: Routes = [
-    // {
-    //     path      : '', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined
-    //     loadChildren: './main/main.module#MainModule'
-    // },
-    {
-        path        : '',
-        loadChildren: './main/pages/wallet/wallet.module#WalletModule'
-    },
-    {
-        path        : '',
-        loadChildren: './main/pages/rights-management/post.module#PostModule'
-    },
-    {
-        path        : 'login',
-        loadChildren: './main/pages/authentication/login/login.module#LoginModule'
-    },
-    {
-        path      : '**', // "path: **" The router will select this route if the requested URL doesn't match any paths for routes defined
-        redirectTo: 'login'
-    },
-];
-
-
+import { DataService } from './core/services/data.service';
+// import { Ng2Webstorage } from 'ngx-webstorage';
 
 @NgModule({
-    declarations: [
-        AppComponent
+  declarations: [AppComponent],
+  imports: [
+    // Core Angular Module // Don't remove!
+    CommonModule,
+    BrowserAnimationsModule,
+    // Ng2Webstorage,
 
-    ],
-    imports     : [
-        BrowserModule,
-        HttpModule,
-        HttpClientModule,
-        BrowserAnimationsModule,
-        RouterModule.forRoot(appRoutes),
-        SharedModule,
-        MainModule,
-        AsyncLocalStorageModule
-    ],
-    providers   : [
-        SplashScreenService,
-        ConfigService,
-        NavigationService,
-        DataService
-    ],
-    bootstrap   : [
-        AppComponent
-    ]
+    // Muse Core Modules
+    CoreModule,
+    RoutingModule,
+    MainModule,
+
+    // Register a Service Worker (optional)
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+  ],
+  providers: [
+    DataService
+  ],
+  bootstrap: [AppComponent]
 })
-export class AppModule
-{
-}
+export class AppModule { }
