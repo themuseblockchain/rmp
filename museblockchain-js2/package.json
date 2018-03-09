@@ -1,0 +1,131 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "muse-js@git://github.com/Tadasu85/Muse-JS-1.git",
+        "scope": null,
+        "escapedName": "muse-js",
+        "name": "muse-js",
+        "rawSpec": "git://github.com/Tadasu85/Muse-JS-1.git",
+        "spec": "git://github.com/Tadasu85/Muse-JS-1.git",
+        "type": "hosted",
+        "hosted": {
+          "type": "github",
+          "ssh": "git@github.com:Tadasu85/Muse-JS-1.git",
+          "sshUrl": "git+ssh://git@github.com/Tadasu85/Muse-JS-1.git",
+          "httpsUrl": "git+https://github.com/Tadasu85/Muse-JS-1.git",
+          "gitUrl": "git://github.com/Tadasu85/Muse-JS-1.git",
+          "shortcut": "github:Tadasu85/Muse-JS-1",
+          "directUrl": "https://raw.githubusercontent.com/Tadasu85/Muse-JS-1/master/package.json"
+        }
+      },
+      "D:\\Projects\\Dev\\Muse\\New folder"
+    ]
+  ],
+  "_from": "git://github.com/Tadasu85/Muse-JS-1.git",
+  "_id": "muse-js@0.1.2",
+  "_inCache": true,
+  "_location": "/muse-js",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "muse-js@git://github.com/Tadasu85/Muse-JS-1.git",
+    "scope": null,
+    "escapedName": "muse-js",
+    "name": "muse-js",
+    "rawSpec": "git://github.com/Tadasu85/Muse-JS-1.git",
+    "spec": "git://github.com/Tadasu85/Muse-JS-1.git",
+    "type": "hosted",
+    "hosted": {
+      "type": "github",
+      "ssh": "git@github.com:Tadasu85/Muse-JS-1.git",
+      "sshUrl": "git+ssh://git@github.com/Tadasu85/Muse-JS-1.git",
+      "httpsUrl": "git+https://github.com/Tadasu85/Muse-JS-1.git",
+      "gitUrl": "git://github.com/Tadasu85/Muse-JS-1.git",
+      "shortcut": "github:Tadasu85/Muse-JS-1",
+      "directUrl": "https://raw.githubusercontent.com/Tadasu85/Muse-JS-1/master/package.json"
+    }
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "git://github.com/Tadasu85/Muse-JS-1.git#f4fdb78a35b3ceb68e1a7c23c7152874a517bc01",
+  "_shasum": "319e8efa9e0b12a2c1faefa083a91ba4d1e73ad6",
+  "_shrinkwrap": null,
+  "_spec": "muse-js@git://github.com/Tadasu85/Muse-JS-1.git",
+  "_where": "D:\\Projects\\Dev\\Muse\\New folder",
+  "author": {
+    "name": "Tadasu85",
+    "email": "johnstor@gmail.com",
+    "url": "https://github.com/Tadasu85"
+  },
+  "authors": "tadasu85, gchampagne",
+  "bugs": {
+    "url": "https://github.com/themuseblockchain/Muse-JS/issues"
+  },
+  "dependencies": {
+    "bigi": "^1.4.2",
+    "bluebird": "^3.4.6",
+    "browserify-aes": "^1.0.6",
+    "bs58": "^4.0.0",
+    "bytebuffer": "^5.0.1",
+    "create-hash": "^1.1.2",
+    "create-hmac": "^1.1.4",
+    "debug": "^2.2.0",
+    "detect-node": "^2.0.3",
+    "ecurve": "^1.0.5",
+    "lodash": "^4.16.4",
+    "secure-random": "^1.1.1",
+    "tls": "0.0.1",
+    "ws": "^1.1.1"
+  },
+  "description": "Muse.js the JavaScript API for Muse blockchain",
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.2.5",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-es2017": "^6.16.0",
+    "babel-register": "^6.14.0",
+    "bluebird": "^3.4.6",
+    "eslint": "^3.5.0",
+    "eslint-plugin-import": "^1.15.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.2.1",
+    "json-loader": "^0.5.4",
+    "mocha": "^3.0.2",
+    "mocha-make-stub": "^2.3.2",
+    "should": "^11.1.0",
+    "webpack": "^1.13.2",
+    "webpack-visualizer-plugin": "^0.1.5"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "gitHead": "f4fdb78a35b3ceb68e1a7c23c7152874a517bc01",
+  "homepage": "https://github.com/themuseblockchain/Muse-JS#readme",
+  "keywords": [
+    "muse",
+    "blockchain",
+    "musejs",
+    "DPOS",
+    "graphene2.4"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "muse-js",
+  "optionalDependencies": {},
+  "private": false,
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/themuseblockchain/Muse-JS.git"
+  },
+  "scripts": {
+    "build": "npm run build-browser && npm run build-node",
+    "build-browser": "rm -rf dist && NODE_ENV=production webpack && gzip -k -f ./dist/*.js && du -h ./dist/*",
+    "build-node": "mkdir -p ./lib && cp -r ./src/* ./lib/ && babel ./src --out-dir ./lib",
+    "build-windows": "prepare_code.bat"
+  },
+  "version": "0.1.2"
+}
