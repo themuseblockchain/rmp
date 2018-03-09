@@ -78,6 +78,7 @@ export class PostComponent implements OnInit {
 
             trackTitle: ['', Validators.required],
             trackArtists: [[], Validators.required],
+            trackArtist: ['', Validators.required],
             trackGenre: [1, Validators.required], // int
             trackArtistAlias: ['', Validators.required],
             trackVolume: [0, Validators.required], // int
