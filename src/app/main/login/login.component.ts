@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 // import { AuthService } from '../../core/services/auth.service';
 import { fadeInAnimation } from '../../core/common/route.animation';
 import { DataService } from '../../core/services/data.service';
+import { MuserService } from '../../core/services/muser.service';
+
 // import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 
 
@@ -19,10 +20,12 @@ import { DataService } from '../../core/services/data.service';
 
 export class LoginComponent implements OnInit {
   private isAuthenticated: any;
-  form: FormGroup;
+  // form: FormGroup;
+  muser: {};
   loginFormErrors: any;
   muserName: string;
   password: string;
+
   // login: { muserName?: string, password?: string } = {};
   // parse username as lowercase.
 
@@ -33,14 +36,15 @@ export class LoginComponent implements OnInit {
   errors = [];
   constructor(
     private router: Router,
-    private formBuilder: FormBuilder,
-    private dataService: DataService
+    private dataService: DataService,
+    private muserService: MuserService
     // private webLocalStorage: LocalStorageService,
     // private webSessionStorage: SessionStorageService
 
   ) { }
 
   ngOnInit() {
+    this.muserService.cast.subscribe(muserName => this.muser = muserName);
   }
 
   // onLogin() {
@@ -51,13 +55,12 @@ export class LoginComponent implements OnInit {
     //  this.isAuthenticated = this.webLocalStorage.observe('isAuthenticated').subscribe((isAuthenticated) => {
     //       console.log(isAuthenticated);
     //       });
-   this.dataService.authAccount(this.muserName, this.password).then(() => {
-    this.isAuthenticated = localStorage.getItem('isAuthenticated');
-     if (this.isAuthenticated != null && this.isAuthenticated === 'true')
-        {
-          this.router.navigateByUrl('/');
-        }
-      }).catch(e => console.log('error' + e));
-      // this.webLocalStorage.retrieve('isAuthenticated');
-    }
+    this.dataService.authAccount(this.muserName.toLowerCase(), this.password).then(() => {
+      this.isAuthenticated = localStorage.getItem('isAuthenticated');
+      if (this.isAuthenticated != null && this.isAuthenticated === 'true') {
+        this.router.navigateByUrl('/');
+      }
+    }).catch(e => console.log('error' + e));
+    // this.webLocalStorage.retrieve('isAuthenticated');
+  }
 }

@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { MainModule } from './main/main.module';
 import { DataService } from './core/services/data.service';
+// import { AuthService } from './core/services/auth.service';
+import { MuserService } from './core/services/muser.service';
 // import { Ng2Webstorage } from 'ngx-webstorage';
 
 @NgModule({
@@ -27,7 +29,9 @@ import { DataService } from './core/services/data.service';
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
-    DataService
+    DataService,
+    // AuthService,
+    MuserService
   ],
   bootstrap: [AppComponent]
 })
