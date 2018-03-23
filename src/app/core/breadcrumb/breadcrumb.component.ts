@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, OnDestroy } from '@angular/core';
 import { Router, NavigationEnd } from "@angular/router";
 import { BreadcrumbService } from "./breadcrumb.service";
 
@@ -7,7 +7,7 @@ import { BreadcrumbService } from "./breadcrumb.service";
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.scss']
 })
-export class BreadcrumbsComponent implements OnInit, OnChanges {
+export class BreadcrumbsComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input('prefix')
   prefix: string  = '';

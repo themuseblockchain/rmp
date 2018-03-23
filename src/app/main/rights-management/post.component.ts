@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataService } from '../../core/services/data.service';
 import { Observable } from 'rxjs/Rx';
 import * as cryptojs from 'crypto-js';
+// import { MuserService } from '../../core/services/muser.service';
 
 @Component({
     selector: 'post',
@@ -11,14 +12,16 @@ import * as cryptojs from 'crypto-js';
 })
 export class PostComponent implements OnInit {
     postForm: FormGroup;
+    options: FormGroup;
     formErrors: any;
 
-    private authUser: any;
+    private muserName: any;
     private password: any;
 
     constructor(
         public dataService: DataService,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        // private muserService: MuserService
     ) {
         this.formErrors = {
             muserId: {},
@@ -42,17 +45,24 @@ export class PostComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.authUser = localStorage.getItem('currentUser');
+        this.muserName = localStorage.getItem('currentUser');
         this.password = localStorage.getItem('password');
 
-        const decrypt = cryptojs.AES.decrypt(this.password.toString(), this.authUser);
+        const decrypt = cryptojs.AES.decrypt(this.password.toString(), this.muserName); // this.muserName is wrong, need to be encryption key
         const authKey = JSON.stringify(decrypt.toString(cryptojs.enc.Utf8));
 
+        // this.muserService.getCurrentMuserAccount();
+
+        this.options = this.formBuilder.group({
+            'fixed': false,
+            'top': 0,
+            'bottom': 0,
+        });
 
         this.postForm = this.formBuilder.group({
             muserId: [
                 {
-                    value: this.authUser,
+                    value: this.muserName,
                     disabled: true
                 }, Validators.required
             ],
@@ -91,8 +101,8 @@ export class PostComponent implements OnInit {
             compositionWriters: [[], Validators.required],
             thirdParty: [false, Validators.required],
             pro: ['', Validators.required],
-            masterdist: [[{ 'payee': this.authUser, 'bp': 10000 }], Validators.required], // array
-            masterright: [[{ 'voter': this.authUser, 'percentage': 100 }], Validators.required], // array
+            masterdist: [[{ 'payee': this.muserName, 'bp': 10000 }], Validators.required], // array
+            masterright: [[{ 'voter': this.muserName, 'percentage': 100 }], Validators.required], // array
             masterthresh: [100, Validators.required], // percent
             compdist: [[], Validators.required], // array
             compright: [[], Validators.required], // array
@@ -127,15 +137,15 @@ export class PostComponent implements OnInit {
     }
 
     firecontent() {
-        this.authUser = localStorage.getItem('currentUser');
+        this.muserName = localStorage.getItem('currentUser');
         this.password = localStorage.getItem('password');
 
-        const decrypt = cryptojs.AES.decrypt(this.password.toString(), this.authUser);
+        const decrypt = cryptojs.AES.decrypt(this.password.toString(), this.muserName); // this.muserName is wrong, need to be encryption key
         const authKey = JSON.stringify(decrypt.toString(cryptojs.enc.Utf8));
 
         this.dataService.postContent(
             authKey,
-            this.authUser,
+            this.muserName,
             this.postForm.value,
         );
         console.log(this.postForm.value);

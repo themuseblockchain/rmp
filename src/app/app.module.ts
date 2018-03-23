@@ -8,9 +8,8 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { MainModule } from './main/main.module';
 import { DataService } from './core/services/data.service';
-// import { AuthService } from './core/services/auth.service';
 import { MuserService } from './core/services/muser.service';
-// import { Ng2Webstorage } from 'ngx-webstorage';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +17,6 @@ import { MuserService } from './core/services/muser.service';
     // Core Angular Module // Don't remove!
     CommonModule,
     BrowserAnimationsModule,
-    // Ng2Webstorage,
 
     // Muse Core Modules
     CoreModule,
@@ -30,7 +28,6 @@ import { MuserService } from './core/services/muser.service';
   ],
   providers: [
     DataService,
-    // AuthService,
     MuserService
   ],
   bootstrap: [AppComponent]

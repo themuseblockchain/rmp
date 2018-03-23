@@ -1,30 +1,33 @@
 import { Injectable, Inject, NgZone, Input } from '@angular/core';
+import { Utils } from '../../core/utils';
+import { Muser } from '../modals/muser.modal';
 import * as muse from 'museblockchain-js';
 import * as Rx from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-// import { LocalStorageService, SessionStorageService} from 'ngx-webstorage'; // https://github.com/PillowPillow/ng2-webstorage
-import * as cryptojs from 'crypto-js';
-// import { Muser } from '../modals/muser.modal';
+import { CryptoService } from '../../core/services/crypto.service';
+import { Observable } from 'rxjs/Observable';
+import { Observer } from 'rxjs/Observer';
+import { of } from 'rxjs/observable/of';
+import { mergeMap, catchError, switchMap } from 'rxjs/operators';
+import { fromPromise } from 'rxjs/observable/fromPromise';
+// import { MuserService } from './muser.service';
+
 
 @Injectable()
 export class DataService {
+  // muser = this.muser.asObservable();
+  private muserData: any;
+  // private muserData: Observable<any>;
+  private values: any;
+  private anyErrors: boolean;
+  private finished: boolean;
 
-  private isAuthen: any;
-  public userSuccess: any;
-  getData: any;
-  submitContent: any;
-  private authUser: any;
-  private authKey: any;
 
-  constructor(
-    private zone: NgZone
-    // private webLocalStorage: LocalStorageService,
-    // private webSessionStorage: SessionStorageService
-  ) {
+  constructor(private zone: NgZone) {
+
   }
 
 
-  //  private subject: Rx.Subject<MessageEvent>;
   museConfig() {
     this.setConfig();
     this.getConfig();
@@ -35,71 +38,129 @@ export class DataService {
   }
   getConfig() {
     return muse.api.getConfig(function (err, response) {
-      // console.log(response);
     });
   }
 
-  getAccount(authUser) {
+  getAccount(muserName) {
     this.museConfig();
-
-    return muse.api.getAccounts([authUser])
+    return muse.api.getAccounts([muserName])
       .then((result) => result.map(this.transformUserInfo));
   }
 
-  private transformUserInfo(user) {
-    user.meta = JSON.parse(user.json_metadata);
-    // console.log(user);
-    return user;
+  getAccount$(muserName) { // publisher of Muser Data
+    return new Observable((observer: Observer<any>) => {
+      fromPromise(this.getAccount(muserName).then((result => {
+        observer.next(result);
+      })));
+
+      // return this.muserData = Observable.of(1)
+      //   .switchMap(x => fromPromise(this.getAccount(muserName))
+      //   );
+    });
   }
 
-  authAccount(authUser, authKey) {
+
+
+  streamAccountInfo$(muserName) { // publisher of Muser Data
+    this.museConfig();
+
+    // return new Observable((observer: Observer<any>) => {
+    //   muse.api.streamOperationsAsync(this.getAccount$(muserName).subscribe(
+    //     result => {
+    //     observer.next(result);
+    //   }
+    //   ));
+    // });
+
+    // return new Observable((observer: Observer<any>) => {
+    //   muse.api.streamOperations(fromPromise(this.getAccount(muserName).then((result => {
+    //     console.log(JSON.stringify(result));
+    //     observer.next(result);
+
+    //   }))));
+    // });
+
+
+    // ======================
+    // working Observable
+    // ======================
+    return new Observable((observer: Observer<any>) => {
+      muse.api.streamOperationsAsync((err, result) => {
+        this.getAccount(muserName).then((results => {
+          observer.next(results);
+        }));
+      });
+    });
+
+
+    //   return new Observable((observer: Observer<any>) => {
+    //      muse.api.streamOperations(this.getAccount(muserName).then((result => {
+    //       observer.next(result);
+    //     })));
+    //   });
+  }
+
+  streamingAccounts(muserName) {
     this.museConfig();
     return new Promise(function (resolve, reject) {
-      muse.login(authUser, authKey, function (err, success) {
+      muse.api.streamOperations(muserName, 1,
+        function (err, success) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(success);
+          }
+        });
+    });
+  }
+
+  private transformUserInfo(muser) {
+    muser.meta = JSON.parse(muser.json_metadata);
+    return muser;
+  }
+
+  authAccount(muserName, password) {
+    this.museConfig();
+    return new Promise(function (resolve, reject) {
+      muse.login(muserName, password, function (err, success) {
         if (err !== 1) {
           reject(err);
         } else {
           resolve(success);
           localStorage.setItem('isAuthenticated', 'true');
-          localStorage.setItem('currentUser', authUser);
-          // localStorage.setItem('password', authKey);
-          const key = JSON.stringify(Math.random());
-          localStorage.setItem('key', key);
-          localStorage.setItem('password', cryptojs.AES.encrypt(authKey, key));
-          localStorage.setItem('unsecurePassword', authKey);
-          const test = localStorage.getItem('password');
-          const decrypt = cryptojs.AES.decrypt(test, localStorage.getItem('key'));
-          localStorage.setItem('decryptedData', decrypt.toString(cryptojs.enc.Utf8));
+          localStorage.setItem('currentUser', muserName);
+          CryptoService.encrypt(password);
         }
       });
     });
   }
 
-  getAccountHistory(authUser) {
+
+
+  getAccountHistory(muserName) {
     this.museConfig();
     return new Promise(function (resolve, reject) {
-      muse.api.getAccountHistory(authUser, 9999, 24,
+      muse.api.getAccountHistory(muserName, 9999, 24,
         function (err, success) {
           if (err) {
             reject(err);
           } else {
             const fakearray = [];
-            // console.log(success);
             for (const each of success) {
 
               let history_info;
 
               switch (each[1].op[0]) {
                 case 'account_create':
-                  if (each[1].op[1].creator === authUser) {
+                  if (each[1].op[1].creator === muserName) {
                     history_info = 'Created Account ' + each[1].op[1].new_account_name;
                   }
-                  else if (each[1].op[1].new_account_name === authUser) {
+                  else if (each[1].op[1].new_account_name === muserName) {
                     history_info = 'Account Creation';
                   }
                   break;
                 case 'transfer':
-                  if (each[1].op[1].to === authUser) {
+                  if (each[1].op[1].to === muserName) {
                     history_info = 'Received ' + each[1].op[1].amount.split(' ')[0] + ' MUSE from ' + each[1].op[1].from;
                   }
                   else {
@@ -107,7 +168,7 @@ export class DataService {
                   }
                   break;
                 case 'transfer':
-                  if (each[1].op[1].to === authUser) {
+                  if (each[1].op[1].to === muserName) {
                     history_info = 'Received ' + each[1].op[1].amount.split(' ')[0] + ' MUSE from ' + each[1].op[1].from;
                   }
                   else {
@@ -116,7 +177,7 @@ export class DataService {
                   break;
 
                 case 'transfer_to_vesting':
-                  if (each[1].op[1].to === authUser) {
+                  if (each[1].op[1].to === muserName) {
                     // history_info = 'Received ' + each[1].op[1].amount.split(' ')[0] + ' VEST from ' + each[1].op[1].from;
                     history_info = 'Transferred ' + each[1].op[1].amount.split(' ')[0] + ' MUSE to VEST';
                   }
@@ -170,6 +231,7 @@ export class DataService {
         });
     });
   }
+
   getWitnesses() {
     this.museConfig();
     return new Promise(function (resolve, reject) {
@@ -197,8 +259,6 @@ export class DataService {
         });
     });
   }
-
-
 
   getDataForUser(getData) {
     this.museConfig();
@@ -260,18 +320,30 @@ export class DataService {
     });
   }
 
+  // getAllAccounts$() {
+  //   this.museConfig();
+  //   const muserAccountInfo = new Observable(observer => {
+  //     muse.api.lookupAccounts('', 9999, function (err, results) {
+  //       if (err) {
+  //         console.log(err);
+  //       } else {
+  //         observer.next(results);
+  //       }
+  //     });
+  //   });
+  // }
 
-  postContent(authKey, authUser, submitContent) {
+  postContent(password, muserName, submitContent) {
     this.museConfig();
     return new Promise(function (resolve, reject) {
       muse.broadcast.content(
-        authKey,
-        authUser,
+        password,
+        muserName,
         submitContent.ipfsUrl,
         {
           'part_of_album': submitContent.partofAlbum, // bool
           'album_title': submitContent.albumTitle,
-          'album_artist': [authUser], // array
+          'album_artist': [muserName], // array
           'genre_1': submitContent.albumGenre, // integer ??? what do these numbers relate to?
           'country_of_origin': submitContent.countryOrigin,
           'explicit_': submitContent.explicit, // apperently int???? wtf?
@@ -287,7 +359,7 @@ export class DataService {
         {
           'track_title': submitContent.trackTitle,
           'ISRC': submitContent.isrc,
-          'artist': [authUser], // array
+          'artist': [muserName], // array
           'track_artists': submitContent.trackArtists, // array
           'genre_1': submitContent.trackGenre, // integer
           'p_line': submitContent.trackPline,
@@ -304,9 +376,9 @@ export class DataService {
           'PRO': submitContent.pro
         },
         submitContent.masterdist,
-        // [{'payee': authUser, 'bp': 10000}], // This array describes the distributions for master side, total must equal 10k between all entries.
+        // [{'payee': muserName, 'bp': 10000}], // This array describes the distributions for master side, total must equal 10k between all entries.
         submitContent.masterright,
-        // [{'voter': authUser, 'percentage': 100}], // This array describes the voting rights on the master side.
+        // [{'voter': muserName, 'percentage': 100}], // This array describes the voting rights on the master side.
         submitContent.masterthresh, // 100, // Management threshold on master side
         submitContent.compdist, // [], // distributions_comp this array describes the distributions for composition side.
         submitContent.compright, // [], // management_comp this array describes the voting rights on the composition side.
@@ -325,10 +397,10 @@ export class DataService {
     });
   }
 
-  transferMuse(authUser, authKey, transferTo, amount, memo) {
+  transferMuse(muserName, password, transferTo, amount, memo) {
     this.museConfig();
     return new Promise(function (resolve, reject) {
-      muse.transferFunds(authUser, authKey, transferTo, amount, memo, function (err, success) {
+      muse.transferFunds(muserName, password, transferTo, amount, memo, function (err, success) {
         if (err === -1) {
           reject(err);
         } else {
@@ -338,10 +410,10 @@ export class DataService {
     });
   }
 
-  transferMusetoVest(authUser, authKey, amount) {
+  transferMusetoVest(muserName, password, amount) {
     this.museConfig();
     return new Promise(function (resolve, reject) {
-      muse.transferFundsToVestings(authUser, authKey, null, amount, function (err, success) {
+      muse.transferFundsToVestings(muserName, password, null, amount, function (err, success) {
         if (err === -1) {
           reject(err);
         } else {
@@ -351,10 +423,10 @@ export class DataService {
     });
   }
 
-  withdrawVesting(authUser, authKey, amount) {
+  withdrawVesting(muserName, password, amount) {
     this.museConfig();
     return new Promise(function (resolve, reject) {
-      muse.withdrawVesting(authUser, authKey, amount, function (err, success) {
+      muse.withdrawVesting(muserName, password, amount, function (err, success) {
         if (err === -1) {
           reject(err);
         } else {
@@ -363,6 +435,4 @@ export class DataService {
       });
     });
   }
-
-
 }

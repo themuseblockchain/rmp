@@ -13,6 +13,7 @@ export class ModalTransferComponent {
   };
   constructor(
     public dialogRef: MatDialogRef<ModalTransferComponent>
+    
   ) {}
   save() {
     if (this.data.transferto === '') {

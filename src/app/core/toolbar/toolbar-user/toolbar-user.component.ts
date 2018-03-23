@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MuserService } from '../../services/muser.service';
 
 @Component({
   selector: 'toolbar-user',
@@ -8,10 +9,17 @@ import { Component, OnInit } from '@angular/core';
 export class ToolbarUserButtonComponent implements OnInit {
 
   isOpen: boolean;
+  muserName: string;
 
-  constructor() { }
+  constructor(
+    private muserService: MuserService
+  ) {
+
+  }
 
   ngOnInit() {
+    this.muserName = localStorage.getItem('currentUser'); // this.muserService.getMuserName;
+
   }
 
   toggleDropdown() {
@@ -22,4 +30,7 @@ export class ToolbarUserButtonComponent implements OnInit {
     this.isOpen = false;
   }
 
+  onLogout() {
+    localStorage.clear();
+  }
 }
