@@ -1,6 +1,5 @@
 import { Injectable, Inject, NgZone, Input } from '@angular/core';
 import { Utils } from '../../core/utils';
-import { Muser } from '../modals/muser.modal';
 import * as muse from 'museblockchain-js';
 import * as Rx from 'rxjs/Rx';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';

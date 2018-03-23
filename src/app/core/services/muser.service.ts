@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Muser } from '../modals/muser.modal';
 import { DataService } from '../../core/services/data.service';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';

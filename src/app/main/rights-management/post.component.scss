@@ -15,19 +15,47 @@
             }
         }
     }
-    .example-container {
-        position: absolute;
-        top: 60px;
-        bottom: 60px;
-        left: 0;
-        right: 0;
-    }
+}
 
-    .example-sidenav {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 200px;
-        background: rgba(255, 0, 0, 0.5);
-    }
+.management-sidenav {
+  position: absolute;
+  height: 50%;
+  border: 1px solid black;
+  top: 0;
+  right: 0;
+}
+.composition-sidenav {
+  position: absolute;
+  height: 50%;
+  border: 1px solid black;
+  bottom: 0;
+  right: 0;
+}
+.album-sidenav {
+  position: absolute;
+  height: 50%;
+  border: 1px solid black;
+  top: 0;
+  right: 0;
+}
+.track-sidenav {
+  position: absolute;
+  height: 50%;
+  border: 1px solid black;
+  bottom: 0;
+  right: 0;
+}
+.publishers-sidenav {
+  position: absolute;
+  height: 50%;
+  border: 1px solid black;
+  top: 0;
+  right: 0;
+}
+.writers-sidenav {
+  position: absolute;
+  height: 50%;
+  border: 1px solid black;
+  bottom: 0;
+  right: 0;
 }
