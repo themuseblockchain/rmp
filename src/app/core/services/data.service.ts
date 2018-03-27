@@ -43,7 +43,7 @@ export class DataService {
   getAccount(muserName) {
     this.museConfig();
     return muse.api.getAccounts([muserName])
-      .then((result) => result.map(this.transformUserInfo));
+      .then((result) => result;
   }
 
   getAccount$(muserName) { // publisher of Muser Data
@@ -113,10 +113,6 @@ export class DataService {
     });
   }
 
-  private transformUserInfo(muser) {
-    muser.meta = JSON.parse(muser.json_metadata);
-    return muser;
-  }
 
   authAccount(muserName, password) {
     this.museConfig();

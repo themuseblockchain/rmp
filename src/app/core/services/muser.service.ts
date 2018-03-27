@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observer } from 'rxjs/Observer';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
-import { map } from 'rxjs/Operators';
+ // import { map } from 'rxjs/Operators';
 import 'rxjs/Rx'; // all rxjs operators
 import 'rxjs/add/observable/of';
 import * as muse from 'museblockchain-js';
