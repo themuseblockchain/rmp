@@ -67,7 +67,7 @@
     "@types/node": "6.0.92",
     "@types/d3": "^3.5.17",
     "@types/lodash-es": "^4.17.0",
-    "@types/nvd3": "^1.8.38"
+    "@types/nvd3": "^1.8.38",
     "codelyzer": "4.1.0",
     "jasmine-core": "2.8.0",
     "jasmine-spec-reporter": "4.2.1",
