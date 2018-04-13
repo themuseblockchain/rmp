@@ -16,3 +16,46 @@
         }
     }
 }
+
+.management-sidenav {
+  position: absolute;
+  height: 50%;
+  border: 1px solid black;
+  top: 0;
+  right: 0;
+}
+.composition-sidenav {
+  position: absolute;
+  height: 50%;
+  border: 1px solid black;
+  bottom: 0;
+  right: 0;
+}
+.album-sidenav {
+  position: absolute;
+  height: 50%;
+  border: 1px solid black;
+  top: 0;
+  right: 0;
+}
+.track-sidenav {
+  position: absolute;
+  height: 50%;
+  border: 1px solid black;
+  bottom: 0;
+  right: 0;
+}
+.publishers-sidenav {
+  position: absolute;
+  height: 50%;
+  border: 1px solid black;
+  top: 0;
+  right: 0;
+}
+.writers-sidenav {
+  position: absolute;
+  height: 50%;
+  border: 1px solid black;
+  bottom: 0;
+  right: 0;
+}

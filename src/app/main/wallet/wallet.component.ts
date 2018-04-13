@@ -5,14 +5,16 @@ import { ModalTransferComponent } from './modal/modal-transfer.component';
 import { ModalDialogVestComponent } from './modal/modal-vest.component';
 import { ModalWithdrawComponent } from './modal/modal-withdraw.component';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import * as cryptojs from 'crypto-js';
+import { MuserService } from '../../core/services/muser.service';
+import { CryptoService } from '../../core/services/crypto.service';
+
 
 @Component({
   selector: 'wallet',
   templateUrl: './wallet.component.html',
   styleUrls: ['./wallet.component.scss']
 })
-export class WalletComponent implements OnInit {
+export class WalletComponent implements OnInit, OnDestroy {
   walletForm: FormGroup;
   Musebalance: any;
   Vestbalance: any;
@@ -30,19 +32,28 @@ export class WalletComponent implements OnInit {
   dialogRefVest: MatDialogRef<ModalDialogVestComponent>;
   dialogRefWithd: MatDialogRef<ModalWithdrawComponent>;
 
-  private authUser: any;
-  private password: any;
-
-
+  private muserName: any;
+  private muserInfo: any;
 
   constructor(
     private dataService: DataService,
     private formBuilder: FormBuilder,
-    private dialog: MatDialog
-  ) { }
+    private dialog: MatDialog,
+    private muserService: MuserService
+  ) {
+  }
   ngOnInit() {
+    this.muserName = this.muserService.getMuserName;
+    // this.dataService.getAccount(this.muserName)
+    //   .then(data => this.loadData(data));
+
+    this.dataService.getAccount$(this.muserName)
+      .subscribe(data => this.loadData(data));
+
+    this.muserInfo = this.dataService.streamAccountInfo$(this.muserName)
+      .subscribe(data => this.loadData(data));
+
     this.walletForm = this.createUserForm();
-    this.loadData();
   }
 
   createUserForm() {
@@ -51,19 +62,17 @@ export class WalletComponent implements OnInit {
     });
   }
 
-  loadData() {
-    this.authUser = localStorage.getItem('currentUser');
-    this.dataService.getAccount(this.authUser).then((result => {
-      this.BasicKey = result[0].basic.key_auths[0][0];
-      this.ActiveKey = result[0].active.key_auths[0][0];
-      this.OwnerKey = result[0].owner.key_auths[0][0];
-      this.MemoKey = result[0].memo_key;
-      this.Musebalance = result[0].balance.split(' ')[0];
-      this.Vestbalance = result[0].vesting_shares.split(' ')[0];
-      this.MBDbalance = result[0].mbd_balance.split(' ')[0];
-      this.NextwithDraw = result[0].next_vesting_withdrawal;
-    }));
-    this.dataService.getAccountHistory(this.authUser).then((result => {
+  loadData(data) {
+    this.BasicKey = data[0].basic.key_auths[0][0];
+    this.ActiveKey = data[0].active.key_auths[0][0];
+    this.OwnerKey = data[0].owner.key_auths[0][0];
+    this.MemoKey = data[0].memo_key;
+    this.Musebalance = data[0].balance.split(' ')[0];
+    this.Vestbalance = data[0].vesting_shares.split(' ')[0];
+    this.MBDbalance = data[0].mbd_balance.split(' ')[0];
+    this.NextwithDraw = data[0].next_vesting_withdrawal;
+
+    this.dataService.getAccountHistory(this.muserName).then((result => {
       this.History = result;
     }));
     this.dataService.getWitnesses().then((result => {
@@ -71,55 +80,37 @@ export class WalletComponent implements OnInit {
     }));
   }
   transferMuseBtn() {
-    this.authUser = localStorage.getItem('currentUser');
-    this.password = localStorage.getItem('password');
-
-    const decrypt = cryptojs.AES.decrypt(this.password.toString(), this.authUser);
-    const authKey = JSON.stringify(decrypt.toString(cryptojs.enc.Utf8));
-
+    const authPassword = CryptoService.decrypt();
 
     this.dialogRefTrans = this.dialog.open(ModalTransferComponent);
     this.dialogRefTrans.afterClosed().subscribe(
-      data => this.dataService.transferMuse(this.authUser, authKey, data.transferto, data.amount, data.memo
+      data => this.dataService.transferMuse(this.muserName, authPassword, data.transferto, data.amount, data.memo
       ));
-
     // trigger reload after success return and alert error if fails.
   }
 
   vestMuseBtn() {
     this.dialogRefVest = this.dialog.open(ModalDialogVestComponent);
-    this.authUser = localStorage.getItem('currentUser');
-    this.password = localStorage.getItem('password');
-
-    const decrypt = cryptojs.AES.decrypt(this.password.toString(), this.authUser);
-    const authKey = JSON.stringify(decrypt.toString(cryptojs.enc.Utf8));
-
+    const authPassword = CryptoService.decrypt();
     this.dialogRefVest.afterClosed().subscribe(
-      data => this.dataService.transferMusetoVest(this.authUser, authKey, data
+      data => this.dataService.transferMusetoVest(this.muserName, authPassword, data
       ));
   }
 
   withdrawVestBtn() {
     this.dialogRefWithd = this.dialog.open(ModalWithdrawComponent);
-    this.authUser = localStorage.getItem('currentUser');
-    this.password = localStorage.getItem('password');
-
-    const decrypt = cryptojs.AES.decrypt(this.password.toString(), this.authUser);
-    const authKey = JSON.stringify(decrypt.toString(cryptojs.enc.Utf8));
+    const authPassword = CryptoService.decrypt();
     this.dialogRefWithd.afterClosed().subscribe(
-      data => this.dataService.withdrawVesting(this.authUser, authKey, data
+      data => this.dataService.withdrawVesting(this.muserName, authPassword, data
       ));
   }
 
   cancelWithdrawBtn() {
-    this.authUser = localStorage.getItem('currentUser');
-    this.password = localStorage.getItem('password');
-
-    const decrypt = cryptojs.AES.decrypt(this.password.toString(), this.authUser);
-    const authKey = JSON.stringify(decrypt.toString(cryptojs.enc.Utf8));
-    this.dataService.withdrawVesting(this.authUser, authKey, 0);
+    const authPassword = CryptoService.decrypt();
+    this.dataService.withdrawVesting(this.muserName, authPassword, 0);
   }
 
-
-
+  ngOnDestroy(): void {
+    this.muserInfo.unsubscribe();
+  }
 }

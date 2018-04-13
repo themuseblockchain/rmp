@@ -1,9 +1,9 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { fadeInAnimation } from '../../core/common/route.animation';
-import { AsyncLocalStorage } from 'angular-async-local-storage';
+// import { AsyncLocalStorage } from 'angular-async-local-storage';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { LocalStorageService, SessionStorageService} from 'ngx-webstorage';
-
+import { MuserService } from '../../core/services/muser.service';
 
 @Component({
   selector: 'dashboard',
@@ -16,32 +16,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
 
-  discreteBarDemoData;
-  lineChartDemoData;
-  lineChartInterpolatedDemoData;
-  serverLoadDemoData;
-  activityFeedsDemoData;
-  pieChartDemoData;
-  recentSalesProductsDemoData;
-  recentSalesDemoData;
-  trafficSourcesDemoData;
+  muserName: string;
 
-  constructor(private router: Router
-    // private webLocalStorage: LocalStorageService,
-    // private webSessionStorage: SessionStorageService
+
+  constructor(
+    private router: Router,
+    private muserService: MuserService
   ) { }
 
   ngOnInit() {
+    this.muserName = this.muserService.getMuserName;
     const isAuthenticated = localStorage.getItem('isAuthenticated'); {
-      // isAuthenticated || == null || isAuthenticated !== 'true' ? this.router.navigateByUrl('/login') : this.router.navigateByUrl('/');
-
-
-      if (isAuthenticated != null) {
-        if (isAuthenticated === 'true') {
-          this.router.navigateByUrl('/');
-        }
+      if (isAuthenticated === 'true') {
+        this.router.navigateByUrl('/');
       } else {
         this.router.navigateByUrl('/login');
+        localStorage.clear();
       }
     }
   }

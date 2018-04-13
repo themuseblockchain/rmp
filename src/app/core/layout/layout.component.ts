@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MediaChange } from "@angular/flex-layout";
-import { NavigationEnd, Router } from "@angular/router";
-import { Subscription } from "rxjs";
-import { MediaReplayService } from "../sidenav/mediareplay/media-replay.service";
+import { MediaChange } from '@angular/flex-layout';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { MediaReplayService } from '../sidenav/mediareplay/media-replay.service';
 
 @Component({
   selector: 'admin',
@@ -17,7 +17,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
   private _mediaSubscription: Subscription;
   private _routerEventsSubscription: Subscription;
 
-  quickpanelOpen: boolean = false;
   sidenavOpen: boolean = true;
   sidenavMode: string = 'side';
   isMobile: boolean = false;
@@ -31,7 +30,7 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this._mediaSubscription = this.mediaReplayService.media$.subscribe((change: MediaChange) => {
-      let isMobile = (change.mqAlias == 'xs') || (change.mqAlias == 'sm');
+      const isMobile = (change.mqAlias == 'xs') || (change.mqAlias == 'sm');
 
       this.isMobile = isMobile;
       this.sidenavMode = (isMobile) ? 'over' : 'side';

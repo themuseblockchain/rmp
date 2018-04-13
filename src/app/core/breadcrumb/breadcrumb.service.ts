@@ -54,7 +54,7 @@ export class BreadcrumbService {
    */
   getFriendlyNameForRoute(route: string): string {
     let name;
-    let routeEnd = route.substr(route.lastIndexOf('/')+1, route.length);
+    let routeEnd = route.substr(route.lastIndexOf('/') + 1, route.length);
 
     this.routesFriendlyNames.forEach((value, key, map) => {
       if (key === route) {

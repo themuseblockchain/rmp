@@ -8,7 +8,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
 import { BreadcrumbService } from './breadcrumb/breadcrumb.service';
 import { ClickOutsideDirective } from './common/click-outside.directive';
-import { MaterialModule } from './common/material-components.module';
+import { MaterialModule } from './common/material.module';
 import { LoadingIndicatorModule } from './loading-indicator/loading-indicator.module';
 import { PendingInterceptorModule } from './loading-indicator/pending-interceptor.module';
 import { ScrollbarModule } from './scrollbar/scrollbar.module';
@@ -21,7 +21,7 @@ import { SearchBarComponent } from './toolbar/search-bar/search-bar.component';
 import { SearchComponent } from './toolbar/search/search.component';
 import { ToolbarNotificationsComponent } from './toolbar/toolbar-notifications/toolbar-notifications.component';
 import { ToolbarUserButtonComponent } from './toolbar/toolbar-user/toolbar-user.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';  
 
 @NgModule({
   imports: [

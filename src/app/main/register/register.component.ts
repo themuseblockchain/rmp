@@ -1,7 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { fadeInAnimation } from '../../core/common/route.animation';
+import { MatDialog, MatDialogRef } from '@angular/material';
 import { DataService } from '../../core/services/data.service';
+// import { VerificationService } from '../../core/services/verification.service';
+
+import { AlertService } from '../../core/services/alert.service';
+
+import * as firebase from 'firebase';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { Validator, NG_VALIDATORS } from '@angular/forms';
+
+
 
 @Component({
   selector: 'register',
@@ -12,29 +22,28 @@ import { DataService } from '../../core/services/data.service';
   },
   animations: [fadeInAnimation]
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
 
-  muserName: string; /// register should force lowercase on username
-  // email: string;
-  password: string;
+  private muserName: string;
+  private phoneNumber: any;
+  private email: string;
+  private password: string;
+  private passwordConfirm: string;
+  private terms: boolean;
 
   constructor(
     private router: Router,
-    private dataService: DataService
-  ) { }
+    private dataService: DataService,
+    private alert: AlertService,
+    private dialog: MatDialog,
+    // private verification: VerificationService
+    ) { }
 
-  ngOnInit() {
-  }
+  // ngOnInit() {
+  //   //  this.alert.showEmailVerifiedMessageAndRedirect();
+  // }
 
   register() {
-    // this.dataService.authAccount(this.muserName.toLowerCase(), this.password).then(() => {
-    // this.isAuthenticated = localStorage.getItem('isAuthenticated');
-    //  if (this.isAuthenticated != null && this.isAuthenticated === 'true')
-    //     {
-    //       this.router.navigateByUrl('/');
-    //           // this.router.navigate(['/']);
-    //     }
-    //   }).catch(e => console.log('error' + e));
-
+    this.dataService.createAccount(this.muserName, this.password /*, this.phoneNumber*/, this.email);
   }
 }
