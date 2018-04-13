@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { fadeInAnimation } from '../../core/common/route.animation';
-import { AsyncLocalStorage } from 'angular-async-local-storage';
+// import { AsyncLocalStorage } from 'angular-async-local-storage';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { LocalStorageService, SessionStorageService} from 'ngx-webstorage';
 import { MuserService } from '../../core/services/muser.service';

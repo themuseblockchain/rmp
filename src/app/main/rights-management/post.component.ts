@@ -16,6 +16,15 @@ export class PostComponent implements OnInit {
 
   private muserName: any;
 
+  private masterUser: any;
+  private masterWeight: any;
+  private masterSplit: any;
+  private compUser: any;
+  private compWeight: any;
+  private compSplit: any;
+
+
+
   constructor(
     public dataService: DataService,
     private formBuilder: FormBuilder,
@@ -24,6 +33,9 @@ export class PostComponent implements OnInit {
     this.formErrors = {
     };
   }
+
+
+
 
   ngOnInit() {
     this.muserName = this.muserService.getMuserName;
@@ -54,7 +66,7 @@ export class PostComponent implements OnInit {
 
       trackTitle: ['', Validators.required],
       featuredArtist: [''],
-      featuredArtistISNI: [''], // int
+      featuredArtistISNI: [0], // int
       trackArtist: [''],
       trackartistalias: [''],
       trackartistisni: [''],
@@ -63,7 +75,7 @@ export class PostComponent implements OnInit {
       trackArtistAlias: [''],
       trackVolumeNumber: [0], // int
       trackPline: [''],
-      isrc: [0],
+      isrc: [''],
       trackNo: [0], // int
       compositionTitle: [''],
       compositionTitleAlt: [''],

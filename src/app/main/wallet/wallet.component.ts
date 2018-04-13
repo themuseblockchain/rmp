@@ -8,6 +8,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { MuserService } from '../../core/services/muser.service';
 import { CryptoService } from '../../core/services/crypto.service';
 
+
 @Component({
   selector: 'wallet',
   templateUrl: './wallet.component.html',
@@ -43,8 +44,11 @@ export class WalletComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.muserName = this.muserService.getMuserName;
-    this.dataService.getAccount(this.muserName)
-      .then(data => this.loadData(data));
+    // this.dataService.getAccount(this.muserName)
+    //   .then(data => this.loadData(data));
+
+    this.dataService.getAccount$(this.muserName)
+      .subscribe(data => this.loadData(data));
 
     this.muserInfo = this.dataService.streamAccountInfo$(this.muserName)
       .subscribe(data => this.loadData(data));

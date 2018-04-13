@@ -29,10 +29,10 @@ export class LoginComponent implements OnInit {
   };
 
   errors = [];
+  
   constructor(
     private router: Router,
     private dataService: DataService
-    // private muserService: MuserService,
   ) {
 
   }
@@ -42,8 +42,8 @@ export class LoginComponent implements OnInit {
 
 
   onLogin() {
-    this.muserName = this.muserName.toLowerCase();
-    this.dataService.authAccount(this.muserName, this.password).then(() => {
+    // this.muserName = this.muserName.toLowerCase();
+    this.dataService.authAccount(this.muserName.toLowerCase(), this.password).then(() => {
       this.isAuthenticated = localStorage.getItem('isAuthenticated');
       if (this.isAuthenticated === 'true') {
         // this.muserService.muserAccountInfo$.subscribe(muserAccountInfo => {
@@ -53,6 +53,5 @@ export class LoginComponent implements OnInit {
         this.router.navigateByUrl('/');
       }
     }).catch(e => console.log('error' + e));
-
   }
 }

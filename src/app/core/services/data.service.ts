@@ -1,31 +1,40 @@
+import { error } from 'util';
+import { Local } from 'protractor/built/driverProviders';
 import { Injectable, Inject, NgZone, Input } from '@angular/core';
-import { Utils } from '../../core/utils';
-import * as muse from 'museblockchain-js';
 import * as Rx from 'rxjs/Rx';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { CryptoService } from '../../core/services/crypto.service';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { of } from 'rxjs/observable/of';
-import { mergeMap, catchError, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { fromPromise } from 'rxjs/observable/fromPromise';
-// import { MuserService } from './muser.service';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
+// import { LocalStorage, SessionStorage } from 'ngx-webstorage';
+import * as muse from 'museblockchain-js';
+import * as firebase from 'firebase';
 
+import { Utils } from '../../core/utils';
+import { CryptoService } from '../../core/services/crypto.service';
+import { AlertService } from '../../core/services/alert.service';
+import { VerificationService } from '../../core/services/verification.service';
+import { ErrorCodes } from '../../core/enums';
+
+// import { Validator } from '../validator';
 
 @Injectable()
 export class DataService {
-  // muser = this.muser.asObservable();
   private muserData: any;
-  // private muserData: Observable<any>;
-  private values: any;
-  private anyErrors: boolean;
-  private finished: boolean;
+  private muserName: string;
 
 
-  constructor(private zone: NgZone) {
-
+  constructor(
+    private zone: NgZone,
+    private localSt: LocalStorageService,
+    private sessionSt: SessionStorageService,
+    private userVerification: VerificationService,
+    private alert: AlertService
+  ) {
   }
-
 
   museConfig() {
     this.setConfig();
@@ -43,7 +52,7 @@ export class DataService {
   getAccount(muserName) {
     this.museConfig();
     return muse.api.getAccounts([muserName])
-      .then((result) => result;
+      .then((result) => result);
   }
 
   getAccount$(muserName) { // publisher of Muser Data
@@ -51,16 +60,10 @@ export class DataService {
       fromPromise(this.getAccount(muserName).then((result => {
         observer.next(result);
       })));
-
-      // return this.muserData = Observable.of(1)
-      //   .switchMap(x => fromPromise(this.getAccount(muserName))
-      //   );
     });
   }
 
-
-
-  streamAccountInfo$(muserName) { // publisher of Muser Data
+  streamAccountInfo$(muserName) {
     this.museConfig();
 
     // return new Observable((observer: Observer<any>) => {
@@ -72,17 +75,13 @@ export class DataService {
     // });
 
     // return new Observable((observer: Observer<any>) => {
-    //   muse.api.streamOperations(fromPromise(this.getAccount(muserName).then((result => {
+    //   muse.api.streamOperationsAsync(fromPromise(this.getAccount(muserName).then((result => {
     //     console.log(JSON.stringify(result));
     //     observer.next(result);
 
     //   }))));
     // });
 
-
-    // ======================
-    // working Observable
-    // ======================
     return new Observable((observer: Observer<any>) => {
       muse.api.streamOperationsAsync((err, result) => {
         this.getAccount(muserName).then((results => {
@@ -90,13 +89,6 @@ export class DataService {
         }));
       });
     });
-
-
-    //   return new Observable((observer: Observer<any>) => {
-    //      muse.api.streamOperations(this.getAccount(muserName).then((result => {
-    //       observer.next(result);
-    //     })));
-    //   });
   }
 
   streamingAccounts(muserName) {
@@ -110,14 +102,18 @@ export class DataService {
             resolve(success);
           }
         });
+    }).catch((err) => {
+      this.alert.showErrorMessage('streamingAccounts(): ' + err);
     });
   }
 
 
   authAccount(muserName, password) {
+    // this.localSt.store('isAuthenticatedTEST', 'TEST');
+
     this.museConfig();
     return new Promise(function (resolve, reject) {
-      muse.login(muserName, password, function (err, success) {
+      muse.login(muserName.toLowerCase(), password, function (err, success) {
         if (err !== 1) {
           reject(err);
         } else {
@@ -127,10 +123,106 @@ export class DataService {
           CryptoService.encrypt(password);
         }
       });
+    }).catch((err) => {
+      this.alert.showErrorMessage('authAccount(): ' + err);
     });
   }
 
+  createAccount(muserName: string, password: string /*, phoneNumber: number*/, email: string) {
+    this.muserName = muserName.toLocaleLowerCase();
+    this.muserData = this.getAccount$(muserName);
+    this.muserData.subscribe(
+      dataExist => {
+        if (dataExist.length === 0) {
+          firebase.auth().createUserWithEmailAndPassword(email, this.muserName)
+            .then((success) => {
+              this.verifyAccount(muserName, password/*, phoneNumber*/);
+            }).catch((err) => {
+              this.alert.showErrorMessage('createAccount(): ' + err.stack);
+            });
+        } else {
+           this.alert.showErrorMessage(ErrorCodes.muserNameAlreadyInUse);
+        }
+      }
+    );
+  }
 
+  verifyAccount(muserName, password /*, phoneNumber*/) {
+    try {
+      // TODO: how to handle if user does not complete verification in one sitting?
+      if (!firebase.auth().currentUser.emailVerified) {
+        this.userVerification.sendEmailVerification().then(() => {
+        });
+
+        const verification = this.userVerification.checkVerified$().subscribe(
+          verified => {
+            if (verified === true) {
+              verification.unsubscribe();
+              this.createMuserProfileFireBase(muserName /*, phoneNumber*/);
+              this.registerMuseAccount(muserName, password);
+            }
+          }
+        );
+      }
+    } catch (error) {
+       this.alert.showErrorMessage('verifyAccount(): ' + error);
+      // TODO: Add in Error Logging. Most likely write errors to firebase
+    }
+  }
+
+  createMuserProfileFireBase(muserName /*, phoneNumber*/) {
+    const user = firebase.auth().currentUser;
+    firebase.database().ref('musers/' + user.uid).set({
+      muserName: muserName,
+      dateAdded: new Date().toString(),
+      email: user.email,
+      emailVerified: user.emailVerified
+      // phoneNumber: phoneNumber
+    }).then(() => {
+      firebase.database().ref('muserNames').set({
+        [muserName]: user.uid // <<< This may not be the best format
+      }).catch((err) => {
+         this.alert.showErrorMessage('createMuserProfileFireBase() >> db: ' + err);
+        // TODO: Add in Error Logging. Most likely write errors to firebase
+      });
+    }).catch((err) => {
+       this.alert.showErrorMessage('createMuserProfileFireBase(): ' + err);
+      // TODO: Add in Error Logging. Most likely write errors to firebase
+    });
+  }
+
+  registerMuseAccount(muserName, password) {
+    // const faucet_config = JSON.parse('../../../../config.private.json');
+    // const that = this;
+    this.museConfig();
+    return new Promise((resolve, reject) => {
+      this.generateKeys(muserName, password).then((keys: any) => {
+        // try {
+       
+        // } catch (error) {
+        //    this.alert.showErrorMessage('muse.broadcast.accountCreateAsync(): ' + error);
+        //   // TODO: Add in Error Logging. Most likely write errors to firebase
+        // }
+      });
+
+    }).catch((err) => {
+       this.alert.showErrorMessage('registerMuseAccount(): ' + err);
+      // TODO: Add in Error Logging. Most likely write errors to firebase
+    });
+  }
+
+  generateKeys(muserName, password) {
+    this.museConfig();
+    return new Promise(function (resolve, reject) {
+      const keys = muse.auth.getPrivateKeys(muserName, password, ['owner', 'active', 'basic', 'memo']);
+      if (keys) {
+        resolve(keys);
+      } else {
+        reject();
+         this.alert.showErrorMessage('generateKeys(): ');
+      }
+    });
+  }
 
   getAccountHistory(muserName) {
     this.museConfig();
@@ -142,9 +234,7 @@ export class DataService {
           } else {
             const fakearray = [];
             for (const each of success) {
-
               let history_info;
-
               switch (each[1].op[0]) {
                 case 'account_create':
                   if (each[1].op[1].creator === muserName) {
@@ -184,7 +274,6 @@ export class DataService {
                   history_info = 'Withdrawing ' + each[1].op[1].vesting_shares.split(' ')[0] + ' VEST';
                   break;
                 case 'account_witness_vote':
-
                   if (each[1].op[1].approve) {
                     history_info = each[1].op[1].account + ' Voted Witness ' + each[1].op[1].witness;
                   }
@@ -210,10 +299,7 @@ export class DataService {
                 default:
                   history_info = 'Unknown operation: ' + each[1].op[0];
               }
-
               fakearray.push(history_info);
-
-
               // console.log(each);
               // define case switches here.
               // fakearray.push(each[1].timestamp.split('T')[0] + ' ' + each[1].op[0] + ' ' + JSON.stringify(each[1].op[1]));
@@ -224,9 +310,10 @@ export class DataService {
 
           }
         });
+    }).catch((err) => {
+      this.alert.showErrorMessage('getAccountHistory(): ' + err);
     });
   }
-
   getWitnesses() {
     this.museConfig();
     return new Promise(function (resolve, reject) {
@@ -238,9 +325,10 @@ export class DataService {
             resolve(success);
           }
         });
+    }).catch((err) => {
+      this.alert.showErrorMessage('getWitnesses(): ' + err);
     });
   }
-
   getUrlData(getData) {
     this.museConfig();
     return new Promise(function (resolve, reject) {
@@ -252,9 +340,10 @@ export class DataService {
             resolve(success);
           }
         });
+    }).catch((err) => {
+      this.alert.showErrorMessage('getUrlData(): ' + err);
     });
   }
-
   getDataForUser(getData) {
     this.museConfig();
     return new Promise(function (resolve, reject) {
@@ -266,11 +355,11 @@ export class DataService {
             resolve(success);
           }
         });
+    }).catch((err) => {
+      this.alert.showErrorMessage('getDataForUser(): ' + err);
     });
   }
-
   // optionally provide a lowerbound parameter to lookup by
-
   getContentorAll(getData) {
     this.museConfig();
     return new Promise(function (resolve, reject) {
@@ -282,11 +371,11 @@ export class DataService {
             resolve(success);
           }
         });
+    }).catch((err) => {
+      this.alert.showErrorMessage('getContentorAll(): ' + err);
     });
   }
-
   // optionally provide a lowerbound parameter to lookup by
-
   getStreamingPlatforms(getData) {
     this.museConfig();
     return new Promise(function (resolve, reject) {
@@ -298,9 +387,10 @@ export class DataService {
             resolve(success);
           }
         });
+    }).catch((err) => {
+      this.alert.showErrorMessage('getStreamingPlatforms(): ' + err);
     });
   }
-
   getAllAccounts() {
     this.museConfig();
     return new Promise(function (resolve, reject) {
@@ -312,33 +402,22 @@ export class DataService {
             resolve(success);
           }
         });
+    }).catch((err) => {
+      this.alert.showErrorMessage('getAllAccounts(): ' + err);
     });
   }
-
-  // getAllAccounts$() {
-  //   this.museConfig();
-  //   const muserAccountInfo = new Observable(observer => {
-  //     muse.api.lookupAccounts('', 9999, function (err, results) {
-  //       if (err) {
-  //         console.log(err);
-  //       } else {
-  //         observer.next(results);
-  //       }
-  //     });
-  //   });
-  // }
-
-  postContent(password, muserName, submitContent) {
+  postContent(authKey, muserName, submitContent) {
     this.museConfig();
+    const actualActkey = muse.auth.getPrivateKeys(muserName, authKey);
     return new Promise(function (resolve, reject) {
       muse.broadcast.content(
-        password,
+        actualActkey.active,
         muserName,
         submitContent.ipfsUrl,
         {
           'part_of_album': submitContent.partofAlbum, // bool
           'album_title': submitContent.albumTitle,
-          'album_artist': [muserName], // array
+          'album_artist': submitContent.albumArtistlist, // array
           'genre_1': submitContent.albumGenre, // integer ??? what do these numbers relate to?
           'country_of_origin': submitContent.countryOrigin,
           'explicit_': submitContent.explicit, // apperently int???? wtf?
@@ -349,25 +428,30 @@ export class DataService {
           'release_year': submitContent.releaseYear, // integer
           'sales_start_date': submitContent.salesStartDate, // integer
           'master_label_name': submitContent.masterLabelName,
+          'album_producer': submitContent.albumProducer,
+          'albumType': submitContent.albumType,
           'display_label_name': submitContent.displayLabelName
         },
         {
           'track_title': submitContent.trackTitle,
           'ISRC': submitContent.isrc,
-          'artist': [muserName], // array
-          'track_artists': submitContent.trackArtists, // array
+          'track_artists': submitContent.trackArtistlist, // array
+          'featured_artist': submitContent.featuredArtist, // string
+          'featured_artist_ISNI': submitContent.featuredArtistISNI, // int
           'genre_1': submitContent.trackGenre, // integer
           'p_line': submitContent.trackPline,
           'track_no': submitContent.trackNo, // integer
-          'track_volume': submitContent.trackVolume, // integer // this is volume number not volume level
+          'track_volume': submitContent.trackVolumeNumber, // integer // this is volume number not volume level
           'track_duration': 0, // integer // still trying to figure the purpose of this
           'samples': submitContent.samples // bool
         },
         {
           'composition_title': submitContent.compositionTitle,
+          'alternate_composition_title': submitContent.compositionTitleAlt,
+          'ISWC': submitContent.iswc,
           'third_party_publishers': submitContent.thirdParty, // bool
-          'publishers': submitContent.compositionPublishers, // array
-          'writers': submitContent.compositionWriters, // array // wouldnt it be better to store both of these as one array???? this would be contract adjustments.
+          'publishers': submitContent.compositionPublisherslist, // array
+          'writers': submitContent.compositionWriterslist, // array
           'PRO': submitContent.pro
         },
         submitContent.masterdist,
@@ -382,16 +466,17 @@ export class DataService {
         submitContent.pubshare, // 5000, // publishers share
         function (err, success) {
           if (err) {
-            console.log(err);
+            // console.log(err);
             reject(err);
           } else {
-            console.log(success);
+            // console.log(success);
             resolve(success);
           }
         });
+    }).catch((err) => {
+      this.alert.showErrorMessage('postContent(): ' + err);
     });
   }
-
   transferMuse(muserName, password, transferTo, amount, memo) {
     this.museConfig();
     return new Promise(function (resolve, reject) {
@@ -404,7 +489,6 @@ export class DataService {
       });
     });
   }
-
   transferMusetoVest(muserName, password, amount) {
     this.museConfig();
     return new Promise(function (resolve, reject) {
@@ -415,9 +499,10 @@ export class DataService {
           resolve(success);
         }
       });
+    }).catch((err) => {
+      this.alert.showErrorMessage('transferMusetoVest(): ' + err);
     });
   }
-
   withdrawVesting(muserName, password, amount) {
     this.museConfig();
     return new Promise(function (resolve, reject) {
@@ -428,6 +513,8 @@ export class DataService {
           resolve(success);
         }
       });
+    }).catch((err) => {
+      this.alert.showErrorMessage('withdrawVesting(): ' + err);
     });
   }
 }

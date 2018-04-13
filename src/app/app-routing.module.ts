@@ -8,8 +8,6 @@ import { DashboardComponent } from './main/dashboard/dashboard.component';
 import { WalletComponent } from './main/wallet/wallet.component';
 import { PostComponent } from './main/rights-management/post.component';
 
-import { IconsComponent } from './main/icons/icons.component';
-
 const routes: Routes = [
   {
     path: 'login',
@@ -33,14 +31,10 @@ const routes: Routes = [
         component: DashboardComponent,
         pathMatch: 'full'
       },
-      {
-        path: 'components',
-        loadChildren: 'app/main/components/components.module#ComponentsModule',
-      },
-      {
-        path: 'icons',
-        component: IconsComponent
-      },
+      // {
+      //   path: 'components',
+      //   loadChildren: 'app/main/components/components.module#ComponentsModule',
+      // },
       {
         path: 'wallet',
         component: WalletComponent,

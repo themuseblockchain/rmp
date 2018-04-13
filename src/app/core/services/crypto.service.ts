@@ -1,16 +1,14 @@
-// import { MuserService } from '../../core/services/muser.service';
-import { Utils } from '../../core/utils';
 import * as cryptojs from 'crypto-js';
+// import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
+import { Utils } from '../../core/utils';
+// import { MuserService } from '../../core/services/muser.service';
 
 export class CryptoService {
   public static encrypt(password) {
-    // return new Promise(function (resolve, reject) {
-      // this.muserService.getCurrentMuserAccount();
       const key = Utils.generateKey();
+      
       localStorage.setItem('key', key);
       localStorage.setItem('password', cryptojs.AES.encrypt(password, key));
-      // this.muserService.cast.subscribe(muserName => this.muser = muserName);
-    // });
   }
 
   public static decrypt() {

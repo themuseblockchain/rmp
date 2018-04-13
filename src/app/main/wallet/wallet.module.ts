@@ -5,7 +5,7 @@ import { WalletComponent } from './wallet.component';
 import { ModalTransferComponent } from './modal/modal-transfer.component';
 import { ModalDialogVestComponent } from './modal/modal-vest.component';
 import { ModalWithdrawComponent } from './modal/modal-withdraw.component';
-
+import { MaterialModule } from '../../core/common/material.module';
 
 @NgModule({
     declarations: [
