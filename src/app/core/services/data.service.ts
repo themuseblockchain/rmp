@@ -138,7 +138,7 @@ export class DataService {
             .then((success) => {
               this.verifyAccount(muserName, password/*, phoneNumber*/);
             }).catch((err) => {
-              this.alert.showErrorMessage('createAccount(): ' + err.stack);
+              this.alert.showErrorMessage('createAccount(): ' + err);
             });
         } else {
            this.alert.showErrorMessage(ErrorCodes.muserNameAlreadyInUse);
