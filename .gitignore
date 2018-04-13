@@ -41,6 +41,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-/src/app/fake-db/fake-db.service.ts
 /.vscode
 /Terms of Use.docx
+/.vs
