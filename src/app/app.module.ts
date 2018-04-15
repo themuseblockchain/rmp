@@ -15,19 +15,10 @@ import { VerificationService } from './core/services/verification.service';
 import { MuserService } from './core/services/muser.service';
 import { Ng2Webstorage } from 'ngx-webstorage';
 
-import { firebaseConfig } from '../config/config';
+import { Config } from '../config/config';
 import * as firebase from 'firebase';
 
-  const config = {
-    apiKey: 'AIzaSyD1cEYjkdkoi3Hn5team4R8yq7s9MIAvxQ',
-    authDomain: 'rmp-dev-8a70b.firebaseapp.com',
-    databaseURL: 'https://rmp-dev-8a70b.firebaseio.com',
-    projectId: 'rmp-dev-8a70b',
-    storageBucket: 'rmp-dev-8a70b.appspot.com',
-    messagingSenderId: '50686525262'
-  };
-  firebase.initializeApp(config);
-// firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(Config.firebaseDev);
 
 @NgModule({
   declarations: [AppComponent],

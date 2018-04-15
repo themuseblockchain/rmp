@@ -1,13 +1,11 @@
 import { error } from 'util';
 import { Local } from 'protractor/built/driverProviders';
-import { Injectable, Inject, NgZone, Input } from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as Rx from 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
 import { of } from 'rxjs/observable/of';
-import { switchMap } from 'rxjs/operators';
 import { fromPromise } from 'rxjs/observable/fromPromise';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { LocalStorageService, SessionStorageService } from 'ngx-webstorage';
 // import { LocalStorage, SessionStorage } from 'ngx-webstorage';
 import * as muse from 'museblockchain-js';
@@ -19,6 +17,7 @@ import { AlertService } from '../../core/services/alert.service';
 import { VerificationService } from '../../core/services/verification.service';
 import { ErrorCodes } from '../../core/enums';
 
+import { Config } from '../../../config/config';
 // import { Validator } from '../validator';
 
 @Injectable()
@@ -28,7 +27,6 @@ export class DataService {
 
 
   constructor(
-    private zone: NgZone,
     private localSt: LocalStorageService,
     private sessionSt: SessionStorageService,
     private userVerification: VerificationService,
@@ -141,7 +139,7 @@ export class DataService {
               this.alert.showErrorMessage('createAccount(): ' + err);
             });
         } else {
-           this.alert.showErrorMessage(ErrorCodes.muserNameAlreadyInUse);
+          this.alert.showErrorMessage(ErrorCodes.muserNameAlreadyInUse);
         }
       }
     );
@@ -165,7 +163,7 @@ export class DataService {
         );
       }
     } catch (error) {
-       this.alert.showErrorMessage('verifyAccount(): ' + error);
+      this.alert.showErrorMessage('verifyAccount(): ' + error);
       // TODO: Add in Error Logging. Most likely write errors to firebase
     }
   }
@@ -179,14 +177,15 @@ export class DataService {
       emailVerified: user.emailVerified
       // phoneNumber: phoneNumber
     }).then(() => {
-      firebase.database().ref('muserNames').set({
+      const membersInfo = {};
+      firebase.database().ref('muserNames').update({
         [muserName]: user.uid // <<< This may not be the best format
       }).catch((err) => {
-         this.alert.showErrorMessage('createMuserProfileFireBase() >> db: ' + err);
+        this.alert.showErrorMessage('createMuserProfileFireBase() >> db: ' + err);
         // TODO: Add in Error Logging. Most likely write errors to firebase
       });
     }).catch((err) => {
-       this.alert.showErrorMessage('createMuserProfileFireBase(): ' + err);
+      this.alert.showErrorMessage('createMuserProfileFireBase(): ' + err);
       // TODO: Add in Error Logging. Most likely write errors to firebase
     });
   }
@@ -197,16 +196,39 @@ export class DataService {
     this.museConfig();
     return new Promise((resolve, reject) => {
       this.generateKeys(muserName, password).then((keys: any) => {
-        // try {
-       
-        // } catch (error) {
-        //    this.alert.showErrorMessage('muse.broadcast.accountCreateAsync(): ' + error);
-        //   // TODO: Add in Error Logging. Most likely write errors to firebase
-        // }
+        try {
+          muse.broadcast.accountCreate(
+            Config.faucet_config.private_wif,
+            Config.faucet_config.account_creation_fee,
+            Config.faucet_config.account,
+            // Config.faucet_config.newAccountVest,
+            muserName,
+            {
+              'weight_threshold': 1,
+              'account_auths': [],
+              'key_auths': [[keys.ownerPubkey, 1]]
+            },
+            {
+              'weight_threshold': 1,
+              'account_auths': [],
+              'key_auths': [[keys.activePubkey, 1]]
+            },
+            {
+              'weight_threshold': 0,
+              'account_auths': [],
+              'key_auths': [[keys.basicPubkey, 1]]
+            }, keys.memoPubkey, {}, function (err, result) {
+              err( this.alert.showErrorMessage('muse.broadcast.accountCreate(): ' + error));
+                // TODO: Add in Error Logging. Most likely write errors to firebase);
+            }
+          );
+        } catch (error) {
+          this.alert.showErrorMessage('generateKeys(): ' + error);
+          // TODO: Add in Error Logging. Most likely write errors to firebase
+        }
       });
-
     }).catch((err) => {
-       this.alert.showErrorMessage('registerMuseAccount(): ' + err);
+      this.alert.showErrorMessage('registerMuseAccount(): ' + err);
       // TODO: Add in Error Logging. Most likely write errors to firebase
     });
   }
@@ -219,7 +241,7 @@ export class DataService {
         resolve(keys);
       } else {
         reject();
-         this.alert.showErrorMessage('generateKeys(): ');
+        this.alert.showErrorMessage('generateKeys(): ');
       }
     });
   }
