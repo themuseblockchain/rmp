@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fadeInAnimation } from '../../core/common/route.animation';
 import { DataService } from '../../core/services/data.service';
@@ -15,13 +16,25 @@ import { Utils } from '../../core/utils';
   animations: [fadeInAnimation]
 })
 
-export class LoginComponent implements OnInit {
+export class LoginComponent {
+
+  constructor(
+    private router: Router,
+    private dataService: DataService,
+    private fb: FormBuilder
+  ) {
+
+    //Build Form
+    this.form = fb.group({
+      muserName: fb.control('', Validators.required),
+      password: fb.control('', Validators.required)
+    })
+
+  }
+
+  form: FormGroup;
   private isAuthenticated: any;
-  // form: FormGroup;
   muser: {};
-  loginFormErrors: any;
-  muserName: string;
-  password: string;
   muserAccountInfo: any;
 
   messagePerErrorCode = {
@@ -29,21 +42,10 @@ export class LoginComponent implements OnInit {
   };
 
   errors = [];
-  
-  constructor(
-    private router: Router,
-    private dataService: DataService
-  ) {
-
-  }
-
-  ngOnInit() {
-  }
-
 
   onLogin() {
     // this.muserName = this.muserName.toLowerCase();
-    this.dataService.authAccount(this.muserName.toLowerCase(), this.password).then(() => {
+    this.dataService.authAccount(this.form.get("muserName").value.toLowerCase(), this.form.get("password").value).then(() => {
       this.isAuthenticated = localStorage.getItem('isAuthenticated');
       if (this.isAuthenticated === 'true') {
         // this.muserService.muserAccountInfo$.subscribe(muserAccountInfo => {

@@ -9,7 +9,7 @@ import { AlertService } from '../../core/services/alert.service';
 
 import * as firebase from 'firebase';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { Validator, NG_VALIDATORS, NgForm, FormControl, Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'register',
