@@ -274,6 +274,7 @@ export class DataService {
   }
 
   generateKeys(muserName, password) {
+  generateKeys(muserName, password) {
     this.museConfig();
     return new Promise(function (resolve, reject) {
       const keys = muse.auth.getPrivateKeys(muserName, password, ['owner', 'active', 'basic', 'memo']);
