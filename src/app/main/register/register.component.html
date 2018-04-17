@@ -1,9 +1,14 @@
-<div fxLayout="row" fxLayoutAlign="center center" style="height: 100%;">
+<video autoplay muted loop id="videoBackground">
+  <source src="/assets/peertracks.mp4" type="video/mp4">
+</video>
+
+<div fxlayout="row" fxLayoutAlign="center center" style="height: 100%;">
   <div class="register mat-elevation-z12">
-    <!--<div class="register-header" fxLayout="column" fxLayoutAlign="center center">
-      <img src="assets/images/icon.png">
-    </div>-->
-    <form [formGroup]="form" (ngSubmit)="test()">
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <img src="assets/images/logos/muse.png " style="width: 200px;" >
+    </div>
+    
+    <form #form="ngForm" (ngSubmit)="register()">
       <div class="register-content" fxLayout="column" fxLayoutAlign="start stretch">
 
         <mat-form-field>
@@ -39,7 +44,7 @@
             <strong>Password Confirmation is required</strong>
           </mat-error>
         </mat-form-field>
-
+        
         <div class="extra-options" fxLayout="row" fxLayoutAlign="center center">
           <mat-checkbox class="remember-me" formControlName="terms" required>
             <span>I accept the</span>

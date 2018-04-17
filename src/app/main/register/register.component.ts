@@ -49,7 +49,21 @@ export class RegisterComponent {
   // }
 
   register() {
+
     this.dataService.createAccount(this.form.get("muserName").value, this.form.get("password").value, this.form.get("email").value);
+    
+    // .then(() => {
+    //     this.router.navigateByUrl('/login');
+    //     this.dataService.authAccount(this.muserName.toLowerCase(), this.password).then(() => {
+    //       this.isAuthenticated = localStorage.getItem('isAuthenticated');
+    //       if (this.isAuthenticated === 'true') {
+    //         this.router.navigateByUrl('/');
+    //       }
+    //     }).catch((err) => {
+    //       this.alert.showErrorMessage('register(): ' + err);
+    //     });
+
+    //   });
   }
 
   passwordMatch() {
