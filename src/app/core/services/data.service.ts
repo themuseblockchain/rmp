@@ -1,6 +1,6 @@
 import { error } from 'util';
 import { Local } from 'protractor/built/driverProviders';
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import * as Rx from 'rxjs/Rx';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs/Observer';
@@ -18,19 +18,22 @@ import { VerificationService } from '../../core/services/verification.service';
 import { ErrorCodes } from '../../core/enums';
 
 import { Config } from '../../../config/config';
+import { Router } from '@angular/router';
+
 // import { Validator } from '../validator';
 
 @Injectable()
 export class DataService {
   private muserData: any;
   private muserName: string;
-
+  private isAuthenticated: any;
 
   constructor(
     private localSt: LocalStorageService,
     private sessionSt: SessionStorageService,
     private userVerification: VerificationService,
-    private alert: AlertService
+    private alert: AlertService,
+    private router: Router
   ) {
   }
 
@@ -126,12 +129,36 @@ export class DataService {
     });
   }
 
+  // createAccount(muserName: string, password: string /*, phoneNumber: number*/, email: string) {
+  //   return new Promise((resolve, reject) => {
+  //     this.muserName = muserName.toLocaleLowerCase();
+  //     this.muserData = this.getAccount(muserName).then((results => {
+  //       if (results.length === 0) {
+  //         // also check for password length
+  //         firebase.auth().createUserWithEmailAndPassword(email, this.muserName)
+  //           .then((success) => {
+  //             this.verifyAccount(muserName, password/*, phoneNumber*/);
+  //           }).catch((err) => {
+  //             this.alert.showErrorMessage('createUserWithEmailAndPassword(): ' + err);
+  //           });
+  //       } else {
+  //         this.alert.showErrorMessage(ErrorCodes.muserNameAlreadyInUse);
+  //       }
+  //     }));
+  //   }).catch((err) => {
+  //     this.alert.showErrorMessage('createAccount(): ' + err);
+  //     // TODO: Add in Error Logging. Most likely write errors to firebase
+  //   });
+  // }
+
+
   createAccount(muserName: string, password: string /*, phoneNumber: number*/, email: string) {
     this.muserName = muserName.toLocaleLowerCase();
     this.muserData = this.getAccount$(muserName);
     this.muserData.subscribe(
       dataExist => {
         if (dataExist.length === 0) {
+          // also check for password length
           firebase.auth().createUserWithEmailAndPassword(email, this.muserName)
             .then((success) => {
               this.verifyAccount(muserName, password/*, phoneNumber*/);
@@ -157,7 +184,19 @@ export class DataService {
             if (verified === true) {
               verification.unsubscribe();
               this.createMuserProfileFireBase(muserName /*, phoneNumber*/);
-              this.registerMuseAccount(muserName, password);
+              this.registerMuseAccount(muserName, password).then(() => {
+                // TODO: This logic needs to be moved to the register.component.ts
+                this.router.navigateByUrl('/login');
+                this.authAccount(muserName.toLowerCase(), password).then(() => {
+                  this.isAuthenticated = localStorage.getItem('isAuthenticated');
+                  if (this.isAuthenticated === 'true') {
+                    this.router.navigateByUrl('/');
+                  }
+                }).catch((err) => {
+                  this.alert.showErrorMessage('register(): ' + err);
+                });
+                // TODO: This logic needs to be moved to the register.component.ts
+              });
             }
           }
         );
@@ -174,7 +213,7 @@ export class DataService {
       muserName: muserName,
       dateAdded: new Date().toString(),
       email: user.email,
-      emailVerified: user.emailVerified
+      emailVerified: user.emailVerified,
       // phoneNumber: phoneNumber
     }).then(() => {
       const membersInfo = {};
@@ -191,42 +230,43 @@ export class DataService {
   }
 
   registerMuseAccount(muserName, password) {
-    // const faucet_config = JSON.parse('../../../../config.private.json');
-    // const that = this;
     this.museConfig();
     return new Promise((resolve, reject) => {
       this.generateKeys(muserName, password).then((keys: any) => {
-        try {
-          muse.broadcast.accountCreate(
-            Config.faucet_config.private_wif,
-            Config.faucet_config.account_creation_fee,
-            Config.faucet_config.account,
-            // Config.faucet_config.newAccountVest,
-            muserName,
-            {
-              'weight_threshold': 1,
-              'account_auths': [],
-              'key_auths': [[keys.ownerPubkey, 1]]
-            },
-            {
-              'weight_threshold': 1,
-              'account_auths': [],
-              'key_auths': [[keys.activePubkey, 1]]
-            },
-            {
-              'weight_threshold': 0,
-              'account_auths': [],
-              'key_auths': [[keys.basicPubkey, 1]]
-            }, keys.memoPubkey, {}, function (err, result) {
-              err( this.alert.showErrorMessage('muse.broadcast.accountCreate(): ' + error));
-                // TODO: Add in Error Logging. Most likely write errors to firebase);
+        // try {
+        muse.broadcast.accountCreate(
+          Config.faucet_config.private_wif,
+          Config.faucet_config.account_creation_fee,
+          Config.faucet_config.account,
+          muserName,
+          {
+            'weight_threshold': 1,
+            'account_auths': [],
+            'key_auths': [[keys.ownerPubkey, 1]]
+          },
+          {
+            'weight_threshold': 1,
+            'account_auths': [],
+            'key_auths': [[keys.activePubkey, 1]]
+          },
+          {
+            'weight_threshold': 0,
+            'account_auths': [],
+            'key_auths': [[keys.basicPubkey, 1]]
+          }, keys.memoPubkey, {}, function (err, result) {
+            if (err) {
+              reject(this.alert.showErrorMessage('muse.broadcast.accountCreate(): ' + err));
+            } else {
+              resolve(result);
             }
-          );
-        } catch (error) {
-          this.alert.showErrorMessage('generateKeys(): ' + error);
-          // TODO: Add in Error Logging. Most likely write errors to firebase
-        }
+          });
+        // } catch (error) {
+        //   this.alert.showErrorMessage('muse.broadcast.accountCreate(): ' + error);
+        //   // TODO: Add in Error Logging. Most likely write errors to firebase
+        // }
       });
+    }).then(() => {
+      muse.broadcast.transferToVestingAsync(Config.faucet_config.private_wif, Config.faucet_config.account, muserName, '0.01 2.28.0');
     }).catch((err) => {
       this.alert.showErrorMessage('registerMuseAccount(): ' + err);
       // TODO: Add in Error Logging. Most likely write errors to firebase
@@ -336,6 +376,7 @@ export class DataService {
       this.alert.showErrorMessage('getAccountHistory(): ' + err);
     });
   }
+
   getWitnesses() {
     this.museConfig();
     return new Promise(function (resolve, reject) {
@@ -351,6 +392,7 @@ export class DataService {
       this.alert.showErrorMessage('getWitnesses(): ' + err);
     });
   }
+
   getUrlData(getData) {
     this.museConfig();
     return new Promise(function (resolve, reject) {
@@ -366,6 +408,7 @@ export class DataService {
       this.alert.showErrorMessage('getUrlData(): ' + err);
     });
   }
+
   getDataForUser(getData) {
     this.museConfig();
     return new Promise(function (resolve, reject) {
@@ -381,6 +424,7 @@ export class DataService {
       this.alert.showErrorMessage('getDataForUser(): ' + err);
     });
   }
+
   // optionally provide a lowerbound parameter to lookup by
   getContentorAll(getData) {
     this.museConfig();
@@ -397,6 +441,7 @@ export class DataService {
       this.alert.showErrorMessage('getContentorAll(): ' + err);
     });
   }
+
   // optionally provide a lowerbound parameter to lookup by
   getStreamingPlatforms(getData) {
     this.museConfig();
@@ -413,6 +458,7 @@ export class DataService {
       this.alert.showErrorMessage('getStreamingPlatforms(): ' + err);
     });
   }
+
   getAllAccounts() {
     this.museConfig();
     return new Promise(function (resolve, reject) {
@@ -428,6 +474,7 @@ export class DataService {
       this.alert.showErrorMessage('getAllAccounts(): ' + err);
     });
   }
+
   postContent(authKey, muserName, submitContent) {
     this.museConfig();
     const actualActkey = muse.auth.getPrivateKeys(muserName, authKey);
@@ -499,6 +546,7 @@ export class DataService {
       this.alert.showErrorMessage('postContent(): ' + err);
     });
   }
+
   transferMuse(muserName, password, transferTo, amount, memo) {
     this.museConfig();
     return new Promise(function (resolve, reject) {
@@ -511,6 +559,7 @@ export class DataService {
       });
     });
   }
+
   transferMusetoVest(muserName, password, amount) {
     this.museConfig();
     return new Promise(function (resolve, reject) {

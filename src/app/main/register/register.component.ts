@@ -24,6 +24,7 @@ import { Validator, NG_VALIDATORS } from '@angular/forms';
 })
 export class RegisterComponent {
 
+  private isAuthenticated: any;
   private muserName: string;
   private phoneNumber: any;
   private email: string;
@@ -37,7 +38,7 @@ export class RegisterComponent {
     private alert: AlertService,
     private dialog: MatDialog,
     // private verification: VerificationService
-    ) { }
+  ) { }
 
   // ngOnInit() {
   //   //  this.alert.showEmailVerifiedMessageAndRedirect();
@@ -45,5 +46,18 @@ export class RegisterComponent {
 
   register() {
     this.dataService.createAccount(this.muserName, this.password /*, this.phoneNumber*/, this.email);
+    
+    // .then(() => {
+    //     this.router.navigateByUrl('/login');
+    //     this.dataService.authAccount(this.muserName.toLowerCase(), this.password).then(() => {
+    //       this.isAuthenticated = localStorage.getItem('isAuthenticated');
+    //       if (this.isAuthenticated === 'true') {
+    //         this.router.navigateByUrl('/');
+    //       }
+    //     }).catch((err) => {
+    //       this.alert.showErrorMessage('register(): ' + err);
+    //     });
+
+    //   });
   }
 }
