@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
+import { LoadingOverlayComponent } from '../core/loading-overlay/loading-overlay.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
 import { BreadcrumbService } from './breadcrumb/breadcrumb.service';
 import { ClickOutsideDirective } from './common/click-outside.directive';
@@ -42,6 +43,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     SearchComponent,
     BreadcrumbsComponent,
     LayoutComponent,
+    LoadingOverlayComponent,
     ToolbarComponent,
     ToolbarUserButtonComponent,
     ClickOutsideDirective,

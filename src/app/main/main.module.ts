@@ -14,7 +14,6 @@ import { WalletModule } from './wallet/wallet.module';
 
 import { ComponentsModule } from './components/components.module' ;
 
-import { LoadingOverlayComponent } from '../core/loading-overlay/loading-overlay.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -42,7 +41,6 @@ import { PostComponent } from './rights-management/post.component';
     RegisterComponent,
     DashboardComponent,
     PostComponent,
-    LoadingOverlayComponent
     // AlertComponent
   ],
   providers: [

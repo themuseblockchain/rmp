@@ -4,6 +4,7 @@ import { fadeInAnimation } from '../../core/common/route.animation';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { LocalStorageService, SessionStorageService} from 'ngx-webstorage';
 import { MuserService } from '../../core/services/muser.service';
+import { UIService } from '../../core/services/ui.service';
 
 @Component({
   selector: 'dashboard',
@@ -18,13 +19,16 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   muserName: string;
 
-
   constructor(
     private router: Router,
-    private muserService: MuserService
+    private muserService: MuserService,
+    private ui: UIService
   ) { }
 
   ngOnInit() {
+    
+    this.ui.showLoading();
+
     this.muserName = this.muserService.getMuserName;
     const isAuthenticated = localStorage.getItem('isAuthenticated'); {
       if (isAuthenticated === 'true') {
@@ -38,6 +42,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
+      this.ui.hideLoading();
       window.dispatchEvent(new Event('resize'));
     }, 1000);
   }

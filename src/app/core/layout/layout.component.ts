@@ -3,6 +3,8 @@ import { MediaChange } from '@angular/flex-layout';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MediaReplayService } from '../sidenav/mediareplay/media-replay.service';
+import { LoadingOverlayComponent } from '../../core/loading-overlay/loading-overlay.component';
+import { UIService } from '../../core/services/ui.service';
 
 @Component({
   selector: 'admin',
@@ -25,7 +27,8 @@ export class LayoutComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private mediaReplayService: MediaReplayService
+    private mediaReplayService: MediaReplayService,
+    private ui: UIService
   ) { }
 
   ngOnInit() {

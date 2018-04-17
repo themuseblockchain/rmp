@@ -13,12 +13,14 @@ import { DataService } from './core/services/data.service';
 import { AlertService } from './core/services/alert.service';
 import { VerificationService } from './core/services/verification.service';
 import { MuserService } from './core/services/muser.service';
+import { UIService } from './core/services/ui.service';
+
 import { Ng2Webstorage } from 'ngx-webstorage';
 
 import { Config } from '../config/config';
 import * as firebase from 'firebase';
 
-firebase.initializeApp(Config.firebaseDev);
+firebase.initializeApp(Config.firebaseProd);
 
 @NgModule({
   declarations: [AppComponent],
@@ -46,7 +48,8 @@ firebase.initializeApp(Config.firebaseDev);
     DataService,
     VerificationService,
     AlertService,
-    MuserService
+    MuserService,
+    UIService
   ],
   bootstrap: [AppComponent]
 })
