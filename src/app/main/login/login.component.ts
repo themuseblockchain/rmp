@@ -1,15 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding, HostListener } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fadeInAnimation } from '../../core/common/route.animation';
 import { DataService } from '../../core/services/data.service';
 // import { MuserService } from '../../core/services/muser.service';
 import { Utils } from '../../core/utils';
+import { AlertService } from '../../core/services/alert.service';
 
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+
+
   host: {
     '[@fadeInAnimation]': 'true'
   },
@@ -21,14 +24,15 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private dataService: DataService,
+    private alert: AlertService,
     private fb: FormBuilder
   ) {
 
-    //Build Form
+    // Build Form
     this.form = fb.group({
       muserName: fb.control('', Validators.required),
       password: fb.control('', Validators.required)
-    })
+    });
 
   }
 
@@ -54,6 +58,8 @@ export class LoginComponent {
         // this.muserService.getCurrentMuserAccount();
         this.router.navigateByUrl('/');
       }
-    }).catch(e => console.log('error' + e));
+    }).catch((err) => {
+        this.alert.showErrorMessage('onLogin(): ' + err);
+      });
   }
 }

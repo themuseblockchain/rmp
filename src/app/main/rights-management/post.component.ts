@@ -129,7 +129,7 @@ export class PostComponent implements OnInit {
       }
     }
   }
-  firecontent() {
+  fireContent() {
     const authPassword = CryptoService.decrypt();
     this.dataService.postContent(
       authPassword,

@@ -7,6 +7,7 @@ import { RegisterComponent } from './main/register/register.component';
 import { DashboardComponent } from './main/dashboard/dashboard.component';
 import { WalletComponent } from './main/wallet/wallet.component';
 import { PostComponent } from './main/rights-management/post.component';
+import { RightsManagementComponent } from './main/rights-management/rights-management.component';
 
 const routes: Routes = [
   {
@@ -17,10 +18,7 @@ const routes: Routes = [
     path: 'register',
     component: RegisterComponent
   },
-  // {
-  //   path: 'forgot-password',
-  //   component: ForgotPasswordComponent
-  // },
+
   {
     path: '',
     component: LayoutComponent,
@@ -31,10 +29,6 @@ const routes: Routes = [
         component: DashboardComponent,
         pathMatch: 'full'
       },
-      // {
-      //   path: 'components',
-      //   loadChildren: 'app/main/components/components.module#ComponentsModule',
-      // },
       {
         path: 'wallet',
         component: WalletComponent,
@@ -43,6 +37,11 @@ const routes: Routes = [
       {
         path: 'post',
         component: PostComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'rights-management',
+        component: RightsManagementComponent,
         pathMatch: 'full'
       },
     ]

@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../core/common/material.module';
 import { ScrollbarModule } from '../../core/scrollbar/scrollbar.module';
 import { AlertComponent } from './alert/alert.component';
+import { TacComponent } from './modal/terms-conditions/tac.component';
 
 @NgModule({
   imports: [
@@ -14,11 +15,13 @@ import { AlertComponent } from './alert/alert.component';
     ScrollbarModule
   ],
   declarations: [
-    AlertComponent
+    AlertComponent,
+    TacComponent
 
   ],
   entryComponents: [
-    AlertComponent
+    AlertComponent,
+    TacComponent
   ]
 })
 
