@@ -117,9 +117,7 @@
         ],
         "component-selector": [
             true,
-            "element",
-            "muse",
-            "kebab-case"
+            "element"
         ],
         "use-input-property-decorator": true,
         "use-output-property-decorator": true,

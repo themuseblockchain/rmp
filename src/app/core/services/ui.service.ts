@@ -12,7 +12,7 @@ export class UIService {
 
     public showLoading(loadingMessage?: string) {
 
-        //Timeout used to avoid a change state error
+        // Timeout used to avoid a change state error
         setTimeout(() => {
             this.loadingState = true;
             if (loadingMessage) {

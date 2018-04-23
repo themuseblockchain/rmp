@@ -1,189 +1,313 @@
-<mat-toolbar color="primary"></mat-toolbar>
 <mat-toolbar color="primary">
-  <div class="calendar-header" fxLayout="row" fxLayoutAlign="start center">
-    <span>Wallet</span>
-    <span fxFlex></span>
-    <!--<div class="chevrons">
-      <button mat-icon-button mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate">
-        <mat-icon>chevron_left</mat-icon>
-      </button>
-      <button mat-icon-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate">
-        <mat-icon>chevron_right</mat-icon>
-      </button>
-    </div>-->
-    <!--<button mat-button (click)="view = 'month'">Month</button>
-    <button mat-button (click)="view = 'week'">Week</button>
-    <button mat-button (click)="view = 'day'">Day</button>-->
-  </div>
+  <span>Wallet</span>
 </mat-toolbar>
 
-<div id="walletpage" class="dashboard" fxLayout="column" fxLayoutGap="16px">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
 
-  <!-- TOP BACKGROUND -->
-  <!--<div class="top-bg mat-deep-purple-bg"></div>-->
-  <!-- / TOP BACKGROUND -->
+      <mat-tab-group>
 
-  <!-- CENTER -->
+        <!--Balances-->
+        <mat-tab label="Balances">
 
-  <div class="center">
+          <!--Muse Balance-->
+          <div class="row my-1">
+            <div class="col-12 my-2">
+              <h3>Muse Balance:</h3>
+              <span [innerHtml]="account.Musebalance"></span>
+            </div>
+            <div class="col-12 my-2">
+              <button mat-raised-button class="mat-purple-bg mt-16 mt-sm-0" (click)="transferMuseBtn()">
+                Transfer
+              </button>
+              <button mat-raised-button class="mat-purple-bg mt-16 mt-sm-0" (click)="vestMuseBtn()">
+                Transfer to Vesting
+              </button>
+            </div>
+            <div class="col-12 my-2">
+              Tradeable tokens that may be transferred anywhere at anytime. MUSE can be vested by clicking transfer to Vesting.
+            </div>
+            <div class="col-12 my-1">
+              <mat-divider></mat-divider>
+            </div>
+          </div>
 
-    <!-- HEADER -->
-    <!--<div class="header white-fg p-24" fxLayout="row" fxLayoutAlign="space-between center">-->
+          <!--Vesting Balance-->
+          <div class="row my-1">
+            <div class="col-12 my-2">
+              <h3>Vests Balance:</h3>
+              <span [innerHtml]="account.Vestbalance"></span>
+            </div>
+            <div class="col-12 my-2">
+              <button mat-raised-button (click)="withdrawVestBtn()" class="mat-purple-bg mt-16 mt-sm-0">
+                Withdraw
+              </button>
+              <button mat-raised-button (click)="cancelWithdrawBtn()" class="mat-purple-bg mt-16 mt-sm-0">
+                Cancel Withdrawal
+              </button>
+            </div>
+            <div class="col-12 my-2">
+              Tokens that grant you more influence within the network.
+            </div>
+            <div class="col-12 my-1">
+              <mat-divider></mat-divider>
+            </div>
+          </div>
 
-    <!--<h2>Wallet</h2>-->
-    <!--<button mat-raised-button
-      class="save-content-button mat-white-bg mt-16 mt-sm-0">
-      <span>SAVE</span>
-    </button>-->
+          <!--FIAT Balance-->
+          <div class="row my-1">
+            <div class="col-12 my-1">
+              <h3>Muse Backed Dollars Balance:</h3>
+              <span [innerHtml]="account.MBDbalance"></span>
+            </div>
+            <div class="col-12 my-1">
+              Tokens worth about $1.00 of MUSE
+            </div>
+            <div class="col-12 my-1">
+              <mat-divider></mat-divider>
+            </div>
+          </div>
 
+          <!--Next Withdrawal-->
+          <div class="row my-1">
+            <div class="col-12 my-2">
+              <h3>Next Withdrawal:</h3>
+              <span [innerHtml]="account.NextwithDraw | date:'short'"></span>
+            </div>
+            <div class="col-12 my-1">
+              <mat-divider></mat-divider>
+            </div>
+          </div>
 
-    <!--</div>-->
-    <!-- / HEADER -->
+          <!--History-->
+          <div class="row my-1">
+            <div class="col-12 my-2">
+              <h3>History</h3>
+            </div>
+            <div class="col-12">
+              <table class="table table-striped">
+                <tbody>
+                  <tr *ngFor="let h of account?.history">
+                    <td class="py-2" [innerHtml]="h.date | date:'short'"></td>
 
-    <!-- CONTENT CARD -->
-    <div class="content-card mat-white-bg">
+                    <!--Created Account-->
+                    <ng-template [ngIf]="h.transaction.transactionType == 'account_create' && h.transaction.creator == muserName">
+                      <td class="py-2" [innerHtml]="'Created Account ' + h.newAccountName"></td>
+                    </ng-template>
 
-      <!-- CONTENT -->
-      <div class="content">
+                    <!--Account Creation-->
+                    <ng-template [ngIf]="h.transaction.transactionType == 'account_create' && h.transaction.newAccountName == muserName">
+                      <td class="py-2" [innerHtml]="'Account Creation'"></td>
+                    </ng-template>
 
-        <form name="walletForm" [formGroup]="walletForm" class="wallet w-100-p" fxLayout="column" fxFlex>
+                    <!--Transfer - Received-->
+                    <ng-template [ngIf]="h.transaction.transactionType == 'transfer' && h.transaction.to == muserName">
+                      <td class="py-2" [innerHtml]="'Received ' + h.transaction.amount + ' MUSE from ' + h.transaction.from"></td>
+                    </ng-template>
 
-          <mat-tab-group>
-            <mat-tab label="Balances">
-              <div class="tab-content p-24" fxLayout="column">
-                <div class="py-16" fxLayout="row">
-                  <mat-form-field class="w-100-p">
-                    <div>
-                      <input readonly matInput name="Muse" formControlName="tempValue" placeholder="Muse Balance: "> {{Musebalance}}
-                      <button mat-raised-button (click)="transferMuseBtn()" class="mat-purple-bg mt-16 mt-sm-0">
-                        Transfer
-                      </button>
-                      <button mat-raised-button (click)="vestMuseBtn()" class="mat-purple-bg mt-16 mt-sm-0">
-                        Transfer to Vesting
-                      </button>
-                    </div>
+                    <!--Transfer - Sent-->
+                    <ng-template [ngIf]="h.transaction.transactionType == 'transfer' && h.transaction.to != muserName">
+                      <td class="py-2" [innerHtml]="'Sent ' + h.transaction.amount + ' MUSE to ' + h.transaction.to"></td>
+                    </ng-template>
 
-                    <p>Tradeable tokens that may be transferred anywhere at anytime. MUSE can be vested by clicking transfer
-                      to Vesting.</p>
+                    <!--Vesting - Transfer-->
+                    <ng-template [ngIf]="h.transaction.transactionType == 'transfer_to_vesting' && h.transaction.to == muserName">
+                      <td class="py-2" [innerHtml]="'Transferred ' + h.transaction.amount + '  MUSE to VEST'"></td>
+                    </ng-template>
 
-                  </mat-form-field>
+                    <!--Vesting - Sent-->
+                    <ng-template [ngIf]="h.transaction.transactionType == 'transfer_to_vesting' && h.transaction.to != muserName">
+                      <td class="py-2" [innerHtml]="'Sent ' + h.transaction.amount + ' VEST to ' + h.transaction.to"></td>
+                    </ng-template>
+
+                    <!--Vesting - Widthdraw-->
+                    <ng-template [ngIf]="h.transaction.transactionType == 'withdraw_vesting'">
+                      <td class="py-2" [innerHtml]="'Withdrawing ' + h.transaction.vestingShares + ' VEST'"></td>
+                    </ng-template>
+
+                    <!--Witness Voted-->
+                    <ng-template [ngIf]="h.transaction.transactionType == 'account_witness_vote' && h.transaction.approve">
+                      <td class="py-2" [innerHtml]="h.transaction.account + ' Voted Witness ' + h.transaction.witness"></td>
+                    </ng-template>
+
+                    <!--Witness UnVoted-->
+                    <ng-template [ngIf]="h.transaction.transactionType == 'account_witness_vote' && !h.transaction.approve">
+                      <td class="py-2" [innerHtml]="h.transaction.account + ' UnVoted Witness ' + h.transaction.witness"></td>
+                    </ng-template>
+
+                    <!--Witness Update-->
+                    <ng-template [ngIf]="h.transaction.transactionType == 'witness_update'">
+                      <td class="py-2" [innerHtml]="'Witness Update'"></td>
+                    </ng-template>
+
+                    <!--Account Update-->
+                    <ng-template [ngIf]="h.transaction.transactionType == 'account_update'">
+                      <td class="py-2" [innerHtml]="'Account Update'"></td>
+                    </ng-template>
+
+                    <!--Content-->
+                    <ng-template [ngIf]="h.transaction.transactionType == 'content'">
+                      <td class="py-2" [innerHtml]="'Content Listed: URL: ' + h.url + ' Uploader: ' + h.uploader"></td>
+                    </ng-template>
+
+                    <!--Fill Vesting Withdraw-->
+                    <ng-template [ngIf]="h.transaction.transactionType == 'fill_vesting_withdraw'">
+                      <td class="py-2" [innerHtml]="'ithdrawal of VESTS from: ' + h.fromAccount + ' to: ' + h.toAccount + ' of ' + h.deposited"></td>
+                    </ng-template>
+
+                    <!--Content-->
+                    <ng-template [ngIf]="h.transaction.transactionType == 'custom_json'">
+                      <td class="py-2" [innerHtml]="'Custom Json ' +h.id + ' ' + h.json + ' ' + h.requiredAuths + ' ' + h.required_basic_auths"></td>
+                    </ng-template>
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </mat-tab>
+
+        <!--Password-->
+        <mat-tab label="Password">
+
+          <div class="row my-1">
+            <div class="col-12 my-2">
+              <h3 [innerHtml]="'Reset '+ muserName +'\'s Password'"></h3>
+            </div>
+            <div class="col-12 mb-2">
+              <ul class="pl-0 list-unstyled">
+                <li>Do
+                  <span class="font-weight-bold">not</span> lose your password.</li>
+                <li>We cannot recover your password.</li>
+                <li>If you can remember your password, It's not secure.</li>
+                <li>Use only randomly-generated passwords.</li>
+                <li>Do not tell anyone your password.</li>
+                <li>Always back up your password.</li>
+              </ul>
+            </div>
+            <div class="col-12 my-1">
+              <mat-divider></mat-divider>
+            </div>
+          </div>
+
+          <div class="row my-1">
+            <div class="col-12 my-2">
+              <mat-form-field>
+                <input matInput [(ngModel)]="CurrentPass" placeholder="Current Password">
+              </mat-form-field>
+            </div>
+            <div class="col-12 my-2">
+              <mat-form-field>
+                <input matInput [(ngModel)]="NewPass" placeholder="New Password">
+              </mat-form-field>
+            </div>
+            <div class="col-12 my-2">
+              <mat-form-field>
+                <input matInput [(ngModel)]="Confirm" placeholder="Confirm Password">
+              </mat-form-field>
+              <div class="row">
+                <div class="col-12">
+                  <mat-checkbox>
+                    I UNDERSTAND THIS WALLET HOSTER CANNOT RECOVER LOST PASSWORDS
+                  </mat-checkbox>
                 </div>
-                <mat-form-field class="w-100-p">
-                  <input readonly matInput name="Vests" formControlName="tempValue" placeholder="Vests Balance: "> {{Vestbalance}}
-                  <button mat-raised-button (click)="withdrawVestBtn()" class="mat-purple-bg mt-16 mt-sm-0">
-                    Withdraw
-                  </button>
-                  <button mat-raised-button (click)="cancelWithdrawBtn()" class="mat-purple-bg mt-16 mt-sm-0">
-                    Cancel Withdrawal
-                  </button>
-                  <p>Tokens that grant you more influence within the network.</p>
-                </mat-form-field>
-                <mat-form-field class="w-100-p">
-                  <input readonly matInput name="MBD" formControlName="tempValue" placeholder="Muse Backed Dollars Balance: "> {{MBDbalance}}
-                  <p>Tokens worth about $1.00 of MUSE</p>
-                </mat-form-field>
-                <mat-form-field class="w-100-p">
-                  <input readonly matInput name="Next Withdrawal" formControlName="tempValue" placeholder="Next Withdrawal: "> {{NextwithDraw}}
-                  <p></p>
-                </mat-form-field>
-                <mat-form-field class="w-100-p">
-                  <input readonly matInput name="History" formControlName="tempValue" placeholder="History">
-                </mat-form-field>
+                <div class="col-12">
+                  <mat-checkbox>
+                    I HAVE SECURELY SAVED MY GENERATED PASSWORD
+                  </mat-checkbox>
+                </div>
+              </div>
+            </div>
 
-                <li *ngFor="let hist of History">
-                  {{ hist }}
+          </div>
+
+        </mat-tab>
+
+        <!--Permissions-->
+        <mat-tab label="Permissions">
+
+          <div class="row my-1">
+            <div class="col-12 my-2">
+              <h3>Basic</h3>
+              <small class="font-weight-bold font-italic" [innerHtml]="account.BasicKey"></small>
+            </div>
+            <div class="col-12 my-2">
+              The basic key is used for non-financial functions such as voting, connection with other users and approving/declining proposed
+              modifications to your data. It should be different from the active and owner keys.
+            </div>
+            <div class="col-12 my-1">
+              <mat-divider></mat-divider>
+            </div>
+          </div>
+
+          <div class="row my-1">
+            <div class="col-12 my-2">
+              <h3>Active</h3>
+              <small class="font-weight-bold font-italic" [innerHtml]="account.ActiveKey"></small>
+            </div>
+            <div class="col-12 my-2">
+              The active key is used for financial transactions and the creation of (or updates to) your data. It should be used from a
+              secure workstation.
+            </div>
+            <div class="col-12 my-1">
+              <mat-divider></mat-divider>
+            </div>
+          </div>
+
+          <div class="row my-1">
+            <div class="col-12 my-2">
+              <h3>Owner</h3>
+              <small class="font-weight-bold font-italic" [innerHtml]="account.OwnerKey"></small>
+            </div>
+            <div class="col-12 my-2">
+              The owner key is the master key for the account and is required to change the other keys. The private key or password for
+              the owner key should be kept offline as much as possible.
+            </div>
+            <div class="col-12 my-1">
+              <mat-divider></mat-divider>
+            </div>
+          </div>
+
+          <div class="row my-1">
+            <div class="col-12 my-2">
+              <h3>Memo</h3>
+              <small class="font-weight-bold font-italic" [innerHtml]="account.MemoKey"></small>
+            </div>
+            <div class="col-12 my-2">
+              The memo key is used to create and read memos.
+            </div>
+            <div class="col-12 my-1">
+              <mat-divider></mat-divider>
+            </div>
+          </div>
+
+        </mat-tab>
+
+        <!--Witness & Voting-->
+        <mat-tab label="Witness-Voting">
+
+          <div class="row my-1">
+            <div class="col-12 my-2">
+              <p>As a MUSE holder you get 30 witness votes, use them wisely. You have 19 witness votes left.</p>
+              <p>If you whould like to vote for a witness outside of the top 50, enter the account name below to cast a vote.</p>
+            </div>
+            <div class="col-12 my-2">
+              <ul class="pl-4">
+                <li *ngFor="let witness of WitnessListArray">
+                  <span [innerHtml]="witness.owner"></span>
+                  <span [innerHtml]="witness.last_confirmed_block_num"></span>
+                  <span [innerHtml]="witness.url"></span>
                 </li>
+              </ul>
+            </div>
+          </div>
 
+        </mat-tab>
 
-              </div>
-            </mat-tab>
-
-            <mat-tab label="Password">
-              <div class="tab-content p-24" fxLayout="column">
-                <div class="py-16" fxLayout="row">
-
-                  <mat-form-field fxFlex>
-                    <input matInput name="CurrentPass" formControlName="tempValue" placeholder="Current Password">
-                  </mat-form-field>
-                </div>
-                <p>Do not lose your password. We cannot recover your password. If you can remember the password, It's not secure.
-                  Use only randomly-generated passwords. Do not tell anyone your password. Always back up your password.</p>
-                <mat-form-field fxFlex>
-                  <input matInput name="NewPass" formControlName="tempValue" placeholder="New Password">
-                </mat-form-field>
-
-                <mat-form-field class="w-100-p">
-                  <input matInput name="Confirm" formControlName="tempValue" placeholder="Confirm Password">
-                  <div class="py-16" fxLayout="row">
-
-                    <mat-checkbox>
-                      I UNDERSTAND THIS WALLET HOSTER CANNOT RECOVER LOST PASSWORDS
-                    </mat-checkbox>
-                  </div>
-                  <div class="py-16" fxLayout="row">
-                    <mat-checkbox>
-                      I HAVE SECURELY SAVED MY GENERATED PASSWORD
-                    </mat-checkbox>
-                  </div>
-                </mat-form-field>
-              </div>
-            </mat-tab>
-
-            <mat-tab label="Permissions">
-              <div class="tab-content p-24" fxLayout="column">
-                <div class="py-16" fxLayout="row">
-                  <mat-form-field class="w-100-p">
-                    <input readonly matInput name="Basic" formControlName="tempValue" placeholder="Basic"> {{BasicKey}}
-                    <p>The basic key is used for non-financial functions such as voting, connection with other users and approving/declining
-                      proposed modifications to your data. It should be different from the active and owner keys.</p>
-                  </mat-form-field>
-                </div>
-                <mat-form-field class="w-100-p">
-                  <input readonly matInput name="Active" formControlName="tempValue" placeholder="Active"> {{ActiveKey}}
-                  <p>The active key is used for financial transactions and the creation of (or updates to) your data. It should
-                    be used from a secure workstation.</p>
-                </mat-form-field>
-
-                <mat-form-field class="w-100-p">
-                  <input readonly matInput name="Owner" formControlName="tempValue" placeholder="Owner"> {{OwnerKey}}
-                  <p>The owner key is the master key for the account and is required to change the other keys. The private key
-                    or password for the owner key should be kept offline as much as possible.</p>
-                </mat-form-field>
-
-                <mat-form-field class="w-100-p">
-                  <input readonly matInput name="Memo" formControlName="tempValue" placeholder="Memo"> {{MemoKey}}
-                  <p>The memo key is used to create and read memos.</p>
-                </mat-form-field>
-              </div>
-            </mat-tab>
-
-            <mat-tab label="Witness-Voting">
-              <div class="tab-content p-24" fxLayout="column">
-                <p>As a MUSE holder you get 30 witness votes, use them wisely. You have 19 witness votes left.</p>
-                <p>If you whould like to vote for a witness outside of the top 50, enter the account name below to cast a vote.</p>
-              </div>
-              <div class="tab-content p-4" fxLayout="column" *ngFor="let witness of WitnessListArray">
-
-                <div class="tab-content p-24" fxLayout="row">
-                  <li>
-                    {{ witness.owner }} {{ witness.last_confirmed_block_num }} {{ witness.url }}
-                  </li>
-                </div>
-
-              </div>
-            </mat-tab>
-          </mat-tab-group>
-        </form>
-
-      </div>
-      <!-- / CONTENT -->
-
+      </mat-tab-group>
 
     </div>
-    <!-- / CONTENT -->
-
   </div>
-  <!-- / CONTENT CARD -->
-
 </div>
-<!-- / CENTER -->

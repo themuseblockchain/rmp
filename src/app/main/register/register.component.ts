@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { fadeInAnimation } from '../../core/common/route.animation';
 import { MatDialog, MatDialogRef } from '@angular/material';
-import { DataService } from '../../core/services/data.service';
+import { AuthService } from '../../core/services/auth.service';
 // import { VerificationService } from '../../core/services/verification.service';
 
 import { AlertService } from '../../core/services/alert.service';
@@ -24,21 +24,21 @@ export class RegisterComponent {
 
   constructor(
     private router: Router,
-    private dataService: DataService,
+    private authService: AuthService,
     private alert: AlertService,
     private dialog: MatDialog,
     private fb: FormBuilder
     // private verification: VerificationService
   ) {
 
-    //Build Form
+    // Build Form
     this.form = fb.group({
       muserName: fb.control('', Validators.required),
       email: fb.control('', [Validators.required, Validators.email]),
       password: fb.control('', Validators.required),
       passwordConfirm: fb.control('', Validators.required),
       terms: fb.control(null, Validators.required)
-    })
+    });
 
   }
 
@@ -50,11 +50,11 @@ export class RegisterComponent {
 
   register() {
 
-    this.dataService.createAccount(this.form.get("muserName").value, this.form.get("password").value, this.form.get("email").value);
+    this.authService.createAccount(this.form.get('muserName').value, this.form.get('password').value, this.form.get('email').value);
     
     // .then(() => {
     //     this.router.navigateByUrl('/login');
-    //     this.dataService.authAccount(this.muserName.toLowerCase(), this.password).then(() => {
+    //     this.authService.authAccount(this.muserName.toLowerCase(), this.password).then(() => {
     //       this.isAuthenticated = localStorage.getItem('isAuthenticated');
     //       if (this.isAuthenticated === 'true') {
     //         this.router.navigateByUrl('/');
@@ -67,11 +67,11 @@ export class RegisterComponent {
   }
 
   passwordMatch() {
-    if (this.form.get("password").value == this.form.get("passwordConfirm").value) {
+    if (this.form.get('password').value === this.form.get('passwordConfirm').value) {
       return true;
     }
-    this.form.get("passwordConfirm").setErrors({MatchPassword: true});
-    return false
+    this.form.get('passwordConfirm').setErrors({MatchPassword: true});
+    return false;
   }
 
 }

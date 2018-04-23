@@ -9,9 +9,11 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { MainModule } from './main/main.module';
 
+import { AuthService } from './core/services/auth.service';
 import { DataService } from './core/services/data.service';
 import { AlertService } from './core/services/alert.service';
 import { VerificationService } from './core/services/verification.service';
+import { MuseService } from './core/services/muse.service';
 import { MuserService } from './core/services/muser.service';
 import { UIService } from './core/services/ui.service';
 
@@ -45,9 +47,11 @@ firebase.initializeApp(Config.firebaseProd);
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
+    AuthService,
     DataService,
     VerificationService,
     AlertService,
+    MuseService,
     MuserService,
     UIService
   ],
