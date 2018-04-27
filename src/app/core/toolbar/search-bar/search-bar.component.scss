@@ -1,4 +1,5 @@
-@import "../../../../styles/var";
+// @import "../../../../styles/var";
+@import "src/app/core/scss/muse";
 
 :host {
   display: block;
@@ -25,15 +26,17 @@ input[type="search"] {
   input.search-input {
     display: block;
     padding: 8px 8px 8px 72px;
-    box-shadow: 0 1px 1.5px rgba(0,0,0,0.06),0 1px 1px rgba(0,0,0,0.12);
+    border: 0;
+    outline: 0;
+    background: transparent;
     height: 36px;
     transition: all 0.2s ease;
-    border: none;
+    // border: none;
     font-size: 16px;
     appearance: textfield;
     font-weight: 300;
-    outline: none;
-    border-radius: 3px;
+    // outline: none;
+    // border-radius: 3px;
     box-sizing: border-box;
     // color: currentColor;
     color: #EFEFEF;

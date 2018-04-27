@@ -1,4 +1,4 @@
-.muse-tabs {
+.tabs {
 
   .mat-tab-labels {
     background: $theme-app-bar;
@@ -6,7 +6,7 @@
     .mat-tab-label {
 
       &.mat-tab-label-active {
-        color: mat-color($theme-primary);
+        color: mat-color($primary);
         opacity: 1;
       }
     }

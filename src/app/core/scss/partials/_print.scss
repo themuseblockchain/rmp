@@ -34,13 +34,13 @@
     }
 
     /* General styles */
-    root {
+    muse-root {
+
         navbar-vertical,
-        navbar-horizontal,
-        toolbar,
-        footer,
-        quick-panel,
-        theme,
+        muse-navbar-horizontal,
+        muse-toolbar,
+        muse-footer,
+        muse-theme-options,
         .ps > .ps__scrollbar-x-rail,
         .ps > .ps__scrollbar-y-rail {
             display: none !important;
