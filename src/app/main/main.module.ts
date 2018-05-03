@@ -11,13 +11,12 @@ import { SortablejsModule } from 'angular-sortablejs';
 import { QuillModule } from 'ngx-quill';
 import { ScrollbarModule } from '../core/scrollbar/scrollbar.module';
 import { WalletModule } from './wallet/wallet.module';
-
 import { ComponentsModule } from './components/components.module' ;
-
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PostComponent } from './rights-management/post.component';
+import { RightsManagementComponent } from './rights-management/rights-management.component';
 // import { AlertComponent } from './components/alert/alert.component';
 
 @NgModule({
@@ -40,8 +39,8 @@ import { PostComponent } from './rights-management/post.component';
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
-    PostComponent
-    // AlertComponent
+    PostComponent,
+    RightsManagementComponent
   ],
   providers: [
   ]

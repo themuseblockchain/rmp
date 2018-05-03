@@ -2,9 +2,13 @@
 
   <mat-toolbar color="primary" class="sidenav-toolbar mat-elevation-z2">
     <div fxLayout="row" style="width: 100%;">
-      <span style="width: 45px; text-align: center; margin-left: -24px;" fxFlexAlign="center">
-        <img src="assets/images/logos/muse.png" style="width: 65px; vertical-align: text-top;"></span>
-      <img style="height: 25px; margin-left: 30px; margin-bottom: -5px;" src="assets/images/logos/MusePlnTxr.png" fxFlexAlign="center" class="fade-in-on-icon-sidenav">
+
+      <span style="width: 45px; text-align: center; margin-left: -13px;" fxFlexAlign="center">
+        <img src="assets/images/logos/muse.png" style="width: 65px; vertical-align: text-top;">
+      </span>
+      <img style="height: 25px; margin-left: 19px; margin-bottom: -5px;" src="assets/images/logos/muse_txt.png" fxFlexAlign="center"
+        class="fade-in-on-icon-sidenav">
+
       <span fxFlex></span>
       <div fxHide="true" fxHide.gt-sm="false" fxFlexAlign="center">
         <button mat-icon-button (click)="toggleIconSidenav()">
@@ -17,7 +21,7 @@
   <div class="sidenav-scrollbar-container" fxLayout="column">
     <scrollbar>
       <mat-nav-list fxLayout="column" class="sidenav-list sidenav-toplevel">
-          <sidenav-item *ngFor="let item of items" [item]="item"></sidenav-item>
+        <sidenav-item *ngFor="let item of items" [item]="item"></sidenav-item>
       </mat-nav-list>
     </scrollbar>
   </div>

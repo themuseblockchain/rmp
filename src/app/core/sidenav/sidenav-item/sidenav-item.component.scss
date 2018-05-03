@@ -1,4 +1,4 @@
-@import "../../../../styles/_var";
+@import "src/app/core/scss/muse";
 
 :host {
   display: block;
@@ -21,6 +21,7 @@ mat-nav-list a.sidenav-anchor {
     height: $sidenav-icon-width-height;
     font-size: 18px;
     line-height: 18px;
+    color: $sidenav-color !important;
   }
 }
 
@@ -60,6 +61,7 @@ mat-nav-list a.sidenav-anchor {
     color: $sidenav-color;
     transition: color .1s;
     outline: none;
+    text-decoration: none !important;
 
     &:hover {
       color: #FFFFFF;

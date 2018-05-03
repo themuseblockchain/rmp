@@ -2,7 +2,8 @@ export enum AlertBtnText {
     OK = 'OK',
     UpdateEmail = 'Update Email',
     ResendEmail = 'Resend Email',
-    Redirect = 'OK'
+    Redirect = 'OK',
+    Close = 'Close'
 }
 
 export enum ErrorCodes {
