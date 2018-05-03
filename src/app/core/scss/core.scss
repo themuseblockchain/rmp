@@ -4,8 +4,13 @@
 // @import '~@swimlane/ngx-datatable/release/assets/icons.css';
 // Perfect scrollbar
 // @import '~perfect-scrollbar/css/perfect-scrollbar.css';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
 // Muse
 @import "muse";
+
 
 // Theming
 @include mat-core();

@@ -10,12 +10,12 @@ export namespace Config {
     };
     
     export const faucet_config = {
-        private_wif: "",
-        account_creation_fee: "",
-        account: "",
-        newAccountVest: "",
-        newAccountMuse: "",
-        newAccountMuseMemo: ""
+        private_wif: '',
+        account_creation_fee: '',
+        account: '',
+        newAccountVest: '',
+        newAccountMuse: '',
+        newAccountMuseMemo: ''
     }
 
 }

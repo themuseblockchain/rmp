@@ -71,7 +71,8 @@ export class WalletComponent implements OnInit {
 
   // Account History
   dataSource = new MatTableDataSource<MuseAccountHistory>(this.account.history);
-  displayedColumns = ['date', 'transaction'];
+  displayedColumnsHistory = ['date', 'transaction'];
+  displayedColumnsWitness = ['witness'];
 
   ngOnInit() {
 
