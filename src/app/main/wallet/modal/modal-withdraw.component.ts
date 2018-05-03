@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef  } from '@angular/material';
 
 @Component({
@@ -7,14 +7,17 @@ import { MatDialog, MatDialogRef  } from '@angular/material';
 })
 
 export class ModalWithdrawComponent {
-  data = '';
+  
   constructor(
     public dialogRef: MatDialogRef<ModalWithdrawComponent>
   ) {}
+
+  data = '';
+
   save() {
-    console.log(this.data);
     this.dialogRef.close(this.data);
   }
+
   close() {
     this.dialogRef.close();
   }

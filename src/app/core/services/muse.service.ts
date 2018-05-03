@@ -34,15 +34,17 @@ export class MuseService {
       muse.api.streamOperationsAsync((err, result) => {
         muse.api.getAccounts([muserName]).then((results => {
           observer.next(results);
-        }));
+        }), error => {
+          this.alertService.showErrorMessage('streamAccountInfo$(): ' + error);
+        });
       });
     });
   }
 
-  getAccountHistory(muserName): Promise<MuseAccountHistory[]> {
+  getAccountHistory(muserName): Promise<void | MuseAccountHistory[]> {
     this.setMuseSocket();
 
-    return new Promise(function (resolve, reject) {
+    return new Promise<MuseAccountHistory[]>(function (resolve, reject) {
       muse.api.getAccountHistory(muserName, 9999, 24, function (error, result) {
 
 
@@ -64,9 +66,9 @@ export class MuseService {
 
         }
 
-      }).catch((err) => {
-        this.alertService.showErrorMessage('getAccountHistory(): ' + err);
       });
+    }).catch((err) => {
+      this.alertService.showErrorMessage('getAccountHistory(): ' + err);
     });
 
   }
@@ -96,6 +98,8 @@ export class MuseService {
           resolve(success);
         }
       });
+    }).catch((err) => {
+      this.alertService.showErrorMessage('transferFunds(): ' + err);
     });
   }
 

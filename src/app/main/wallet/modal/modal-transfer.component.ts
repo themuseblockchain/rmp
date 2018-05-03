@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
@@ -6,15 +6,17 @@ import { MatDialog, MatDialogRef } from '@angular/material';
   templateUrl: './modal-transfer.component.html',
 })
 export class ModalTransferComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<ModalTransferComponent>
+  ) { }
+
   data = {
     'transferto': '',
     'amount': '',
     'memo': ''
   };
-  constructor(
-    public dialogRef: MatDialogRef<ModalTransferComponent>
 
-  ) { }
   save() {
     if (this.data.transferto === '') {
       alert('Please provide a Muse account name to transfer to.');
@@ -22,6 +24,7 @@ export class ModalTransferComponent {
       this.dialogRef.close(this.data);
     }
   }
+  
   close() {
     this.dialogRef.close();
   }

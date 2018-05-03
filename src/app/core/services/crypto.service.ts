@@ -1,10 +1,12 @@
 import * as cryptojs from 'crypto-js';
-// import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
 import { Utils } from '../../core/utils';
+// import {LocalStorageService, SessionStorageService} from 'ngx-webstorage';
 // import { MuserService } from '../../core/services/muser.service';
 
 export class CryptoService {
+    
   public static encrypt(password) {
+      console.log(password);
       const key = Utils.generateKey();
       
       localStorage.setItem('key', key);
@@ -17,11 +19,3 @@ export class CryptoService {
       return authPassword.toString(cryptojs.enc.Utf8);
   }
 }
-
-
-
-
-
-
-
-

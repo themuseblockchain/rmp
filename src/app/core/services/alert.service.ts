@@ -28,7 +28,11 @@ const errorMessages = {
 const successMessages = {
   emailVerified: { title: 'Email Confirmed!', message: 'Congratulations! Your email has been confirmed!' },
   emailVerificationSent: { title: 'Email Confirmation Sent!', message: 'Please confirm your email sent to ' },
-  passwordChanged: { title: 'Password Changed!', message: 'Your password has been successfully changed.' }
+  passwordChanged: { title: 'Password Changed!', message: 'Your password has been successfully changed.' },
+
+  // Catch all Success
+  default: { title: 'Success', message: '' }
+
 };
 
 
@@ -60,6 +64,17 @@ export class AlertService {
     });
   }
 
+  showSuccessMessage(title: string, message: string) {
+    this.dialog.open(AlertComponent, {
+      disableClose: true,
+      data: {
+        title: title,
+        message: message,
+        btnEnd: AlertBtnText.OK
+      }
+    });
+  }
+
   // Show error messages depending on the code
   // If you added custom error codes on top, make sure to add a case block for it.
   showErrorMessage(code) {
@@ -81,6 +96,16 @@ export class AlertService {
           data: {
             title: errorMessages.muserNameAlreadyInUse['title'],
             message: errorMessages.muserNameAlreadyInUse['message'],
+            btnEnd: AlertBtnText.OK
+          }
+        });
+        break;
+      case ErrorCodes.wrongPassword:
+        this.dialog.open(AlertComponent, {
+          disableClose: true,
+          data: {
+            title: errorMessages.wrongPassword['title'],
+            message: errorMessages.wrongPassword['message'],
             btnEnd: AlertBtnText.OK
           }
         });

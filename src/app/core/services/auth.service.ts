@@ -14,6 +14,7 @@ import * as muse from 'museblockchain-js';
 // Models
 import { Config } from '../../../config/config';
 import { ErrorCodes } from '../../core/enums';
+import { MuseKeys } from '../modals/muse-keys';
 
 @Injectable()
 export class AuthService {
@@ -128,8 +129,8 @@ export class AuthService {
   registerMuseAccount(muserName, password) {
     this.setMuseSocket();
     return new Promise((resolve, reject) => {
-      this.generateKeys(muserName, password).then((keys: any) => {
-        // try {
+      this.getPrivateKeys(muserName, password).then((keys: MuseKeys) => {
+
         muse.broadcast.accountCreate(
           Config.faucet_config.private_wif,
           Config.faucet_config.account_creation_fee,
@@ -156,29 +157,42 @@ export class AuthService {
               resolve(result);
             }
           });
-        // } catch (error) {
-        //   this.alert.showErrorMessage('muse.broadcast.accountCreate(): ' + error);
-        //   // TODO: Add in Error Logging. Most likely write errors to firebase
-        // }
       });
     }).then(() => {
       muse.broadcast.transferToVestingAsync(Config.faucet_config.private_wif, Config.faucet_config.account, muserName, '0.01 2.28.0');
     }).catch((err) => {
       this.alert.showErrorMessage('registerMuseAccount(): ' + err);
-      // TODO: Add in Error Logging. Most likely write errors to firebase
     });
   }
 
-  generateKeys(muserName, password) {
+  getPrivateKeys(muserName, password): Promise<void | MuseKeys> {
     this.setMuseSocket();
-    return new Promise(function (resolve, reject) {
+    // Note: Returns private keys for the password provided, can be used to generate new keys
+    return new Promise<MuseKeys>(function (resolve, reject) {
       const keys = muse.auth.getPrivateKeys(muserName, password, ['owner', 'active', 'basic', 'memo']);
-      if (keys) {
-        resolve(keys);
-      } else {
-        reject();
-        this.alert.showErrorMessage('generateKeys(): ');
-      }
+      if (!keys) { reject('Failed to load keys.'); }
+      resolve(keys);
+    }).catch((err) => {
+      this.alert.showErrorMessage('getPrivateKeys(): ' + err);
+    });
+
+  }
+
+  updateAccountKeys(muserName, password, newPassword, ownerPubkey, activePubkey, basicPubkey, memoPubkey): Promise<void | boolean> {
+    const alert = this.alert;
+    this.setMuseSocket();
+    return new Promise<boolean>(function (resolve, reject) {
+      muse.updateAccountKeys(muserName, password, ownerPubkey, activePubkey, basicPubkey, memoPubkey, (code, message) => {
+        if (code === 0) {
+          CryptoService.encrypt(newPassword);
+          alert.showSuccessMessage('Password Changed!', 'Your password has been successfully changed.'); // TODO: Set messages in a resource file
+          resolve(true);
+        } else {
+          reject(message);
+        }
+      });
+    }).catch((err) => {
+      this.alert.showErrorMessage('updateAccountKeys(): ' + err);
     });
   }
 

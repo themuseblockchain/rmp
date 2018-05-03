@@ -40,7 +40,7 @@ import { PostComponent } from './rights-management/post.component';
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
-    PostComponent,
+    PostComponent
     // AlertComponent
   ],
   providers: [

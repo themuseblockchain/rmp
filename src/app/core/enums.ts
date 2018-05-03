@@ -23,5 +23,6 @@ export enum ErrorCodes {
     userNotFound = 'auth/user-not-found',
     invalidCredential = 'auth/invalid-credential',
     invalidVerificationCode = 'auth/invalid-verification-code',
-    invalidVerificationId = 'auth/invalid-verification-id'
+    invalidVerificationId = 'auth/invalid-verification-id',
+    wrongPassword = 'auth/wrong-password'
 }

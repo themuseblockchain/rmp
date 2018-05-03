@@ -46,3 +46,11 @@
   z-index: 9999;
   pointer-events: none;
 }
+
+// Simple Selection Highlight
+::selection {
+  background: $primary;
+}
+::-moz-selection {
+  background: $primary;
+}

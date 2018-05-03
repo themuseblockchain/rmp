@@ -28,12 +28,12 @@ export class LayoutComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private mediaReplayService: MediaReplayService,
-    private ui: UIService
+    public ui: UIService
   ) { }
 
   ngOnInit() {
     this._mediaSubscription = this.mediaReplayService.media$.subscribe((change: MediaChange) => {
-      const isMobile = (change.mqAlias == 'xs') || (change.mqAlias == 'sm');
+      const isMobile = (change.mqAlias === 'xs') || (change.mqAlias === 'sm');
 
       this.isMobile = isMobile;
       this.sidenavMode = (isMobile) ? 'over' : 'side';

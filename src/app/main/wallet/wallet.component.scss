@@ -1,49 +1,18 @@
-// #wallet {
-    
-    // .content {
+.form-container {
+    display: flex;
+    flex-direction: column;
+      
+    mat-form-field {
+        width: 100%;
+    }
 
-    //     .mat-tab-group,
-    //     .mat-tab-body-wrapper,
-    //     .tab-content{
-    //         flex: 1 1 auto;
-    //         max-width: 100%;
-    //     }
+    .mat-table,
+    .mat-paginator{
+        background: transparent;
+    }
 
-    //     .mat-tab-body-content {
-    //         display: flex;
-    //     }
+    .mat-row{
+        padding: 0;
+    }
 
-    //     .mat-tab-label {
-    //         height: 64px;
-    //     }
-    // }
-
-
-
-
-// :host {
-//   display: block;
-// }
-
-// .dashboard {
-//     padding: 16px;
-//     }
-
-// .toolbar {
-
-// }
-
-// .calendar-header {
-//   width: 100%;
-
-//   button {
-//     margin-left: 8px;
-//   }
-// }
-
-// .calendar {
-//   background: white;
-// }
-
-
-// // }
+}
