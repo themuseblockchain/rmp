@@ -25,7 +25,9 @@ export class SidenavService {
 
     const dashboard = menu.addItem('Dashboard', 'dashboard', '/', 1);
     menu.addItem('Wallet', 'mail', '/wallet', 2);
-    menu.addItem('Post', 'mail', '/post', 3);
+    menu.addItem('Rights Management', 'mail', '/rights-management', 3);
+    // menu.addItem('White List', 'mail', '/white-list', 4);
+    // menu.addItem('Buy MUSE', 'mail', '/buy', 5);
 
     // const customPages = menu.addItem('Custom Pages', 'web', null, 8);
     // menu.addSubItem(customPages, 'Login Page', '/login', 1);
@@ -74,7 +76,7 @@ export class SidenavService {
   }
 
   isOpen(item: SidenavItem) {
-    return (this._currentlyOpen.indexOf(item) != -1);
+    return (this._currentlyOpen.indexOf(item) !== -1);
   }
 
   toggleCurrentlyOpen(item: SidenavItem) {

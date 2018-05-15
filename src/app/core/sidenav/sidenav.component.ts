@@ -47,8 +47,9 @@ export class SidenavComponent implements OnInit, OnDestroy {
 
     this.breadcrumbService.addFriendlyNameForRoute('/', 'Dashboard');
     this.breadcrumbService.addFriendlyNameForRoute('/wallet', 'Wallet');
-    this.breadcrumbService.addFriendlyNameForRoute('/post', 'Post');
- 
+    this.breadcrumbService.addFriendlyNameForRoute('/rights-management', 'Rights Management');
+    // this.breadcrumbService.addFriendlyNameForRoute('/white-list', 'White List');
+    // this.breadcrumbService.addFriendlyNameForRoute('/external Link', 'Buy Muse');
 
   }
 

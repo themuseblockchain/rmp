@@ -1,44 +1,41 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { fadeInAnimation } from '../../core/common/route.animation';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { AuthService } from '../../core/services/auth.service';
 // import { VerificationService } from '../../core/services/verification.service';
-
+import { AlertBtnText } from '../../core/enums/alert-btn-text.enums';
 import { AlertService } from '../../core/services/alert.service';
 
 import * as firebase from 'firebase';
 // import { ServiceWorkerModule } from '@angular/service-worker';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { TacComponent } from '../../main/components/modal/terms-conditions/tac.component';
-import { AlertBtnText } from '../../core/enums';
-
 
 @Component({
   selector: 'register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
-
   host: {
     '[@fadeInAnimation]': 'true'
   },
-
   animations: [fadeInAnimation]
 })
 export class RegisterComponent {
 
   constructor(
+    private router: Router,
     private authService: AuthService,
     private alert: AlertService,
     private dialog: MatDialog,
     private fb: FormBuilder
     // private verification: VerificationService
   ) {
-
     // Build Form
     this.form = fb.group({
-      muserName: fb.control('', Validators.required),
+      muserName: fb.control('', [Validators.required, Validators.minLength(3), Validators.maxLength(16)]),
       email: fb.control('', [Validators.required, Validators.email]),
-      password: fb.control('', Validators.required),
+      password: fb.control('', [Validators.required,  Validators.minLength(6)]),
       passwordConfirm: fb.control('', Validators.required),
       terms: fb.control(null, Validators.required)
     });

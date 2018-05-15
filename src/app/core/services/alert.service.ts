@@ -3,7 +3,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material';
 
 // import { Validator } from '../validator';
 import { AlertComponent } from '../../main/components/alert/alert.component';
-import { AlertBtnText, ErrorCodes } from '../../core/enums';
+import { AlertBtnText } from '../../core/enums/alert-btn-text.enums';
+import { ErrorCodes } from '../../core/enums/error-codes.enums';
 
 const errorMessages = {
   // Firebase Error Messages
@@ -19,7 +20,7 @@ const errorMessages = {
   providerAlreadyLinked: { title: 'Already Linked!', message: 'Sorry, your account is already linked to this credential.' },
   credentialAlreadyInUse: { title: 'Credential Not Available!', message: 'Sorry, this credential is already used by another user.' },
   muserNameAlreadyInUse: { title: 'Muser Name Not Available!', message: 'Sorry, this Muser Name is already in use.' },
-
+  muserNotFound: { title: 'Account Not Found!', message: 'Sorry, an account with this Muser Name could not be found.' },
 
   // Catch all error
   default: { title: 'Error', message: 'Please contact support with the following error message: ' }
@@ -100,6 +101,16 @@ export class AlertService {
           }
         });
         break;
+      case ErrorCodes.muserNameNotFound:
+        this.dialog.open(AlertComponent, {
+          disableClose: true,
+          data: {
+            title: errorMessages.muserNotFound['title'],
+            message: errorMessages.muserNotFound['message'],
+            btnEnd: AlertBtnText.OK
+          }
+        });
+        break;
       case ErrorCodes.wrongPassword:
         this.dialog.open(AlertComponent, {
           disableClose: true,
@@ -110,6 +121,18 @@ export class AlertService {
           }
         });
         break;
+
+        case ErrorCodes.invalidTesterKey:
+        this.dialog.open(AlertComponent, {
+          disableClose: true,
+          data: {
+            title: errorMessages.invalidCredential['title'],
+            message: errorMessages.invalidCredential['message'],
+            btnEnd: AlertBtnText.OK
+          }
+        });
+        break;
+
       default:
         this.dialog.open(AlertComponent, {
           disableClose: true,

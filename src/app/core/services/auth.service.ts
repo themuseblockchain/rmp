@@ -14,7 +14,8 @@ import * as muse from 'museblockchain-js';
 // Models
 import { Config } from '../../../config/config';
 import { ErrorCodes } from '../../core/enums';
-import { MuseKeys } from '../modals/muse-keys';
+import { MuseKeys } from '../models/muse-keys';
+import * as firebase from 'firebase';
 
 @Injectable()
 export class AuthService {
@@ -110,7 +111,7 @@ export class AuthService {
       muserName: muserName,
       dateAdded: new Date().toString(),
       email: user.email,
-      emailVerified: user.emailVerified,
+      emailVerified: user.emailVerified
       // phoneNumber: phoneNumber
     }).then(() => {
       const membersInfo = {};
@@ -196,4 +197,17 @@ export class AuthService {
     });
   }
 
+  validateTesterKey(inputKey) {
+    return new Promise((resolve, reject) => {
+      const db = firebase.database();
+      const ref = db.ref('BetaTesterKey/');
+      ref.on('value', (snap) => {
+        if (snap.val() === inputKey) {
+          resolve(true);
+        } else {
+          reject(false);
+        }
+      });
+    });
+  }
 }

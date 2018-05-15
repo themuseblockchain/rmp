@@ -1,0 +1,414 @@
+<div id="post" class="page-layout carded fullwidth">
+  <div class="top-bg mat-deep-purple-bg"></div>
+  <div class="center">
+    <div class="header white-fg p-24" fxLayout="row" fxLayoutAlign="space-between center">
+      <h2>Post Content</h2>
+      <!-- <button mat-raised-button class="mat-white-bg mt-16 mt-sm-0 save-content-button" mat-raised-button type="submit"  (click)="postContent()" [disabled]="!contentForm.valid"> -->
+      <button mat-raised-button class="mat-white-bg mt-16 mt-sm-0 save-content-button" mat-raised-button type="submit" (click)="postContent()">
+        <span>SAVE</span>
+      </button>
+    </div>
+
+    <div class="content-card mat-white-bg mb-5">
+      <form name="contentForm" [formGroup]="contentForm" class="content w-100-p" fxLayout="column" fxFlex>
+        <mat-tab-group>
+          <mat-tab label="Master Side">
+            <div class="tab-content p-24" fxLayout="column">
+              <h1>Track Info:</h1>
+              <div fxLayout="row" fxLayout.xs="column" fxFlex="1 0 auto" fxLayoutAlign="space-between center">
+                <mat-checkbox matInput formControlName="partOfAlbum" [matTooltip]="toolTips.partOfAlbum" [matTooltipShowDelay]="toolTips.delay">
+                  Content is part of an album?
+                </mat-checkbox>
+              </div>
+              <div class="py-16" fxLayout="row">
+                <mat-form-field class="w-100-p">
+                  <input matInput name="Track Title" formControlName="trackTitle" placeholder="Track Title" [matTooltip]="toolTips.trackTitle"
+                    [matTooltipShowDelay]="toolTips.delay" required>
+
+                  <mat-error *ngIf="contentForm.controls.trackTitle.hasError('required')">
+                    <strong>Track Title is required</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                <!-- <mat-form-field class="w-100-p">
+                  <input matInput name="File URL" formControlName="ipfsUrl" placeholder="IPFS URL" [matTooltip]="toolTips.url" [matTooltipShowDelay]="toolTips.delay" required>
+                  <mat-error *ngIf="contentForm.controls.ipfsUrl.hasError('required')">
+                    <strong>IPFS URL is required</strong>
+                  </mat-error>
+                </mat-form-field> -->
+                <mat-form-field class="w-100-p">
+                  <input matInput name="Track Producer" formControlName="trackProducer" placeholder="Track Producer" [matTooltip]="toolTips.trackProducer"
+                    [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+
+                <mat-form-field class="w-100-p">
+                  <form [formGroup]="contentForm">
+                    <mat-select placeholder="Contains Sample?" name="sampleAnswer" formControlName="hasSample" [matTooltip]="toolTips.sample"
+                      [matTooltipShowDelay]="toolTips.delay">
+                      <mat-option *ngFor="let sampleAnswer of yes_no" [value]="sampleAnswer.value">
+                        {{ sampleAnswer.viewValue }}
+                      </mat-option>
+                    </mat-select>
+                  </form>
+                </mat-form-field>
+              </div>
+
+              <div class="py-16" fxLayout="row">
+                <div class="w-100-p">
+                  <mat-label [ngClass]="{'required': contentForm.value.trackArtists?.length == 0}" class="spacing">Track Artist</mat-label>
+                  <button mat-raised-button class="mat-purple-bg mt-16 mt-sm-0" mat-raised-button (click)="addArtist('Track Artist Content')"
+                    [matTooltip]="toolTips.trackArtist" [matTooltipShowDelay]="toolTips.delay">Add</button>
+                  <mat-chip-list matPrefix #trackArtists formControlName="trackArtists">
+                    <mat-chip class="chip" *ngFor="let data of contentForm.value.trackArtists; index as i" removable="true" (removed)="removeFromList('trackArtists', i)">
+                      {{ data.artist }} {{ data.muserName }} {{data.isni}} {{data.aliases}}
+                      <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                  </mat-chip-list>
+                </div>
+
+                <mat-form-field class="w-100-p">
+                  <input matInput name="Featured Artist" formControlName="featuredArtist" placeholder="Featured Artist" [matTooltip]="toolTips.featuredArtist"
+                    [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input type="number" matInput name="Featured Artist ISNI" min= 0 formControlName="featuredArtistIsni" placeholder="Featured Artist ISNI"
+                    [matTooltip]="toolTips.featuredArtistIsni" [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+              </div>
+
+
+              <div class="py-16" fxLayout="row">
+
+                <!-- TODO: set required -->
+                <genre class="w-50-p" #trackGenre1>{{ trackGenre1.selectorParam('trackGenre1') }}</genre>
+                <genre class="w-50-p" #trackGenre2>{{ trackGenre2.selectorParam('trackGenre2') }}</genre>
+
+
+                <mat-form-field class="w-100-p">
+                  <form [formGroup]="contentForm">
+                    <mat-select placeholder="Is Content Explicit?" name="explicitAnswer" formControlName="explicit" [matTooltip]="toolTips.explicit"
+                      [matTooltipShowDelay]="toolTips.delay" required>
+                      <mat-option *ngFor=" let explicitAnswer of explicit" [value]="explicitAnswer.value">
+                        {{ explicitAnswer.viewValue }}
+                      </mat-option>
+                    </mat-select>
+                  </form>
+                  <mat-error *ngIf="contentForm.controls.explicit.hasError('required')">
+                    <strong>Explicit is required</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                <countries class="w-100-p"></countries>
+
+              </div>
+
+
+              <div class="py-16" fxLayout="row">
+                <mat-form-field class="w-100-p">
+                  <input type="number" matInput name="trackNo" min= 0 formControlName="trackNo" placeholder="Track Number" [matTooltip]="toolTips.trackNo"
+                    [matTooltipShowDelay]="toolTips.delay" required>
+                  <mat-error *ngIf="contentForm.controls.trackNo.hasError('required')">
+                    <strong>Track Number is required</strong>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input type="number" matInput name="trackVolumeNo" min= 0 formControlName="trackVolumeNo" placeholder="Track Volume Number"
+                    [matTooltip]="toolTips.trackVolumeNo" [matTooltipShowDelay]="toolTips.delay" required>
+
+                  <mat-error *ngIf="contentForm.controls.trackVolumeNo.hasError('required')">
+                    <strong>Track Vo. Number is required</strong>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input type="number" matInput name="trackDuration" min= 0 formControlName="trackDuration" placeholder="Track Duration" [matTooltip]="toolTips.trackDuration"
+                    [matTooltipShowDelay]="toolTips.delay" required>
+                  <mat-error *ngIf="contentForm.controls.trackDuration.hasError('required')">
+                    <strong>Track Duration is required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="py-16" fxLayout="row">
+                <mat-form-field class="w-100-p">
+                  <input matInput [matDatepicker]="releaseDate" [max]="maxDate" formControlName="releaseDate" name="releaseDate" placeholder="Release Date"
+                    [matTooltip]="toolTips.releaseDate" [matTooltipShowDelay]="toolTips.delay" required>
+                  <mat-datepicker-toggle matSuffix [for]="releaseDate">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #releaseDate></mat-datepicker>
+                  <mat-error *ngIf="contentForm.controls.releaseDate.hasError('required')">
+                    <strong>Release Date is required</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                <!-- <mat-form-field class="w-100-p">
+                        <input type="number" matInput name="Release Date" formControlName="releaseDate" placeholder="Release Date" required
+                        [matTooltip]="toolTips.releaseDate" [matTooltipShowDelay]="toolTips.delay">
+                      </mat-form-field> -->
+
+
+                <!-- TODO: parse year from release Date -->
+                <mat-form-field class="w-100-p">
+                  <input type="number" min="1800" [max]="maxYear" matInput name="Release Year" formControlName="releaseYear" placeholder="Release Year"
+                    required [matTooltip]="toolTips.releaseYear" [matTooltipShowDelay]="toolTips.delay" required>
+
+                  <mat-error *ngIf="contentForm.controls.releaseYear.hasError('required')">
+                    <strong>Release Year is required</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                <!-- <mat-form-field class="w-100-p">
+                      <input matInput name="Sales Start Date" formControlName="salesStartDate" placeholder="Sales Start
+                      Date" 
+                      [matTooltip]="toolTips.salesStartDate" [matTooltipShowDelay]="toolTips.delay">
+                    </mat-form-field> -->
+
+                <mat-form-field class="w-100-p">
+                  <input matInput [matDatepicker]="salesStartDate" [max]="maxDate" name="Sales Start Date
+                  " formControlName="salesStartDate" placeholder="Sales Start Date" [matTooltip]="toolTips.salesStartDate"
+                    [matTooltipShowDelay]="toolTips.delay" required>
+                  <mat-datepicker-toggle matSuffix [for]="salesStartDate">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker #salesStartDate></mat-datepicker>
+
+                  <mat-error *ngIf="contentForm.controls.salesStartDate.hasError('required')">
+                    <strong>Sales Start Date is required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="py-16" fxLayout="row">
+                <mat-form-field class="w-100-p">
+                  <input matInput name="Track P Line" formControlName="trackPLine" placeholder="Track P Line" [matTooltip]="toolTips.trackPLine"
+                    [matTooltipShowDelay]="toolTips.delay">
+
+                  <!-- <mat-error *ngIf=" contentForm.controls.trackPLine.hasError('required')">
+                    <strong>Track P Line is required</strong>
+                  </mat-error> -->
+                </mat-form-field>
+
+                <mat-form-field class="w-100-p">
+                  <input type="text" matInput name="ISRC code" formControlName="isrc" placeholder="ISRC code" [matTooltip]="toolTips.isrc"
+                    [matTooltipShowDelay]="toolTips.delay" required>
+                  <mat-error *ngIf="contentForm.controls.isrc.hasError('required')">
+                    <strong>ISRC code is required</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100-p">
+                  <input matInput name="UPC or EAN" formControlName="upcEan" placeholder="UPC or EAN" [matTooltip]="toolTips.upcEan" [matTooltipShowDelay]="toolTips.delay">
+
+                  <!-- TODO: Add pattern validation for UPC or EAN -->
+                  <mat-error *ngIf="contentForm.controls.upcEan.hasError('required')">
+                    <strong>UPC or EAN is required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <h1>Album Info:</h1>
+              <div class="py-16" fxLayout="row">
+                <mat-form-field class="w-100-p">
+                  <input matInput name="Album Title" formControlName="albumTitle" placeholder="Album Title" [matTooltip]="toolTips.albumTitle"
+                    [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+
+
+                <mat-form-field class="w-100-p">
+                  <form [formGroup]="contentForm">
+                    <mat-select name="Album Type" name="type" formControlName="albumType" placeholder="Album Type" [matTooltip]="toolTips.albumType"
+                      [matTooltipShowDelay]="toolTips.delay">
+                      <mat-option *ngFor="let type of productType" [value]="type.value">
+                        {{ type.value }}
+                      </mat-option>
+                    </mat-select>
+                  </form>
+                </mat-form-field>
+
+
+                <mat-form-field class="w-100-p">
+                  <input matInput name="Album Producer" formControlName="albumProducer" placeholder="Album Producer" [matTooltip]="toolTips.albumProducer"
+                    [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+              </div>
+              <div class="py-16" fxLayout="row">
+                <div class=" w-100-p">
+                  <!-- <mat-label [ngClass]="{ 'required': contentForm.value.albumArtistlist?.length==0 }">Album Artist... </mat-label> -->
+                  <mat-label class="spacing">Album Artist</mat-label>
+                  <button mat-raised-button class="mat-purple-bg mt-16 mt-sm-0" mat-raised-button (click)="addArtist('Album Artist Content')"
+                    [matTooltip]="toolTips.albumArtist" [matTooltipShowDelay]="toolTips.delay">Add</button>
+                  <mat-chip-list matPrefix #albumArtists formControlName="albumArtists">
+                    <mat-chip class="chip" *ngFor="let data of contentForm.value.albumArtists; index as i" removable="true" (removed)="removeFromList('albumArtists', i)">
+                      {{ data.artist }} {{ data.muserName }} {{ data.isni }} {{ data.aliases }}
+                      <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                  </mat-chip-list>
+                </div>
+
+
+                <mat-form-field class=" w-100-p">
+                  <input matInput name="Album P Line" formControlName="albumPLine" placeholder="Album P Line" [matTooltip]="toolTips.albumPLine"
+                    [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input matInput name="Album C Line" formControlName="albumCLine" placeholder="Album C Line" [matTooltip]="toolTips.albumCLine"
+                    [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+
+              </div>
+
+              <div class="py-16" fxLayout="row">
+                <genre class="w-100-p" #albumGenre1>{{ albumGenre1.selectorParam('albumGenre1') }}</genre>
+                <genre class="w-100-p" #albumGenre2>{{ albumGenre2.selectorParam('albumGenre2') }}</genre>
+
+
+              </div>
+
+              <div class="py-16" fxLayout="row">
+                <mat-form-field class="w-100-p">
+                  <input matInput name="Master Label Name" formControlName="masterLabelName" placeholder="Master Label Name" [matTooltip]="toolTips.masterLabel"
+                    [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input matInput name="Display Label Name (aka imprint label name)" formControlName="displayLabelName" placeholder="Display Label Name (aka imprint label name)"
+                    [matTooltip]="toolTips.displayLabel" [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+              </div>
+
+            </div>
+
+          </mat-tab>
+
+
+          <mat-tab label="Composition Side">
+            <div class="tab-content p-24" fxLayout="column">
+              <div fxLayout="row" fxLayout.xs="column" fxFlex="1 0 auto" fxLayoutAlign="space-between center">
+                <mat-checkbox matInput formControlName="isThirdPartyPublishers" [matTooltip]="toolTips.isThirdPartyPublishers" [matTooltipShowDelay]="toolTips.delay">
+                  Content is third party managed?
+                </mat-checkbox>
+              </div>
+              <div class="py-16" fxLayout="row">
+                <mat-form-field class="w-100-p">
+                  <input matInput name="Composition Title" formControlName="compTitle" placeholder="Composition Title">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input matInput name="Composition Title Alternate" formControlName="compTitleAlt" placeholder="Composition Title Alternate">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input type="number" matInput name="Composition ISWC" min= 0 formControlName="compTitleIswc" placeholder="Composition ISWC">
+                </mat-form-field>
+              </div>
+
+              <div class="py-16" fxLayout="row">
+
+
+                <div class="w-100-p">
+                  <mat-label [ngClass]="{'required': contentForm.value.writers?.length == 0}" class="spacing">Writer</mat-label>
+                  <button mat-raised-button class="mat-purple-bg mt-16 mt-sm-0" mat-raised-button (click)="addWriter()" [matTooltip]="toolTips.writer"
+                    [matTooltipShowDelay]="toolTips.delay">Add</button>
+                  <mat-chip-list matPrefix #writers formControlName="writers">
+                    <mat-chip class=" chip" *ngFor="let data of contentForm.value.writers; index as i" removable="true" (removed)="removeFromList('writers', i)">
+                      {{ data.writer }} {{ data.muserName }} {{data.ipi_cae}} {{data.isni}} {{data.writersPublisher}} {{data.writersRole}}
+                      <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                  </mat-chip-list>
+                </div>
+
+                <div class="w-100-p">
+                  <!-- <mat-label [ngClass]="{ 'required': contentForm.value.compositionPublisherslist?.length==0 }">Publisher... </mat-label> -->
+                  <mat-label class="spacing">Publisher</mat-label>
+                  <button mat-raised-button class="mat-purple-bg mt-16 mt-sm-0" mat-raised-button (click)="addPublisher()" [matTooltip]="toolTips.publisher"
+                    [matTooltipShowDelay]="toolTips.delay">Add</button>
+                  <mat-chip-list matPrefix #publishers>
+                    <mat-chip class="chip" *ngFor="let data of contentForm.value.publishers; index as i" removable="true" (removed)="removeFromList('publishers', i)">
+                      {{data.publisher}} {{ data.muserName }} {{ data.ipi_cae }} {{data.ISNI}}
+                      <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                  </mat-chip-list>
+                </div>
+
+
+
+                <mat-form-field class="w-100-p">
+                  <form [formGroup]="contentForm">
+                    <mat-select placeholder="Performing Rights Organization" name="pro" formControlName="performingRightsOrg" [matTooltip]="toolTips.pros"
+                      [matTooltipShowDelay]="toolTips.delay" required>
+                      <mat-option *ngFor=" let pro of pros" [value]="pro.value">
+                        {{ pro.value }}
+                      </mat-option>
+                    </mat-select>
+                  </form>
+
+                  <mat-error *ngIf="contentForm.controls.performingRightsOrg.hasError('required')">
+                <strong>PRO is required</strong>
+              </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Management & Splits">
+            <div class="tab-content p-24" fxLayout="column">
+              <h1>General Royalty split:</h1>
+              <div class="py-16" fxLayout="row">
+                <mat-form-field class="w-100-p">
+                  <input type="number" matInput min= 0 name="Percent that goes master." formControlName="publishers_share" placeholder="Percent to composition side.">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input type="number" matInput min= 1 name="Percent to streaming platform" formControlName="playing_reward" placeholder="Percent to streaming platform.">
+                </mat-form-field>
+              </div>
+
+              <div class="py-16" fxLayout="row">
+
+                <div class="w-100-p">
+                  <mat-label class="spacing">Master Side Royalty Split</mat-label>
+                  <button mat-raised-button class="mat-purple-bg mt-16 mt-sm-0" mat-raised-button (click)="addManagementSplit('Master\'s Management Content')"
+                    [matTooltip]="toolTips.management" [matTooltipShowDelay]="toolTips.delay">Add</button> 
+                  <mat-chip-list matPrefix #masterSplit>
+                    <mat-chip class="chip" *ngFor="let data of contentForm.value.masterSplit; index as i" removable="true" (removed)="removeFromList('masterSplit ', i)">
+                      {{ data.muserName }} {{ data.bp }} {{data.percentage}}
+                      <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                  </mat-chip-list>
+                </div>
+
+
+
+
+
+
+
+                <mat-form-field class="w-100-p">
+                    <input type="number" matInput min= 0 name="management_threshold" formControlName="management_threshold" placeholder="Master Management Threshold">
+                  </mat-form-field>
+              </div>
+
+  
+              <div class="py-16" fxLayout="row">
+
+                <div class="w-100-p">
+                    <mat-label class="spacing">Composition Side Royalty Split</mat-label>
+                    <button mat-raised-button class="mat-purple-bg mt-16 mt-sm-0" mat-raised-button (click)="addManagementSplit('Composition\'s Management Content')"
+                      [matTooltip]="toolTips.management" [matTooltipShowDelay]="toolTips.delay">Add</button>
+                    <mat-chip-list matPrefix #compSplit>
+                      <mat-chip class="chip" *ngFor="let data of contentForm.value.compSplit; index as i" removable="true" (removed)="removeFromList('compSplit', i)">
+                        {{ data.muserName }} {{ data.bp }} {{data.percentage}} 
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                      </mat-chip>
+                    </mat-chip-list>
+                  </div>
+                <mat-form-field class="w-100-p">
+                  <input type="number" matInput min= 0 name="management_threshold_comp" formControlName="management_threshold_comp" placeholder="Composition Management Threshold">
+                </mat-form-field>
+
+              </div>
+
+
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </form>
+    </div>
+  </div>
+</div>

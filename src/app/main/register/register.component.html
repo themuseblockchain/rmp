@@ -5,33 +5,42 @@
 <div fxlayout="row" fxLayoutAlign="center center" style="height: 100%;">
   <div class="register mat-elevation-z12">
     <div fxLayout="column" fxLayoutAlign="center center">
-      <img src="assets/images/logos/muse.png " style="width: 200px;" >
+      <img src="assets/images/logos/muse.png " style="width: 200px;">
     </div>
-    
+
     <form [formGroup]="form" (ngSubmit)="register()">
       <div class="register-content" fxLayout="column" fxLayoutAlign="start stretch">
 
         <mat-form-field>
           <input matInput type="text" placeholder="Muser Name" formControlName="muserName" required>
           <mat-error *ngIf="form.controls.muserName.hasError('required')">
-              <strong>Muser Name is required</strong>
+            <strong>Muser Name is required</strong>
+          </mat-error>
+          <mat-error *ngIf="form.controls.muserName.hasError('maxlength')">
+            <strong>Max length is 16 characters</strong>
+          </mat-error>
+          <mat-error *ngIf="form.controls.muserName.hasError('minlength')">
+            <strong>Min length is 3 characters</strong>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <input matInput type="email" placeholder="E-Mail" formControlName="email" required>
           <mat-error *ngIf="form.controls.email.hasError('required')">
-              <strong>Email is required</strong>
+            <strong>Email is required</strong>
           </mat-error>
           <mat-error *ngIf="!form.controls.email.hasError('required') && form.controls.email.hasError('email')">
-              <strong>A valid email address is required</strong>
+            <strong>A valid email address is required</strong>
           </mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <input matInput type="password" placeholder="Password" formControlName="password" required>
           <mat-error *ngIf="form.controls.password.hasError('required')">
-              <strong>Password is required</strong>
+            <strong>Password is required</strong>
+          </mat-error>
+          <mat-error *ngIf="form.controls.password.hasError('minlength')">
+            <strong>Min length is 6 characters</strong>
           </mat-error>
         </mat-form-field>
 
@@ -44,7 +53,7 @@
             <strong>Password Confirmation is required</strong>
           </mat-error>
         </mat-form-field>
-        
+
         <div class="extra-options" fxLayout="row" fxLayoutAlign="center center">
           <mat-checkbox class="remember-me" formControlName="terms" required>
             <span>I accept the</span>
@@ -53,7 +62,10 @@
           </mat-checkbox>
         </div>
 
-        <button color="primary" mat-raised-button [disabled]="!form.valid">CREATE ACCOUNT</button>
+        <!-- <button color="primary" mat-raised-button [disabled]="!form.valid">CREATE ACCOUNT</button> -->
+        <div class="extra-options" fxLayout="row" fxLayoutAlign="center center">
+          <h4>Registration will be activated soon!</h4>
+        </div>
 
         <p class="note">Already have an account?
           <br/>

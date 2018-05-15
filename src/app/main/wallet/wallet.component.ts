@@ -15,9 +15,9 @@ import { ModalTransferComponent } from './modal/modal-transfer.component';
 import { ModalDialogVestComponent } from './modal/modal-vest.component';
 import { ModalWithdrawComponent } from './modal/modal-withdraw.component';
 
-import { MuseAccountHistory } from '../../core/modals/muse-account-history';
-import { MuseAccount } from '../../core/modals/muse-account';
-import { MuseKeys } from '../../core/modals/muse-keys';
+import { MuseAccountHistory } from '../../core/models/muse-account-history';
+import { MuseAccount } from '../../core/models/muse-account';
+import { MuseKeys } from '../../core/models/muse-keys';
 
 @Component({
   selector: 'wallet',

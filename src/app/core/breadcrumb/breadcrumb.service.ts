@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class BreadcrumbService {
@@ -54,7 +54,7 @@ export class BreadcrumbService {
    */
   getFriendlyNameForRoute(route: string): string {
     let name;
-    let routeEnd = route.substr(route.lastIndexOf('/') + 1, route.length);
+    const routeEnd = route.substr(route.lastIndexOf('/') + 1, route.length);
 
     this.routesFriendlyNames.forEach((value, key, map) => {
       if (key === route) {
@@ -87,7 +87,7 @@ export class BreadcrumbService {
    * Specify a route (url) that should not be shown in the breadcrumb.
    */
   hideRoute(route: string): void {
-    if (!(this.hideRoutes.indexOf(route) != -1)) {
+    if (!(this.hideRoutes.indexOf(route) !== -1)) {
       this.hideRoutes.push(route);
     }
   }
@@ -96,7 +96,7 @@ export class BreadcrumbService {
    * Specify a route (url) regular expression that should not be shown in the breadcrumb.
    */
   hideRouteRegex(routeRegex: string): void {
-    if (!(this.hideRoutesRegex.indexOf(routeRegex) != -1)) {
+    if (!(this.hideRoutesRegex.indexOf(routeRegex) !== -1)) {
       this.hideRoutesRegex.push(routeRegex);
     }
   }
@@ -105,7 +105,7 @@ export class BreadcrumbService {
    * Returns true if a route should be hidden.
    */
   isRouteHidden(route: string): boolean {
-    let hide = (this.hideRoutes.indexOf(route) != -1);
+    let hide = (this.hideRoutes.indexOf(route) !== -1);
 
     this.hideRoutesRegex.forEach((value) => {
       if (new RegExp(value).exec(route)) {
