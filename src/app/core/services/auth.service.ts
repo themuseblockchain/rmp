@@ -10,11 +10,14 @@ import { VerificationService } from './verification.service';
 
 // Api
 import * as muse from 'museblockchain-js';
+import * as firebase from 'firebase';
 
 // Models
 import { Config } from '../../../config/config';
 import { ErrorCodes } from '../../core/enums';
 import { MuseKeys } from '../modals/muse-keys';
+import { Muser } from '../modals/muser';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthService {
@@ -24,10 +27,25 @@ export class AuthService {
     private museService: MuseService,
     private router: Router,
     private userVerification: VerificationService,
-  ) { }
+  ) {
+    this.setMuser();
+  }
 
+  public muser: Observable<Muser>;
   private muserName: string;
   private isAuthenticated: any;
+
+  private setMuser() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (firebase.auth().currentUser) {
+        const ref = firebase.database().ref('musers/' + firebase.auth().currentUser.uid).on('value', (snapshot) => {
+          this.muser = Observable.of(snapshot.val());
+        });
+      } else {
+        this.muser = Observable.of(null);
+      }
+    });
+  }
 
   setMuseSocket() {
     muse.config.set('websocket', 'wss://api.muse.blckchnd.com');
@@ -105,25 +123,25 @@ export class AuthService {
   }
 
   createMuserProfileFireBase(muserName /*, phoneNumber*/) {
+
+    // Fetch current User
     const user = firebase.auth().currentUser;
-    firebase.database().ref('musers/' + user.uid).set({
-      muserName: muserName,
-      dateAdded: new Date().toString(),
-      email: user.email,
-      emailVerified: user.emailVerified,
-      // phoneNumber: phoneNumber
-    }).then(() => {
-      const membersInfo = {};
-      firebase.database().ref('muserNames').update({
-        [muserName]: user.uid // <<< This may not be the best format
-      }).catch((err) => {
-        this.alert.showErrorMessage('createMuserProfileFireBase() >> db: ' + err);
-        // TODO: Add in Error Logging. Most likely write errors to firebase
-      });
-    }).catch((err) => {
-      this.alert.showErrorMessage('createMuserProfileFireBase(): ' + err);
+
+    // Set Muser Values
+    const muser: Muser = new Muser();
+    muser.uid = user.uid;
+    muser.muserName = muserName;
+    muser.dateAdded = new Date().toString();
+    muser.email = user.email;
+    muser.emailVerified = user.emailVerified;
+    // muser.pin = input value // TODO: Implement Pin
+
+    // Create user in Database
+    firebase.database().ref('musers/' + user.uid).set(muser).catch((err) => {
+      this.alert.showErrorMessage('createMuserProfileFireBase() >> db: ' + err);
       // TODO: Add in Error Logging. Most likely write errors to firebase
     });
+
   }
 
   registerMuseAccount(muserName, password) {
@@ -152,7 +170,7 @@ export class AuthService {
             'key_auths': [[keys.basicPubkey, 1]]
           }, keys.memoPubkey, {}, function (err, result) {
             if (err) {
-              reject(this.alert.showErrorMessage('muse.broadcast.accountCreate(): ' + err));
+              reject(err);
             } else {
               resolve(result);
             }
@@ -195,5 +213,41 @@ export class AuthService {
       this.alert.showErrorMessage('updateAccountKeys(): ' + err);
     });
   }
+
+  // region Roles
+
+  isUser(user: any): boolean {
+    const allowed = ['admin', 'management', 'user'];
+    return this.checkAuthorization(user, allowed);
+  }
+
+  isManagement(user: any): boolean {
+    const allowed = ['admin', 'management'];
+    return this.checkAuthorization(user, allowed);
+  }
+
+  isAdmin(user: any): boolean {
+    const allowed = ['admin'];
+    return this.checkAuthorization(user, allowed);
+  }
+
+  private checkAuthorization(muser: Muser, allowedRoles: string[]): boolean {
+
+    if (!muser) {
+      return false;
+    }
+
+    for (const role of allowedRoles) {
+      if (muser && muser.roles && muser.roles[role]) {
+        if (muser.roles[role]) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  // endregion
 
 }

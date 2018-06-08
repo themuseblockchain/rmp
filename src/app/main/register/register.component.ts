@@ -12,6 +12,11 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { TacComponent } from '../../main/components/modal/terms-conditions/tac.component';
 import { AlertBtnText } from '../../core/enums';
 
+import { LoadingOverlayComponent } from '../../core/loading-overlay/loading-overlay.component';
+import { UIService } from '../../core/services/ui.service';
+import { MuseAuthService } from '../../core/muse-connect/authentication/auth.service';
+import { User } from '../../core/muse-connect/users/user';
+import { CryptoService } from '../../core/services/crypto.service';
 
 @Component({
   selector: 'register',
@@ -27,20 +32,24 @@ import { AlertBtnText } from '../../core/enums';
 export class RegisterComponent {
 
   constructor(
+    private auth: MuseAuthService,
     private authService: AuthService,
     private alert: AlertService,
+    private cryptoService: CryptoService,
     private dialog: MatDialog,
-    private fb: FormBuilder
-    // private verification: VerificationService
+    private fb: FormBuilder,
+    public ui: UIService
   ) {
 
     // Build Form
     this.form = fb.group({
-      muserName: fb.control('', Validators.required),
-      email: fb.control('', [Validators.required, Validators.email]),
-      password: fb.control('', Validators.required),
-      passwordConfirm: fb.control('', Validators.required),
-      terms: fb.control(null, Validators.required)
+      muserName: fb.control('DominikG', Validators.required),
+      email: fb.control('giroux.dominik@gmail.com', [Validators.required, Validators.email]),
+      password: fb.control('s86T61k6', Validators.required),
+      passwordConfirm: fb.control('s86T61k6', Validators.required),
+      terms: fb.control(true, Validators.required),
+      ackLoss: fb.control(true, Validators.required),
+      ackPw: fb.control(true, Validators.required)
     });
 
   }
@@ -86,6 +95,17 @@ export class RegisterComponent {
     }
     this.form.get('passwordConfirm').setErrors({ MatchPassword: true });
     return false;
+  }
+
+  registerMuseConnect(){
+
+    const user = new User();
+    user.email = this.form.get('email').value;
+    user.musername = this.form.get('muserName').value;
+    user.password = this.form.get('password').value;
+    user.key = this.cryptoService.museConnectEncrypt(this.form.get('password').value);
+    this.auth.register(user);
+
   }
 
 }

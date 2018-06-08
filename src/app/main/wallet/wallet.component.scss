@@ -1,18 +1,28 @@
-//.form-container {
-    // display: flex;
-    // flex-direction: column;
       
-    mat-form-field {
-        width: 100%;
-    }
+mat-form-field {
+    width: 100%;
+}
 
-    .mat-table,
-    .mat-paginator{
-        background: transparent;
-    }
+.mat-table,
+.mat-paginator {
+    background: transparent;
 
-    .mat-row{
+    mat-header-row {
         padding: 0;
+        th {
+            flex: 1;
+            overflow: hidden;
+            word-wrap: break-word;
+        }
     }
 
-//}
+    .mat-vote-button {
+        min-width: 0;
+    }
+
+
+}
+
+.mat-row {
+    padding: 0;
+}

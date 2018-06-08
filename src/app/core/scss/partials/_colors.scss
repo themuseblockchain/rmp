@@ -109,6 +109,11 @@ $matColorHues: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, A100, A200, A400
         .mat-ripple-element {
             background: rgba(255, 255, 255, 0.1);
         }
+
+        i {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
     }
 }
 
@@ -195,6 +200,7 @@ $matColorHues: 50, 100, 200, 300, 400, 500, 600, 700, 800, 900, A100, A200, A400
             background-color: rgba($color, .12) !important;
             color: rgba($contrastColor, .26) !important;
         }
+
     }
 
     .#{$colorName}#{$hue}-fg {

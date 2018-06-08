@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     
-    this.ui.showLoading();
+    // this.ui.showLoading();
 
     this.muserName = this.muserService.getMuserName;
     const isAuthenticated = localStorage.getItem('isAuthenticated'); {
@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.ui.hideLoading();
+      // this.ui.hideLoading();
       window.dispatchEvent(new Event('resize'));
     }, 1000);
   }

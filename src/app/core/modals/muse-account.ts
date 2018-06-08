@@ -6,6 +6,7 @@ export class MuseAccount {
     constructor(){
         this.keys = new MuseKeys();
         this.history = [];
+        this.witnessVotes = [];
     }
 
     Musebalance: string;
@@ -14,6 +15,7 @@ export class MuseAccount {
     NextwithDraw: Date;
     keys: MuseKeys;
     history: MuseAccountHistory[];
+    witnessVotes: string[];
 
     mapAccount(museAccount: any){
         // console.log(museAccount); // Object from blockchain - Uncomment to view all properties
@@ -26,6 +28,7 @@ export class MuseAccount {
         this.Vestbalance = museAccount.vesting_shares.split(' ')[0];
         this.MBDbalance = museAccount.mbd_balance.split(' ')[0];
         this.NextwithDraw = new Date(museAccount.next_vesting_withdrawal);
+        this.witnessVotes = museAccount.witness_votes;
     }
 
 }

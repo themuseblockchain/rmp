@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, PageEvent, MatTableDataSource, MatPaginator } from '@angular/material';
 
 import { AlertService } from '../../core/services/alert.service';
@@ -18,6 +19,7 @@ import { ModalWithdrawComponent } from './modal/modal-withdraw.component';
 import { MuseAccountHistory } from '../../core/modals/muse-account-history';
 import { MuseAccount } from '../../core/modals/muse-account';
 import { MuseKeys } from '../../core/modals/muse-keys';
+import { MuseWitness } from '../../core/modals/muse-witness';
 
 @Component({
   selector: 'wallet',
@@ -36,6 +38,7 @@ export class WalletComponent implements OnInit {
     private dialog: MatDialog,
     private muserService: MuserService,
     private museService: MuseService,
+    // private router: Router,
     private ui: UIService
   ) {
 
@@ -49,13 +52,14 @@ export class WalletComponent implements OnInit {
 
   }
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('paginator') paginator: MatPaginator;
+  @ViewChild('paginatorWitness') paginatorWitness: MatPaginator;
 
   muserName: any;
   passwordForm: FormGroup;
   account: MuseAccount = new MuseAccount();
   defaultDate: Date = new Date('1969-12-31T23:59:59');
-  WitnessListArray: any;
+  WitnessListArray: MuseWitness[] = [];
   generatedPassword: string;
   CurrentPass: string;
   marketCap: any;
@@ -72,7 +76,14 @@ export class WalletComponent implements OnInit {
   // Account History
   dataSource = new MatTableDataSource<MuseAccountHistory>(this.account.history);
   displayedColumnsHistory = ['date', 'transaction'];
-  displayedColumnsWitness = ['witness'];
+
+  // Witness
+  dataSourceWitness = new MatTableDataSource<MuseWitness>(this.WitnessListArray);
+  displayedColumnsWitness = ['owner', 'block', 'url'];
+  inputWitness: string;
+
+  // Claim of Stake
+  inputWIF: string;
 
   ngOnInit() {
 
@@ -115,14 +126,19 @@ export class WalletComponent implements OnInit {
   }
 
   getWitnesses() {
-    this.museService.getWitnesses().then((result => {
-      this.WitnessListArray = result;
+    this.museService.getWitnesses().then(((result: any[]) => {
+      result.forEach(res => {
+        const witness: MuseWitness = new MuseWitness();
+        witness.mapWitness(res);
+        // this.WitnessListArray.push(witness);
+        this.dataSourceWitness.data.push(witness);
+      });
+      this.dataSourceWitness.paginator = this.paginatorWitness;
     }));
   }
 
   getMarketCap() {
     this.coinMarketCapService.getMarketCap().subscribe(response => {
-      console.log(response);
       this.marketCap = response[0];
     });
   }
@@ -280,6 +296,18 @@ export class WalletComponent implements OnInit {
       }
     }
 
+  }
+
+  voteWitness(witnessOwner: string, vote: boolean){
+    console.log(vote);
+    this.ui.showLoading();
+    const password = CryptoService.decrypt();
+    this.museService.voteWitness(this.muserName, password, witnessOwner, vote);
+  }
+
+  claimWIF(){
+    this.ui.showLoading();
+    this.museService.claimBalance(this.muserName, this.inputWIF); //ToDo: Check Muse-js library to figure source of current error
   }
 
 }

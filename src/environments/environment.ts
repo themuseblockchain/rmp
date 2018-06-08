@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  googleApi: ''
+  googleApi: '',
+  apiUrl: 'http://localhost:5000/api/'
 };

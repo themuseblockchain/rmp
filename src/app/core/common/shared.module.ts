@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SafePipe } from './pipes/safe-pipe.component';
+import { LoadingOverlayComponent } from '../loading-overlay/loading-overlay.component';
 
 @NgModule({
     imports: [
@@ -13,14 +14,15 @@ import { SafePipe } from './pipes/safe-pipe.component';
         FormsModule,
         ReactiveFormsModule        
     ],
-    declarations: [SafePipe],
+    declarations: [SafePipe, LoadingOverlayComponent],
     exports: [
         FlexLayoutModule,
         MaterialModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        SafePipe
+        SafePipe,
+        LoadingOverlayComponent
     ]
 })
 

@@ -1,4 +1,5 @@
 import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,18 +19,25 @@ import { VerificationService } from './core/services/verification.service';
 import { MuseService } from './core/services/muse.service';
 import { MuserService } from './core/services/muser.service';
 import { UIService } from './core/services/ui.service';
+import { MuseAuthService } from './core/muse-connect/authentication/auth.service';
 
 import { Ng2Webstorage } from 'ngx-webstorage';
+import { RouterModule } from '@angular/router';
 
 import { Config } from '../config/config';
 import * as firebase from 'firebase';
 
-firebase.initializeApp(Config.firebaseProd);
+// Default Firebase App (Rights Management Portal)
+firebase.initializeApp(Config.rightsManagementPortal);
+
+// Muse Connect
+firebase.initializeApp(Config.museConnect, 'museConnect');
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     // Core Angular Module // Don't remove!
+    RoutingModule,
     CommonModule,
     BrowserAnimationsModule,
     Ng2Webstorage,
@@ -43,8 +51,8 @@ firebase.initializeApp(Config.firebaseProd);
     // Muse Core Modules
     CoreModule,
     HttpModule,
-    RoutingModule,
     MainModule,
+    HttpClientModule,
 
     // Register a Service Worker (optional)
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
@@ -54,10 +62,11 @@ firebase.initializeApp(Config.firebaseProd);
     AuthService,
     CoinMarketCapService,
     DataService,
-    VerificationService,    
+    VerificationService,
     MuseService,
     MuserService,
-    UIService
+    UIService,
+    MuseAuthService
   ],
   bootstrap: [AppComponent]
 })

@@ -44,3 +44,7 @@ Thumbs.db
 /.vscode
 /Terms of Use.docx
 /.vs
+
+# Custom
+/functions
+src/config/config.ts

@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconRegistry } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
-import { LoadingOverlayComponent } from '../core/loading-overlay/loading-overlay.component';
 import { BreadcrumbsComponent } from './breadcrumb/breadcrumb.component';
 import { BreadcrumbService } from './breadcrumb/breadcrumb.service';
 import { ClickOutsideDirective } from './common/click-outside.directive';
@@ -23,6 +22,7 @@ import { SearchComponent } from './toolbar/search/search.component';
 import { ToolbarNotificationsComponent } from './toolbar/toolbar-notifications/toolbar-notifications.component';
 import { ToolbarUserButtonComponent } from './toolbar/toolbar-user/toolbar-user.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';  
+import { SharedModule } from './common/shared.module';
 
 @NgModule({
   imports: [
@@ -34,7 +34,8 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     ScrollbarModule,
     LoadingIndicatorModule,
     PendingInterceptorModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ],
   declarations: [
     SidenavComponent,
@@ -43,7 +44,6 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
     SearchComponent,
     BreadcrumbsComponent,
     LayoutComponent,
-    LoadingOverlayComponent,
     ToolbarComponent,
     ToolbarUserButtonComponent,
     ClickOutsideDirective,

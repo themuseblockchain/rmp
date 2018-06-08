@@ -9,6 +9,7 @@ import { AlertService } from './alert.service';
 // Api
 import * as muse from 'museblockchain-js';
 import { MuseAccountHistory } from '../modals/muse-account-history';
+import { MuseWitness } from '../modals/muse-witness';
 
 @Injectable()
 export class MuseService {
@@ -24,7 +25,7 @@ export class MuseService {
   getAccount(muserName): Promise<any> {
     this.setMuseSocket();
     return muse.api.getAccounts([muserName]).catch((err) => {
-      this.alertService.showErrorMessage('getAccountHistory(): ' + err);
+      this.alertService.showErrorMessage('getAccount(): ' + err);
     });
   }
 
@@ -130,6 +131,36 @@ export class MuseService {
       });
     }).catch((err) => {
       this.alertService.showErrorMessage('withdrawVesting(): ' + err);
+    });
+  }
+
+  voteWitness(muserName, password, witnessOwner: string, vote: boolean){
+    this.setMuseSocket();
+    return new Promise(function (resolve, reject) {
+      muse.witnessVote(muserName, password, witnessOwner, vote, (code, message) => {
+        if (code === 1) {
+          resolve(true);
+        } else {
+          reject(message);
+        }
+      });
+    }).catch((err) => {
+      this.alertService.showErrorMessage('voteWitness(): ' + err);
+    });
+  }
+
+  claimBalance(muserName, wif){
+    this.setMuseSocket();
+    return new Promise(function (resolve, reject) {
+      muse.claimBalance(muserName, wif, (code, message) => {
+        if (code === 1) {
+          resolve(true);
+        } else {
+          reject(message);
+        }
+      });
+    }).catch((err) => {
+      this.alertService.showErrorMessage('Sorry, Unable to process. Please check your WIF or try again later.');
     });
   }
 

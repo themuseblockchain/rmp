@@ -19,7 +19,7 @@ export class UIService {
                 this.loadingMessage = loadingMessage;
             }
         }, 100);
-        
+
     }
 
     public hideLoading() {

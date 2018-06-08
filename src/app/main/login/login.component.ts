@@ -7,12 +7,14 @@ import { AuthService } from '../../core/services/auth.service';
 import { Utils } from '../../core/utils';
 import { AlertService } from '../../core/services/alert.service';
 
+import { MuseAuthService } from '../../core/muse-connect/authentication/auth.service';
+import { User } from '../../core/muse-connect/users/user';
+import { CryptoService } from '../../core/services/crypto.service';
+
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-
-
   host: {
     '[@fadeInAnimation]': 'true'
   },
@@ -25,13 +27,14 @@ export class LoginComponent {
     private router: Router,
     private authService: AuthService,
     private alert: AlertService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public auth: MuseAuthService
   ) {
 
     // Build Form
     this.form = fb.group({
-      muserName: fb.control('', Validators.required),
-      password: fb.control('', Validators.required)
+      muserName: fb.control('giroux.dominik@gmail.com', Validators.required),
+      password: fb.control('s86T61k6', Validators.required)
     });
 
   }
@@ -59,7 +62,19 @@ export class LoginComponent {
         this.router.navigateByUrl('/');
       }
     }).catch((err) => {
-        this.alert.showErrorMessage('onLogin(): ' + err);
-      });
+      this.alert.showErrorMessage('onLogin(): ' + err);
+    });
   }
+
+  login() {
+    this.auth.login(
+      new User(
+        null,
+        this.form.get('muserName').value,
+        null, // Passing email or musername has musername - MuseConnect filter it with '@' character
+        this.form.get('password').value
+      )
+    );
+  }
+
 }

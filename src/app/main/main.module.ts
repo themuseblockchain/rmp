@@ -11,13 +11,16 @@ import { SortablejsModule } from 'angular-sortablejs';
 import { QuillModule } from 'ngx-quill';
 import { ScrollbarModule } from '../core/scrollbar/scrollbar.module';
 import { WalletModule } from './wallet/wallet.module';
-import { ComponentsModule } from './components/components.module' ;
+import { ComponentsModule } from './components/components.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PostComponent } from './rights-management/post.component';
 import { RightsManagementComponent } from './rights-management/rights-management.component';
 // import { AlertComponent } from './components/alert/alert.component';
+
+import { SharedModule } from '../core/common/shared.module';
+import { UIService } from '../core/services/ui.service';
 
 @NgModule({
   imports: [
@@ -33,7 +36,8 @@ import { RightsManagementComponent } from './rights-management/rights-management
     ComponentsModule,
     QuillModule,
     SortablejsModule,
-    ScrollbarModule
+    ScrollbarModule,
+    SharedModule
   ],
   declarations: [
     LoginComponent,
@@ -43,6 +47,7 @@ import { RightsManagementComponent } from './rights-management/rights-management
     RightsManagementComponent
   ],
   providers: [
+    UIService
   ]
 })
 export class MainModule {

@@ -1,5 +1,7 @@
 import { MatChipInputEvent } from '@angular/material';
 
+
+// Deprecated ??
 export class Muser {
     muserName: string;
     password: string;

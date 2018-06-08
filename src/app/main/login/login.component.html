@@ -8,7 +8,7 @@
       <img src="assets/images/logos/muse.png" style="width: 200px;">
     </div>
 
-    <form [formGroup]="form" (ngSubmit)="onLogin()">
+    <form [formGroup]="form" (ngSubmit)="login()">
       <div class="login-content" fxLayout="column" fxLayoutAlign="start stretch">
         <mat-form-field>
           <input matInput type="text" placeholder="MuserName" formControlName="muserName" required>
@@ -23,8 +23,11 @@
           </mat-error>
         </mat-form-field>
         <button color="primary" mat-raised-button [disabled]="!form.valid">SIGN IN</button>
-        <p class="note">Don't have an account?<br/> <a [routerLink]="['/register']">Click here to create one</a></p>
+        <p class="note">Don't have an account?<br/> <a [routerLink]="['/register']">Click here to create one</a></p>       
       </div>
     </form>
+
+    
+
   </div>
 </div>
