@@ -1,0 +1,413 @@
+<div id="post" class="page-layout carded fullwidth">
+  <div class="top-bg mat-deep-purple-bg"></div>
+  <div class="center">
+    <div class="header white-fg p-24" fxLayout="row" fxLayoutAlign="space-between center">
+      <h2>Rights Management</h2>
+
+      <button mat-raised-button class="mat-white-bg mt-16 mt-sm-0 save-content-button" mat-raised-button type="submit" (click)="postContent()"
+        [disabled]="!contentForm.valid || trackArtistList?.length == 0 || masterRoyaltyList?.length == 0 || writersList?.length == 0">
+        <span>REVIEW</span>
+        <!-- navigate to review page -->
+      </button>
+    </div>
+
+    <div class="content-card mat-white-bg mb-5">
+      <form [formGroup]="contentForm" class="content w-100-p" fxLayout="column" fxFlex>
+        <mat-tab-group>
+          <mat-tab label="Master Side">
+            <div class="tab-content p-24" fxLayout="column">
+              <h1>Track Info:</h1>
+              <div formGroupName="album_meta" fxLayout="row" fxLayout.xs="column" fxFlex="1 0 auto" fxLayoutAlign="space-between center">
+                <mat-checkbox matInput formControlName="partOfAlbum" [matTooltip]="toolTips.partOfAlbum" [matTooltipShowDelay]="toolTips.delay">
+                  Content is part of an album?
+                </mat-checkbox>
+              </div>
+              <div formGroupName="track_meta" class="py-16" fxLayout="row">
+                <mat-form-field class="w-100-p">
+                  <input matInput formControlName="trackTitle" placeholder="Track Title" [matTooltip]="toolTips.trackTitle" [matTooltipShowDelay]="toolTips.delay">
+                  <mat-error *ngIf="contentForm.get('track_meta.trackTitle').hasError('required') && contentForm.get('track_meta.trackTitle').touched">
+                    <strong>Track Title is required</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100-p">
+                  <input matInput formControlName="trackProducer" placeholder="Track Producer" [matTooltip]="toolTips.trackProducer" [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+
+                <mat-form-field class="w-100-p">
+                  <mat-select formControlName="hasSample" placeholder="Contains Sample?" [matTooltip]="toolTips.sample" [matTooltipShowDelay]="toolTips.delay">
+                    <mat-option *ngFor="let sampleAnswer of yes_no" [value]="sampleAnswer.value">
+                      {{ sampleAnswer.viewValue }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div formGroupName="track_meta" class="py-16" fxLayout="row">
+                <div class="w-100-p">
+                  <mat-label [ngClass]="{'required': trackArtistList?.length == 0}" class="spacing">Track Artist</mat-label>
+                  <button mat-raised-button class="mat-purple-bg mt-16 mt-sm-0" mat-raised-button (click)="addArtist('trackArtist')" [matTooltip]="toolTips.trackArtist"
+                    [matTooltipShowDelay]="toolTips.delay">Add</button>
+
+                  <mat-error *ngIf="trackArtistList?.length == 0">
+                    <strong>is required</strong>
+                  </mat-error>
+
+                  <mat-chip-list matPrefix>
+                    <mat-chip class="chip" *ngFor="let data of trackArtistList; index as i" removable="true" (removed)="removeFromList('trackArtistList', i)">
+                      {{ data.artist }} {{data.isni}} {{data.aliases}}
+                      <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                  </mat-chip-list>
+                </div>
+
+                <mat-form-field class="w-100-p">
+                  <input matInput formControlName="featuredArtist" placeholder="Featured Artist" [matTooltip]="toolTips.featuredArtist" [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input type="number" matInput formControlName="featuredArtistIsni" placeholder="Featured Artist ISNI" [matTooltip]="toolTips.featuredArtistIsni"
+                    [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+              </div>
+
+
+              <div class="py-16" fxLayout="row">
+                <genre class="w-100-p" #trackGenre1>{{ trackGenre1.selectorParam('track_meta.trackGenre1') }}</genre>
+                <genre class="w-100-p" #trackGenre2>{{ trackGenre2.selectorParam('track_meta.trackGenre2') }}</genre>
+                <mat-form-field formGroupName="album_meta" class="w-100-p">
+                  <mat-select placeholder="Is Content Explicit?" formControlName="explicit" [matTooltip]="toolTips.explicit" [matTooltipShowDelay]="toolTips.delay">
+                    <mat-option *ngFor=" let explicitAnswer of explicit" [value]="explicitAnswer.value">
+                      {{ explicitAnswer.viewValue }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+
+              <div formGroupName="track_meta" class="py-16" fxLayout="row">
+                <mat-form-field class="w-100-p">
+                  <input matInput formControlName="trackNo" type="number" min=0 placeholder="Track Number" [matTooltip]="toolTips.trackNo"
+                    [matTooltipShowDelay]="toolTips.delay">
+                  <mat-error *ngIf="contentForm.get('track_meta.trackNo').hasError('pattern') && contentForm.get('track_meta.trackNo').touched">
+                    <strong>Please enter a number</strong>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input type="number" matInput formControlName="trackVolumeNo" placeholder="Track Volume Number" [matTooltip]="toolTips.trackVolumeNo"
+                    [matTooltipShowDelay]="toolTips.delay">
+                  <mat-error *ngIf="contentForm.get('track_meta.trackVolumeNo').hasError('pattern') && contentForm.get('track_meta.trackVolumeNo').touched">
+                    <strong>Please enter a number</strong>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input type="number" matInput formControlName="trackDuration" placeholder="Track Duration" [matTooltip]="toolTips.trackDuration"
+                    [matTooltipShowDelay]="toolTips.delay">
+                  <mat-error *ngIf="contentForm.get('track_meta.trackDuration').hasError('pattern') && contentForm.get('track_meta.trackDuration').touched">
+                    <strong>Please enter a number</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+
+              <div formGroupName="album_meta" class="py-16" fxLayout="row">
+
+                <mat-form-field class="w-100-p">
+                  <mat-datepicker-toggle matPrefix [for]="releaseDate">
+                    <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+                  </mat-datepicker-toggle>
+
+                  <input mat-icon="date_range" matInput [matDatepicker]="releaseDate" formControlName="releaseDate" placeholder="Release Date"
+                    [max]="maxDate" [matTooltip]="toolTips.releaseDate" [matTooltipShowDelay]="toolTips.delay" (click)="releaseDate.open()">
+                  <mat-datepicker #releaseDate></mat-datepicker>
+                  <mat-error *ngIf="contentForm.get('album_meta.releaseDate').hasError('required') && contentForm.get('album_meta.releaseDate').touched">
+                    <strong>Date is required</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100-p">
+                  <mat-datepicker-toggle matPrefix [for]="salesStartDate">
+                    <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+                  </mat-datepicker-toggle>
+                  <input matInput [matDatepicker]="salesStartDate" formControlName="salesStartDate" placeholder="Sales Start Date" [max]="maxDate"
+                    [matTooltip]="toolTips.salesStartDate" [matTooltipShowDelay]="toolTips.delay" (click)="salesStartDate.open()">
+
+                  <mat-datepicker #salesStartDate></mat-datepicker>
+                  <mat-error *ngIf="contentForm.get('album_meta.salesStartDate').hasError('required') && contentForm.get('album_meta.salesStartDate').touched">
+                    <strong>Date is required</strong>
+                  </mat-error>
+                </mat-form-field>
+
+                <countries class="w-100-p"></countries>
+
+              </div>
+
+              <div class="py-16" fxLayout="row">
+                <mat-form-field formGroupName="track_meta" class="w-100-p">
+                  <input matInput formControlName="trackPLine" placeholder="Track P Line" [matTooltip]="toolTips.trackPLine" [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+
+                <mat-form-field formGroupName="track_meta" class="w-100-p">
+                  <input type="text" matInput formControlName="isrc" placeholder="ISRC code" [matTooltip]="toolTips.isrc" [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+
+                <mat-form-field formGroupName="album_meta" class="w-100-p">
+                  <input matInput formControlName="upcEan" placeholder="UPC or EAN" [matTooltip]="toolTips.upcEan" [matTooltipShowDelay]="toolTips.delay">
+                  <mat-error *ngIf="contentForm.get('album_meta.upcEan').hasError('pattern') && contentForm.get('album_meta.upcEan').touched">
+                    <strong>Please correct UPC or EAN</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <h1>Album Info:</h1>
+              <div formGroupName="album_meta" class="py-16" fxLayout="row">
+                <mat-form-field class="w-100-p">
+                  <input matInput formControlName="albumTitle" placeholder="Album Title" [matTooltip]="toolTips.albumTitle" [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+
+                <mat-form-field class="w-100-p">
+                  <mat-select formControlName="albumType" placeholder="Album Type" [matTooltip]="toolTips.albumType" [matTooltipShowDelay]="toolTips.delay">
+                    <mat-option *ngFor="let type of productType" [value]="type.value">
+                      {{ type.value }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="w-100-p">
+                  <input matInput formControlName="albumProducer" placeholder="Album Producer" [matTooltip]="toolTips.albumProducer" [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+              </div>
+
+              <div formGroupName="album_meta" class="py-16" fxLayout="row">
+                <div class=" w-100-p">
+                  <mat-label class="spacing">Album Artist</mat-label>
+                  <button mat-raised-button class="mat-purple-bg mt-16 mt-sm-0" mat-raised-button (click)="addArtist('albumArtist')" [matTooltip]="toolTips.albumArtist"
+                    [matTooltipShowDelay]="toolTips.delay">Add</button>
+
+                    <mat-chip-list matPrefix>
+                    <mat-chip class="chip" *ngFor="let data of albumArtistList; index as i" removable="true" (removed)="removeFromList('albumArtistList', i)">
+                      {{ data.artist }} {{data.isni}} {{data.aliases}}
+                      <mat-icon matChipRemove>cancel</mat-icon>
+                    </mat-chip>
+                  </mat-chip-list>
+                </div>
+
+
+                <mat-form-field class=" w-100-p">
+                  <input matInput formControlName="albumPLine" placeholder="Album P Line" [matTooltip]="toolTips.albumPLine" [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input matInput formControlName="albumCLine" placeholder="Album C Line" [matTooltip]="toolTips.albumCLine" [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+              </div>
+
+              <div class="py-16" fxLayout="row">
+                <genre class="w-100-p" #albumGenre1>{{ albumGenre1.selectorParam('album_meta.albumGenre1') }}</genre>
+                <genre class="w-100-p" #albumGenre2>{{ albumGenre2.selectorParam('album_meta.albumGenre2') }}</genre>
+              </div>
+
+              <div formGroupName="album_meta" class="py-16" fxLayout="row">
+                <mat-form-field class="w-100-p">
+                  <input matInput formControlName="masterLabelName" placeholder="Master Label Name" [matTooltip]="toolTips.masterLabel" [matTooltipShowDelay]="toolTips.delay">
+                  <mat-error *ngIf="contentForm.get('album_meta.masterLabelName').hasError('required') && contentForm.get('album_meta.masterLabelName').touched">
+                    <strong>Master Label Name is required</strong>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input matInput formControlName="displayLabelName" placeholder="Display Label Name (aka imprint label name)" [matTooltip]="toolTips.displayLabel"
+                    [matTooltipShowDelay]="toolTips.delay">
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Composition Side">
+            <div class="tab-content p-24" fxLayout="column">
+              <div formGroupName="comp_meta" class="py-16" fxLayout="row">
+                <mat-form-field class="w-100-p">
+                  <input matInput formControlName="compTitle" placeholder="Composition Title">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input matInput formControlName="compTitleAlt" placeholder="Composition Title Alternate">
+                </mat-form-field>
+                <mat-form-field class="w-100-p">
+                  <input type="text" matInput formControlName="compTitleIswc" placeholder="Composition ISWC">
+                </mat-form-field>
+              </div>
+
+              <div class="py-16" fxLayout="row">
+                <div formGroupName="comp_meta" class="w-100-p">
+                  <mat-label [ngClass]="{'required': writersList?.length == 0}" class="spacing">Writers</mat-label>
+                  <button mat-raised-button class="mat-purple-bg mt-16 mt-sm-0" mat-raised-button (click)="addWriter()" [matTooltip]="toolTips.writer"
+                    [matTooltipShowDelay]="toolTips.delay">Add</button>
+                  <mat-error *ngIf="writersList?.length == 0">
+                    <strong>is required</strong>
+                  </mat-error>
+                  <mat-chip-list matPrefix>
+                      <mat-chip class="chip" *ngFor="let data of writersList; index as i" removable="true" (removed)="removeFromList('writersList', i)">
+                          {{ data.writer }} {{data.IPI_CAE}} {{data.ISNI}} {{data.publisher}} {{data.role}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                      </mat-chip>
+                    </mat-chip-list>
+
+                </div>
+
+                <div formGroupName="comp_meta" class="w-100-p">
+                  <mat-label class="spacing">Publisher</mat-label>
+                  <button mat-raised-button class="mat-purple-bg mt-16 mt-sm-0" mat-raised-button (click)="addPublisher()" [matTooltip]="toolTips.publisher"
+                    [matTooltipShowDelay]="toolTips.delay">Add</button>
+
+                  <mat-chip-list matPrefix>
+                      <mat-chip class="chip" *ngFor="let data of publishersList; index as i" removable="true" (removed)="removeFromList('publishersList', i)">
+                          {{data.publisher}} {{ data.IPI_CAE }} {{data.ISNI}}
+                        <mat-icon matChipRemove>cancel</mat-icon>
+                      </mat-chip>
+                    </mat-chip-list>
+                </div>
+
+                <mat-form-field formGroupName="comp_meta" class="w-100-p">
+                  <mat-select formControlName="performingRightsOrg" placeholder="Performing Rights Organization" [matTooltip]="toolTips.pros"
+                    [matTooltipShowDelay]="toolTips.delay">
+                    <mat-option *ngFor=" let pro of pros" [value]="pro.value">
+                      {{ pro.value }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Management & Royalty splits">
+            <div class="tab-content p-24" fxLayout="column">
+              <h1>General Royalty Splits:</h1>
+              <div class="py-16" fxLayout="row">
+                <div class="w-45-p">
+                  <mat-label>Percentage of income going to Master Side:</mat-label>
+                </div>
+                <div class="w-100-p">
+                  <mat-slider [max]="mastMax" [min]="mastMin" [step]="step" [thumb-label]="thumbLabel" formControlName="master_share">
+                  </mat-slider>
+                </div>
+                <div class="w-10-p bottom-border margin">
+                  <h4 [innerHtml]="contentForm.value.master_share"></h4>
+                </div>
+              </div>
+
+              <div class="py-16" fxLayout="row">
+                <div class="w-45-p">
+                  <mat-label>Percentage of income going to Streaming Platform:</mat-label>
+                  <p class="small-label">NOTE: This value is deducted from the Master Side Income</p>
+                </div>
+                <div class="w-100-p">
+                  <mat-slider [max]="streamMax" [min]="streamMin" [step]="step" [thumb-label]="thumbLabel" formControlName="playing_reward">
+                  </mat-slider>
+                </div>
+                <div class="w-10-p bottom-border margin">
+                  <h4 [innerHtml]="contentForm.value.playing_reward"></h4>
+                </div>
+              </div>
+              <div class="py-16" fxLayout="row">
+                <div class="w-45-p">
+                  <mat-label>Percentage of income going to Composition Side:</mat-label>
+                </div>
+                <div class="w-100-p">
+                  <mat-slider [max]="compMax" [min]="compMin" [step]="step" [thumb-label]="thumbLabel" formControlName="publishers_share">
+                  </mat-slider>
+                </div>
+                <div class="w-10-p bottom-border margin">
+                  <h4 [innerHtml]="contentForm.value.publishers_share"></h4>
+                </div>
+              </div>
+
+              <h1>Master Side Royalty Split:</h1>
+              <mat-checkbox name="masterMultiManagers" (change)="updateMasterMultiManagers()"> The Master side has multiple contract Managers</mat-checkbox>
+              <mat-form-field class="w-15-p" *ngIf="masterMultiManagers" [matTooltip]="toolTips.threshold" [matTooltipShowDelay]="toolTips.delay">
+                <input type="number" max=100 matInput formControlName="management_threshold" placeholder="Threshold">
+              </mat-form-field>
+              <mat-error *ngIf="contentForm.get('management_threshold').hasError('max') && contentForm.get('management_threshold').touched">
+                <strong>Threshold must be 0 - 100</strong>
+              </mat-error>
+              <div class="py-16" fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="w-100-p">
+                  <mat-form-field formGroupName="distributions">
+                    <input matInput placeholder="Muser Name" name="payee" formControlName="payee" [(ngModel)]="masterRoyaltyInput.muserName">
+                  </mat-form-field>
+                  <mat-form-field formGroupName="distributions">
+                    <input type="number" min=0 max=100  matInput placeholder="Income" name="bp" formControlName="bp" [(ngModel)]="masterRoyaltyInput.income">
+                  </mat-form-field>
+                  <mat-checkbox class="margin" name="masterManagesContract" *ngIf="masterMultiManagers" [(ngModel)]="masterManagesContract"
+                    (change)="updateMasterManagesContract()">Manages Contract</mat-checkbox>
+                  <mat-form-field formGroupName="management" *ngIf="masterManagesContract && masterMultiManagers">
+                    <input type="number" min=0 max=100 matInput placeholder="Weight" name="percentage" formControlName="percentage" [(ngModel)]="masterRoyaltyInput.weight">
+                  </mat-form-field>
+                  <button mat-raised-button class="mat-purple-bg mt-16 mt-sm-0" (click)="addList('masterRoyaltyList')" color="primary">Add</button>
+                </div>
+              </div>
+              <div class="py-16" fxLayout="row">
+                <div class="w-45-p">
+                  <mat-list>
+                    <mat-list-item *ngFor="let data of masterRoyaltyList,  index as i">
+                      <div class="mat-cell" required>{{data.muserName}}</div>
+                      <div class="mat-cell" required>{{data.income}}</div>
+                      <div class="mat-cell">{{data.management}}</div>
+                      <div class="mat-cell">{{data.weight}}</div>
+                      <div>
+                        <button class="btn btn-default" type="button" (click)="removeFromList('masterRoyaltyList', i)">Delete</button>
+                      </div>
+                      <mat-divider></mat-divider>
+                    </mat-list-item>
+
+                  </mat-list>
+                </div>
+              </div>
+
+
+              <!-- <div *ngIf="compValue?.value > 0"> -->
+                <h1>Composition Side Royalty Split:</h1>
+                <mat-checkbox name="compMultiManagers" (change)="updateCompMultiManagers()"> The Composition side has multiple contract Managers</mat-checkbox>
+                <mat-form-field class="w-15-p" *ngIf="compMultiManagers" [matTooltip]="toolTips.threshold" [matTooltipShowDelay]="toolTips.delay">
+                  <input type="number" matInput formControlName="management_threshold_comp" placeholder="Threshold">
+                </mat-form-field>
+                <div class="py-16" fxLayout="row" fxLayoutAlign="space-between center">
+                  <div class="w-100-p">
+                    <mat-form-field formGroupName="distributions">
+                      <input matInput placeholder="Muser Name" name="payee" formControlName="payee" [(ngModel)]="compRoyaltyInput.muserName">
+                    </mat-form-field>
+                    <mat-form-field formGroupName="distributions">
+                      <input type="number" min=0 max=100 matInput placeholder="Income" name="bp" formControlName="bp" [(ngModel)]="compRoyaltyInput.income">
+                    </mat-form-field>
+                    <mat-checkbox class="margin" name="compManagesContract" *ngIf="compMultiManagers" [(ngModel)]="compManagesContract" (change)="updateCompManagesContract()">
+                      Manages Contract
+
+                    </mat-checkbox>
+                    <mat-form-field class="margin-right" formGroupName="management" *ngIf="compManagesContract && compMultiManagers">
+                      <input type="number" min=0 max=100 matInput placeholder="Weight" name="percentage" formControlName="percentage" [(ngModel)]="compRoyaltyInput.weight">
+                    </mat-form-field>
+                    <button mat-raised-button class="mat-purple-bg mt-16 mt-sm-0" (click)="addList('compRoyaltyList')" color="primary">Add</button>
+
+                  </div>
+                </div>
+                <div class="py-16" fxLayout="row">
+                  <div class="w-45-p">
+                    <mat-list>
+                      <mat-list-item *ngFor="let data of compRoyaltyList,  index as i">
+                        <div class="mat-cell">{{data.muserName}}</div>
+                        <div class="mat-cell">{{data.income}}</div>
+                        <div class="mat-cell">{{data.management}}</div>
+                        <div class="mat-cell">{{data.weight}}</div>
+                        <div>
+                          <button class="btn btn-default" type="button" (click)="removeFromList('compRoyaltyList', i)">Delete</button>
+                        </div>
+                        <mat-divider></mat-divider>
+                      </mat-list-item>
+
+                    </mat-list>
+                  </div>
+                </div>
+              <!-- </div> -->
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </form>
+    </div>
+  </div>
+</div>

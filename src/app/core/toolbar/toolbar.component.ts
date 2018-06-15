@@ -18,6 +18,12 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit() { }
 
+
+  onBuyMuseNav() {
+    window.open('https://buy.museblockchain.com', '_blank');
+  }
+
+  
   toggleFullscreen() {
     if (screenfull.enabled) {
       screenfull.toggle();

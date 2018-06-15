@@ -16,10 +16,18 @@
               <strong>Muser Name is required</strong>
           </mat-error>
         </mat-form-field>
+
         <mat-form-field>
           <input matInput type="password" placeholder="Password" formControlName="password" required>
           <mat-error *ngIf="form.controls.password.hasError('required')">
               <strong>Password is required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput type="text" placeholder="Invitation Key" formControlName="key" required>
+          <mat-error *ngIf="form.controls.key.hasError('required')">
+              <strong>Beta Tester Key is required</strong>
           </mat-error>
         </mat-form-field>
         <button color="primary" mat-raised-button [disabled]="!form.valid">SIGN IN</button>

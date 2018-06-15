@@ -6,7 +6,7 @@ import { Utils } from '../../core/utils';
 export class CryptoService {
     
   public static encrypt(password) {
-      console.log(password);
+    //   console.log(password);
       const key = Utils.generateKey();
       
       localStorage.setItem('key', key);
@@ -16,6 +16,10 @@ export class CryptoService {
   public static decrypt() {
       const password = localStorage.getItem('password');
       const authPassword = cryptojs.AES.decrypt(password.toString(), localStorage.getItem('key'));
+      // alert('FIX: in public static decrypt(), musers can log in with either active key or password');
       return authPassword.toString(cryptojs.enc.Utf8);
   }
+
+
+
 }

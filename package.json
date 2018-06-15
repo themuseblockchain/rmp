@@ -34,6 +34,7 @@
     "angular-calendar": "^0.23.3",
     "angular-in-memory-web-api": "0.5.1",
     "angular-sortablejs": "^2.5.1",
+    "angularfire2": "^4.0.0-rc.3-exp.7",
     "bootstrap": "^4.1.0",
     "browserify": "14.5.0",
     "classlist.js": "1.1.20150312",

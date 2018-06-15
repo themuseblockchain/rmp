@@ -8,7 +8,7 @@ import { AlertService } from './alert.service';
 
 // Api
 import * as muse from 'museblockchain-js';
-import { MuseAccountHistory } from '../modals/muse-account-history';
+import { MuseAccountHistory } from '../models/muse-account-history';
 
 @Injectable()
 export class MuseService {
@@ -28,6 +28,14 @@ export class MuseService {
     });
   }
 
+  getAccount$(muserName) {
+    return new Observable((observer: Observer<any>) => {
+      fromPromise(this.getAccount(muserName).then((result => {
+        observer.next(result);
+      })));
+    });
+  }
+  
   streamAccountInfo$(muserName): Observable<any> {
     this.setMuseSocket();
     return new Observable((observer: Observer<any>) => {

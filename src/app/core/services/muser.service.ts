@@ -5,10 +5,10 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observer } from 'rxjs/Observer';
 import { Subscription } from 'rxjs/Subscription';
 import { Subject } from 'rxjs/Subject';
- // import { map } from 'rxjs/Operators';
 import 'rxjs/Rx'; // all rxjs operators
 import 'rxjs/add/observable/of';
 import * as muse from 'museblockchain-js';
+import { MuseService } from './muse.service';
 
 @Injectable()
 export class MuserService {
@@ -20,9 +20,24 @@ export class MuserService {
     // });
 
     constructor(
-        private dataService: DataService
+        private dataService: DataService,
+        private museService: MuseService,
     ) {
     }
+
+    muserExist(muserName){
+        // TODO: convert to Observable
+        const muserNameExist = this.museService.getAccount$(muserName);
+        muserNameExist.subscribe(muserExist => {
+          if (muserExist.length !== 0) {
+            // return true
+          } else {
+            // return false
+          }
+        });
+    }
+
+
 }
 
 

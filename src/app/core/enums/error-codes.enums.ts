@@ -1,11 +1,3 @@
-export enum AlertBtnText {
-    OK = 'OK',
-    UpdateEmail = 'Update Email',
-    ResendEmail = 'Resend Email',
-    Redirect = 'OK',
-    Close = 'Close'
-}
-
 export enum ErrorCodes {
     muserNameAlreadyInUse = 'auth/app-deleted',
     emailAlreadyInUse = 'auth/app-not-authorized',
@@ -25,5 +17,9 @@ export enum ErrorCodes {
     invalidCredential = 'auth/invalid-credential',
     invalidVerificationCode = 'auth/invalid-verification-code',
     invalidVerificationId = 'auth/invalid-verification-id',
-    wrongPassword = 'auth/wrong-password'
+    muserNameNotFound = 'muserNameNotFound',
+    wrongPassword = 'auth/wrong-password',
+    invalidTesterKey = 'invalid-testerKey',
+    invalidContentForm = 'invalidContentForm'
 }
+

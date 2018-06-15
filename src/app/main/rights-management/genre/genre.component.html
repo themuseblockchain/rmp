@@ -1,0 +1,19 @@
+<form name="smartForm" class="smart-form">
+    <mat-form-field class="full-width">
+        <!-- <div *ngIf="message == 'trackGenre1.selectorParam' || message == 'albumGenre1.selectorParam'">
+            <input type="text" placeholder="Primary Genre" matInput [formControl]="smartControl" [matAutocomplete]="auto" matTooltip= {{toolTips.genre}} matTooltipShowDelay= {{toolTips.delay}}>
+ 
+        </div>
+        <div *ngIf="message == 'trackGenre2.selectorParam' || message == 'albumGenre2.selectorParam'">
+            <input type="text" placeholder="Secondary Genre" matInput [formControl]="smartControl" [matAutocomplete]="auto" matTooltip= {{toolTips.genre}} matTooltipShowDelay= {{toolTips.delay}}>
+        </div> -->
+
+        <input type="text" placeholder="Genre" matInput [formControl]="smartControl" [matAutocomplete]="auto" matTooltip= {{toolTips.genre}}
+            matTooltipShowDelay= {{toolTips.delay}}>
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option #selectedGenre *ngFor="let option of filteredOptions | async" [value]="option">
+                {{ option }}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</form>

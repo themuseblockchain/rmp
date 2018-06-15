@@ -22,6 +22,10 @@ export class ToolbarUserButtonComponent implements OnInit {
 
   }
 
+  onSupportNav() {
+      window.open('https://support.museblockchain.com', '_blank');
+  }
+
   toggleDropdown() {
     this.isOpen = !this.isOpen;
   }

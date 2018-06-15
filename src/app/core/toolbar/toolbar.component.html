@@ -5,6 +5,7 @@
     </button>
   </div>
 
+
   <!--<div fxLayout="row" fxLayoutAlign="start center" fxFlex="500px" fxHide fxShow.gt-md>
     <search-bar></search-bar>
   </div>-->
@@ -13,14 +14,31 @@
 
   <span fxFlex></span>
 
+
+  <!-- <div class="item" fxLayout="row" fxLayoutAlign="start center" matRipple>
+    <mat-icon class="icon">local_atm</mat-icon>
+    <a [routerLink]="['https://support.museblockchain.com']" target="_blank"></a>
+  </div> -->
+
+
+
   <!--<search></search>-->
   <div fxLayout="row" fxLayoutAlign="start center" fxFlex="500px" fxHide fxShow.gt-md>
     <search-bar></search-bar>
   </div>
 
+  <button mat-button (click)="onBuyMuseNav()" class="txtColor">
+    <mat-icon>local_atm</mat-icon>
+    Buy MUSE
+  </button>
+
   <div class="">
     <!--<toolbar-notifications></toolbar-notifications>-->
   </div>
+
+
+
+  <!-- <button class="mat-raised-button mat-primary"(click)="onBuyMuseNav()">Buy MUSE</button> -->
 
   <div class="user-button-container">
     <toolbar-user></toolbar-user>
